@@ -1,0 +1,1312 @@
+#myHeader.fixed {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    background: white!important;
+}
+/*.header.fixed .top-menu {*/
+/*    width: 100%;*/
+/*    display: -webkit-box;*/
+/*    display: -ms-flexbox;*/
+/*    display: flex;*/
+/*    -webkit-box-pack: end;*/
+/*    -ms-flex-pack: end;*/
+/*    justify-content: flex-end;*/
+/*    padding: 10px 20px;*/
+/*    background: #c1252b !important;*/
+/*}*/
+.programmeOverview .programmeOverviewArea {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.programmeOverview {
+    width: 100%;
+    position: relative;
+    min-height: 100%;
+    padding: 120px 0 40px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: white;
+    background-blend-mode: soft-light;
+}
+
+.programmeOverview .programmeOverviewArea .programmeOverviewLeft {
+    width: 60%;
+    padding: 0 0 0 50px;
+}
+.programmeOverview .programmeOverviewArea .programmeOverviewRight {
+    width: 40%;
+}
+.programmeOverview .programmeOverviewArea .programmeOverviewRight img{
+    border-radius: 6px;
+    width: 100%;
+}
+.programmeOverviewLeft h4{
+    padding-bottom: 20px;
+    font-weight: bold;
+}
+
+.programmeEligibility .programmeEligibilityArea {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.programmeEligibility {
+    width: 100%;
+    position: relative;
+    min-height: 100%;
+    padding: 40px 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: white;
+    background-blend-mode: soft-light;
+}
+
+.programmeEligibility .programmeEligibilityArea .programmeEligibilityLeft {
+    width: 60%;
+    padding: 0 50px 0 0;
+}
+.programmeEligibility .programmeEligibilityArea .programmeEligibilityRight {
+    width: 40%;
+}
+.programmeEligibilityLeft h4{
+    padding-bottom: 20px;
+    font-weight: bold;
+}
+.programmeEligibility .programmeEligibilityArea .programmeEligibilityRight img{
+    border-radius: 6px;
+    width: 100%;
+}
+
+.programmeCurriculum .programmeCurriculumArea {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  
+}
+.programmeCurriculum {
+    width: 100%;
+    position: relative;
+    /*min-height: 430px;*/
+    padding: 40px 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: white;
+    background-blend-mode: soft-light;
+}
+
+.programmeCurriculum .programmeCurriculumArea .programmeCurriculumLeft {
+    width: 20%;
+    padding: 0 50px 0 0;
+}
+.programmeCurriculum .programmeCurriculumArea .programmeCurriculumRight {
+    width: 70%;
+}
+.programmeCurriculum h4{
+    padding-bottom: 20px;
+}
+
+.programmeCurriculumTable {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid whitesmoke;
+}
+
+.programmeCurriculumTable th, .programmeCurriculumTable td {
+    padding: 20px;
+    border-top: 1px solid #ddd;
+    border: aliceblue;
+    text-align: left;
+    background-color: white;
+}
+.programmeCurriculumTable tr {
+    border-top: 1px solid #ddd;
+}
+
+.programmeCurriculumTable th {
+    background-color: white;
+}
+
+.programmeCurriculumTable tr:nth-child(even) {
+    background-color: white;
+}
+
+.course_title_head{
+ color: #B60007;   
+}
+
+/* Style the tab links to be horizontal */
+.prm-tab-links {
+    width: 25%;
+    border-right: 1px solid whitesmoke;
+}
+
+/* Style each tab link */
+.prm-tab-links a {
+    display: block;
+    font-size: 16px;
+    padding: 20px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+    border-bottom: 2px solid transparent; /* Default border */
+    transition: all 0.3s ease;
+}
+
+.prm-tab-links a:hover, .prm-tab-links a.active {
+    background-color: #e0e0e0;
+    color: #B60007;
+    font-weight: 500;
+    border-right: 2px solid;
+}
+
+/*#myvideo{*/
+/*    position: relative;*/
+/*    background-repeat: no-repeat;*/
+/*    min-width: 100%;*/
+/*    background-size: cover;*/
+/*}*/
+
+#myvideo {
+    position: relative; /* Use absolute positioning to make it cover the screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 90vh; /* Makes the height equal to 100% of the viewport height */
+    object-fit: cover; /* Ensures the video covers the entire area, cropping if necessary */
+}
+
+
+.ptb-100 {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.career-service-content {
+    padding-right: 35px;
+}
+
+.blog-title {
+    margin-bottom: 40px;
+}
+
+.blog-title h2 {
+    font-size: 32px;
+    font-weight: 400;
+    padding-left: 30px;
+    position: relative;
+    margin-bottom: 30px;
+    border-left: 4px solid rgb(176, 194, 255);
+    line-height: 35px;
+    font-weight: bold;
+}
+
+.blog-title p {
+    font-size: 16px;
+    margin-bottom: 15px;
+    line-height: 1.7;
+}
+
+.course_instructor_featured_block_wrapper {
+  border: 1px solid rgba(0, 0, 0, 0.08);;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: #ffffff;
+  width: 330px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.course_instructor_featured_block_wrapper img {
+    border-radius: 0.5rem;
+}
+
+.gap-4 {
+    gap: 1rem;
+}
+
+/*nav bar tab section*/
+
+    .programmeFees{
+     background-color: white!important;   
+     padding: 40px 0;
+    }
+    .course_fees_1{
+        width: 100%;
+        margin: 10px;
+    }
+     .course_fees_2{
+        width: 100%;
+        margin: 10px;
+    }
+    .programmeFeesArea{
+        display: flex;
+    }
+    .programmeFeesTable tr:nth-child(even) {
+  background-color: white; 
+   }
+   .programmeFeesTable th {
+  background-color: white; 
+  color: #B60007;
+   }
+   .text-center{
+       text-align: center;
+   }
+
+
+.tabs-nav {
+  display: flex;
+  justify-content: center;
+/*  border-bottom: 2px solid #ddd;*/
+  position: absolute; /* Initially position is absolute */
+  z-index: 10;
+  background-color: #fff;
+  padding: 0px 0px;
+  width: 100%;
+  transition: transform 0.3s ease-in-out; /* Apply smooth transition on transform */
+  box-shadow: 1px 1px 2px #cecece;
+}
+
+.tab {
+  padding: 20px 20px;
+  margin-right: 50px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.3s;
+  text-decoration: none;
+}
+
+.tab:hover {
+  transform: scale(1.05);
+  text-decoration: none;
+}
+
+/* Active tab styling */
+.tab.active {
+  border-bottom: 2px solid #B60007;
+}
+
+@media (max-width: 727px){
+  .programmeEligibility .programmeEligibilityArea {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: block!important;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.programmeEligibility .programmeEligibilityArea .programmeEligibilityLeft {
+    width: 100%;
+    padding: 10px!important;
+}
+.programmeEligibility .programmeEligibilityArea .programmeEligibilityRight {
+    width: 100%;
+}
+ .programmeFeesArea{
+        display: block;
+}
+}
+
+ @media (max-width: 600px) {
+    .tabs-nav {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      width: unset!important; /* Two tabs per row */
+      text-align: center;
+      padding: 10px 10px;
+      font-size: 11px;
+    }
+
+    .tab{
+      margin-right: 0;
+    }
+    .programmeOverviewLeft{
+     width: 100% !important; 
+     padding: 0 0 0 0!important;
+    }
+    .programmeOverviewRight{
+     width: 100% !important; 
+     padding-bottom: 20px;
+    }
+    .programmeCurriculumArea {
+    width: 100%!important;
+    position: relative;
+}
+.prm-tab-links a {
+    display: block;
+    padding: 20px 10px;
+}
+ .table-view-1 {
+        overflow-x: scroll;
+        width: 65%!important;
+}
+.programmeCurriculumTable th, .programmeCurriculumTable td {
+    padding: 10px 10px!important;
+    border-top: 1px solid #ddd;
+    font-size: 13px;
+    border: aliceblue;
+    text-align: left;
+    background-color: white;
+}
+.prm-tab-links {
+    width: 35%!important;
+    border-right: 1px solid whitesmoke;
+}
+.programmeCurriculumTable {
+    width: 500px!important;
+}
+.course_fees_1 {
+    width: 100%;
+     margin: 0 0 10px 0;
+}
+.course_fees_2 {
+    width: 100%;
+     margin: 0px;
+}
+}
+
+.table-view-1 {
+    width: 75%;
+}
+
+.programmeForm {
+    width: 400px;
+    position: unset!important;
+    right: 15px;
+    top: -55px;
+    z-index: 2;
+    padding: 25px 25px 35px;
+    background-color: #fff;
+    border-radius: 15px;
+    -webkit-box-shadow: 0 8px 32px rgba(0, 0, 0, 0.13);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.13);
+}
+.singleBannerBlock.programme .container {
+    position: relative;
+    align-items: center;
+    display: flex
+;
+}
+.wpcf7 .wpcf7-form-control-wrap input, .wpcf7 .wpcf7-form-control-wrap select, .wpcf7 .wpcf7-form-control-wrap textarea {
+    width: 100%;
+    border-radius: 6px;
+    border-color: rgba(0, 41, 146, 0.15);
+    font-family: "Inter", sans-serif !important;
+    font-size: 13px !important;
+    line-height: 2;
+    font-weight: 400 !important;
+    color: #1E1E1E;
+    padding: 0px 15px!important;
+    position: relative;
+    height: 40px!important;
+}
+.wpcf7 .wpcf7-submit {
+    width: 100%;
+    padding: 10px 18px!important;
+    background-color: #105C8E;
+    border: solid 1px #105C8E;
+    border-radius: 4px;
+    font-family: "Inter", sans-serif !important;
+    font-size: 14px!important;
+    line-height: 1;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    text-shadow: none !important;
+    overflow: hidden;
+    -webkit-transition: all ease-in-out 0.5s;
+    transition: all ease-in-out 0.5s;
+}
+.programmeOutcomehead h4{
+    padding-bottom: 20px;
+}
+.programmeOutcome{
+  padding: 40px 0 40px;
+}
+.programmeOutcome .programmeOutcomeArea{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 0 15px;
+}
+.programmeOutcome .programmeOutcomeArea .programmeOutcomeRight{
+  width: 10%;
+  padding: 0 10px 0;
+}
+.programmeOutcomeLeft {
+    line-height: 22px;
+    width: 90%;
+}
+.programmeForm h4 {
+    font-size: 22px!important;
+    line-height: 1.2;
+    font-weight: 600;
+    color: #105C8E;
+    margin: 0 0 20px!important;
+}
+
+@media (min-width: 728px){
+    .singleBannerBlock.programme {
+    padding: 100px 0;
+    height: 480px!important;
+}
+.outcome_table_row{
+ display: flex;
+ flex-wrap: wrap;
+ align-items: baseline;
+}
+.outcome_table .programmeOutcome{
+ width: 40%;
+ padding: 0 20px 0;
+}
+.outcome_table .programmeCurriculum{
+ width: 60%;   
+}
+.singleBannerBlock.programme {
+    margin-top: -90px;
+    height: 570px !important;
+}
+.singleBannerBlock.programme .container {
+    padding-top: 0px!important;
+}
+}
+
+#mega-menu-wrap-header_menu #mega-menu-header_menu > li.mega-menu-flyout ul.mega-sub-menu li.mega-menu-item a.mega-menu-link {
+    display: block;
+    background: white;
+    color: #1e1e1e;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 15px 30px 15px 30px;
+    line-height: 24px;
+    text-decoration: none;
+    text-transform: capitalize!important;
+    vertical-align: baseline;
+}
+header .top-menu {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    padding: 14px 20px;
+    background: #003f7c !important;
+}
+header .header-content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    background: transparent;
+    position: relative;
+    padding: 10px 30px!important;
+    background: transparent!important;
+}
+.homeBanner {
+    position: relative;
+    margin-top: -90px!important;
+    bottom: 0;
+}
+.videoWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.videoWrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4); /* or #00000069 */
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Ensure video stays behind */
+.videoWrapper video {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bannerBlock::before {
+  content: "";
+  position: absolute;
+  top: 0;                      /* Fill the entire area of the container */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #00000038;   /* Change to your desired color */
+  z-index: 2;                 /* Place it behind the .homeBanner content */
+}
+.bannerBlock {
+    margin-top: -90px;
+    width: 100%;
+    position: relative;
+    background-color: unset!important;
+}
+.researchBanner{
+    margin-top: -90px;
+    width: 100%;
+    position: relative;
+    padding-top: 200px;
+}
+.bannerBlock .bannerArea {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    position: relative;
+    z-index: 3;
+}
+#mega-menu-wrap-header_menu #mega-menu-header_menu > li.mega-menu-item > a.mega-menu-link {
+    line-height: 90px;
+    height: 90px;
+    padding: 0px 0px 0px 0px;
+    vertical-align: baseline;
+    width: auto;
+    display: block;
+    color: #ffffff!important;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: left;
+    background: rgba(0, 0, 0, 0);
+    border: 0;
+    border-radius: 0;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: inherit;
+    outline: none;
+}
+header .top-menu a {
+    color: white!important;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+@media screen and (min-width: 728px) {
+header .header-content .logo img {
+        width: 350px!important;
+}
+ #myHeader.fixed 
+ #mega-menu-wrap-header_menu #mega-menu-header_menu 
+ > li.mega-menu-item > a.mega-menu-link  {
+     color: black!important;
+}
+.homeBanner .banner-slider video {
+    width: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    min-height: calc(100vh - 60px)!important;
+    max-height: calc(100vh - 60px)!important;
+    display: block;
+}
+#mega-menu-header_menu .megaMenuLeft .wp-block-group__inner-container > .wp-block-columns:not(.is-not-stacked-on-mobile) > .wp-block-column {
+    flex-basis: 100% !important;
+}
+#mega-menu-header_menu #menu-institution-menu a:hover{
+    color: #BF2228!important;
+}
+.wp-block-column.is-layout-flow.wp-block-column-is-layout-flow {
+    display: flex;
+    padding-bottom: 15px;
+}
+#mega-menu-header_menu .megaMenuLeft .wp-block-columns {
+    display: contents!important;
+}
+#mega-menu-wrap-header_menu #mega-menu-header_menu p {
+    padding-left: 20px!important;
+}
+#mega-menu-wrap-header_menu #mega-menu-header_menu p a:hover {
+   color: #BF2228!important;
+}
+ul#menu-institution-menu {
+    top: 20px;
+    position: relative;
+}
+}
+
+ #myHeader.fixed .logo .logo_main {
+     display: block;
+}
+#myHeader .logo .logo_main{
+     display: none;   
+}
+#myHeader.fixed .logo .logo_site{
+     display: none;   
+}
+
+html{
+ overflow-x: hidden;
+}
+
+@media (max-width: 727px){
+    .singleBannerBlock.programme .singleBannerArea ul li a {
+    font-family: "Inter", sans-serif;
+    font-size: 8px!important;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #fff;
+    -webkit-transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.3s;
+}
+.singleBannerBlock .singleBannerArea h1, .singleBannerBlock .singleBannerArea h2 {
+        font-size: 14px;
+}
+.singleBannerBlock.programme .singleBannerArea .bannerContent a {
+    display: inline-block;
+    font-family: "Inter", sans-serif;
+    font-size: 12px!important;
+    line-height: 0.5!important;
+    font-weight: 400;
+    color: #fff;
+    padding: 8px 20px;
+    border: solid 1px #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.3s;
+}
+.singleBannerBlock.programme .container {
+    position: relative;
+    align-items: center;
+    display: block!important;
+}
+.programmeForm {
+        width: 100%!important;
+         margin-bottom: 10px;
+}
+.programmeOutcome{
+  padding: 20px 0 20px;
+}
+.programmeCurriculum{
+    padding: 20px 0;
+}
+.programmeOverview {
+    width: 100%;
+    position: relative;
+    min-height: 100%;
+    padding: 120px 0 20px;
+}
+.programmeOutcomehead h4 {
+    padding-bottom: 20px;
+    font-size: 23px;
+}
+.programmeOverviewLeft h4 {
+    padding-bottom: 20px;
+    font-weight: bold;
+    font-size: 23px;
+}
+.programmeCurriculum h4 {
+    padding-bottom: 20px;
+    font-size: 23px;
+}
+.programmeEligibilityLeft h4 {
+    padding-bottom: 20px;
+    font-weight: bold;
+    font-size: 23px;
+}
+.prm-tab-links a {
+    display: block;
+    font-size: 12px!important;
+}
+}
+
+@media (max-width: 927px){
+#mega-menu-header_menu .megaMenuLeft .wp-block-columns .navItem p a {
+    color: #fff !important;
+}
+.videoText h1{
+    font-size: 15px!important;
+    line-height: 20px!important;
+}
+.videoText p{
+   font-size: 12px; 
+}
+.home_page .alumini-speak .other-pages .other-pages-links ul li {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: block!important;
+    gap: 15px;
+    width: 100%!important;
+    margin-bottom: 10px!important;
+    text-align: center!important;
+    margin-right: unset!important;
+    margin-left: unset!important;
+}
+.man-logos{
+    display: none!important;
+    width: unset!important;
+}
+.videoText{
+    width: 100%!important;
+    margin: auto;
+}
+}
+
+.home_page .info {
+    padding: 80px 0;
+    background-image: url(https://staging.sriher.com/wp-content/uploads/2025/04/info-banner-new.jpg)!important;
+    background-repeat: repeat;
+    background-size: 100%;
+    position: relative;
+}
+#mega-menu-wrap-header_menu #mega-menu-header_menu > li.mega-menu-megamenu > ul.mega-sub-menu {
+    z-index: 999;
+    border-radius: 0;
+    background: white!important;
+    border: 0;
+    padding: 0px 0px 0px 0px;
+    position: absolute;
+    width: 100%;
+    max-width: none;
+    left: 0;
+}
+#mega-menu-header_menu #menu-institution-menu a {
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    font-weight: 400 !important;
+    color: #1E1E1E !important;
+    margin: 0 0 20px !important;
+    text-transform: none !important;
+    display: flex;
+    align-items: center;
+    white-space: break-spaces;
+}
+#mega-menu-wrap-header_menu #mega-menu-header_menu input, #mega-menu-wrap-header_menu #mega-menu-header_menu img {
+    max-width: 100%;
+    background: #e40000;
+}
+.mega-megaMenuLeft .mega-sub-menu{
+ border-right: 4px solid whitesmoke!important;   
+}
+.home_page #parallax-info {
+     background-attachment: unset!important;
+}
+
+#myHeader {
+  /* The transform property will animate over 0.5s */
+  transition: transform 0.9s ease;
+}
+
+#myHeader.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transform: translateY(-100%);
+  z-index: 999;
+}
+
+#myHeader.fixed.slide {
+  transform: translateY(0);
+}
+.swiper-slide {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Video stays behind */
+.swiper-slide video {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    position: relative;
+    z-index: 1;
+}
+
+/* Text container goes above video */
+.video_text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+}
+
+/* Actual text styles */
+.videoText {
+    position: relative; /* REQUIRED for z-index to apply! */
+    z-index: 3;
+    text-align: center;
+    padding: 20px;
+    color: #fff;
+    pointer-events: auto;
+    user-select: text;
+}
+
+.videoText h1,
+.videoText p,
+.videoText a {
+    color: #fff;
+    font-weight: 700;
+    margin: 10px 0;
+    user-select: text;
+}
+.contentBlock .contentArea .contentRight {
+    width: calc(100% - 280px);
+    padding: 65px 40px!important;
+}
+.testimonyArea {
+    width: 100%;
+    display: flex!important;
+    flex-wrap: wrap;
+}
+.testimonyArea .card {
+    border: 1px solid rgba(22, 47, 85, 0.2);
+    background: #fff;
+    padding: 40px;
+    margin: 0 10px 10px 0!important;
+}
+footer .footer-wrap .footer-right ul li + li {
+    margin-top: 15px!important;
+}
+footer .footer-wrap .footer-widget {
+    padding-bottom: 35px!important;
+}
+footer {
+    background: #00274e!important;
+    padding: 0;
+    position: relative;
+    z-index: 0;
+}
+footer .footer-wrap .footer-left p {
+    color: #c9c9c9 !important;
+    font-family: "Inter", sans-serif;
+    font-size: 14px!important;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 26px;
+}
+footer .footer-wrap .ftr-left-wrap ul a {
+    color: #c9c9c9 !important;
+    font-family: "Inter", sans-serif;
+    font-size: 14px!important;
+    font-style: normal;
+    font-weight: 500;
+}
+footer .footer-wrap .content-menu .footer-title {
+    color: #ffffff !important;
+}
+footer .footer-wrap .footer-right ul a {
+    color: #c9c9c9 !important;
+    font-weight: 500!important;
+    font-size: 14px!important;
+}
+footer .footer-bottom {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 40px 0 40px!important;
+}
+footer .footer-bottom p, footer .footer-bottom a {
+    color: #d8d8d8 !important;
+}
+footer .footer-wrap {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 75px;
+    padding: 50px 0!important;
+}
+.home_page .placements .founder {
+    background: white !important;
+    padding: 70px 0 85px;
+}
+.home_page .updates .admission {
+    position: relative;
+    padding: 60px 0;
+}
+.home_page .alumini-speak .other-pages .other-pages-links ul{
+    gap: 0px!important;
+    max-width: 100%!important;
+}
+.home_page .alumini-speak .other-pages .other-pages-links ul li {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: block!important;
+    gap: 15px;
+    width: 31%;
+    margin-right: 10px;
+    margin-left: 10px;
+    text-align: center!important;
+}
+.home_page .alumini-speak .other-pages .other-pages-links ul li a {
+    color: white;
+    text-align: center;
+    font-family: "Bitter", sans-serif;
+    font-size: 18px!important;
+    padding: 20px 10px!important;
+    z-index: 999;
+    position: relative;
+}
+.home_page .alumini-speak .other-pages .other-pages-links ul li {
+    box-shadow: 1px 1px 4px 2px #9f9f9f;
+    background: white;
+    padding: 90px 0 70px;
+    position: relative;
+}
+.home_page .updates .admission .content p {
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px;
+    max-width: 920px!important;
+}
+.home_page .alumini-speak .other-pages .other-pages-links ul li:first-child {
+    background-image: url(https://staging.sriher.com/wp-content/uploads/2025/04/medical-center-1.jpg);
+    background-repeat: repeat;
+    background-size: cover;
+}
+
+.home_page .alumini-speak .other-pages .other-pages-links ul li:nth-child(2) {
+    background-image: url(https://staging.sriher.com/wp-content/uploads/2025/04/srmc-hospital.jpg);
+    background-repeat: repeat;
+     background-size: cover;
+}
+
+.home_page .alumini-speak .other-pages .other-pages-links ul li:last-child {
+    background-image: url(https://staging.sriher.com/wp-content/uploads/2025/04/Untitled-design-9-scaled.png);
+    background-repeat: repeat;
+     background-size: cover;
+}
+.home_page .alumini-speak .other-pages .other-pages-links ul li:before{
+    content: "";
+    position: absolute;
+    background-color: #000000;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.2;
+}
+.home_page .alumini-speak .other-pages .other-pages-links ul li img{
+  z-index: 999;
+  position: relative;
+  filter: brightness(7);
+}
+.home_page .alumini-speak .other-pages .other-pages-links ul li:hover a {
+    color: white!important;
+}
+.home_page .updates .admission::before {
+    content: "";
+    position: absolute;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.9;
+    background-color: #003f7c !important;
+}
+.home_page .gallery {
+    background: linear-gradient(to bottom, #003f7c 50%, #ffffff 50%)!important;
+}
+.home_page .gallery {
+    padding: 0px 0 100px!important;
+}
+.home_page .info::before {
+    content: "";
+    position: absolute;
+    background-color: #003f7c!important;
+}
+footer .footer-wrap .footer-left:before {
+    border-right: dotted;
+    border-color: #959595;
+    position: absolute;
+    content: "";
+    height: 95%;
+    float: right;
+    right: -50px;
+    bottom: 30px;
+}
+footer .footer-wrap .footer-left {
+    width: 24%;
+    position: relative;
+}
+footer .footer-wrap .content-menu .footer-title {
+    position: relative;
+}
+footer .footer-wrap .content-menu .footer-title:before {
+    color: #ffffff !important;
+    border-bottom: 3px solid red;
+    position: absolute;
+    border-radius: 12px;
+    width: 30%;
+    content: "";
+    bottom: -10px;
+}
+.home_page .gallery .recognition .recognition-slider .item{
+    background-color: white!important;
+}
+.video_inner{
+    display: flex;
+    flex-wrap: wrap;
+}
+.man-logos{
+    width: 20%;
+    top: 20px;
+    position: relative;
+}
+.videoText{
+    width: 80%;
+    margin: auto;
+}
+.man-logos1{
+    position: relative;
+    left: 150px;
+}
+.man-logos2{
+    position: relative;
+    left: 150px;
+}
+.man-logos3{
+    position: relative;
+    left: 150px;
+}
+.man-logos1 img{
+     width: 120px;
+    height: 100%; 
+     padding: 10px;
+}
+.man-logos2 img{
+    width: 120px;
+    height: 100%; 
+     padding: 10px;
+}
+.man-logos3 img{
+     width: 120px;
+    height: 100%; 
+     padding: 10px;
+}
+.videoText h1{
+   font-size: 55px;    
+}
+.institutions .ubermenu-row::before {
+    content: "";
+    position: absolute;
+    width: 62%;
+    height: 100%;
+    background: #fff !important;
+    right: 0;
+    top: 0;
+}
+.ubermenu-submenu .ubermenu-target-text {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    font-weight: 400 !important;
+    color: #212121 !important;
+}
+.ubermenu-submenu {
+    background: rgb(252 252 252) !important;
+}
+.institutions .left-column .ubermenu-submenu-type-stack .ubermenu-tabs-group .ubermenu-tab:nth-child(1)::before {
+    background-color: #c60000;
+}
+.institutions .left-column .ubermenu-submenu-type-stack .ubermenu-tabs-group .ubermenu-tab:nth-child(2)::before {
+    background-color: #c60000;
+}
+.institutions .left-column .ubermenu-submenu-type-stack .ubermenu-tabs-group .ubermenu-tab:nth-child(3)::before {
+    background-color: #c60000;
+}
+.institutions .left-column .ubermenu-content-block {
+    font-family: "Bitter", sans-serif;
+    font-size: 45px;
+    line-height: 1;
+    color: #3e3e3e!important;
+}
+.institutions .left-column .ubermenu-submenu-type-stack .ubermenu-tabs-group {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -ms-flex-wrap: wrap !important;
+    flex-wrap: wrap !important;
+    padding: 40px 0 40px !important;
+    border-top: 1px solid rgb(59 59 59 / 20%)!important;
+    border-bottom: 1px solid rgb(64 64 64 / 20%)!important;
+}
+.Programes .programes-outer .column-one .ubermenu-tab-content-panel::after {
+    content: "";
+    position: absolute;
+    width: 70%;
+    height: 100%;
+    background: #ffffff!important;
+    right: 0;
+    top: 0;
+}
+.ubermenu-submenu .ubermenu-tabs-group .ubermenu-tab-content-panel .ubermenu-tabs-group .ubermenu-tab-content-panel .ubermenu-item .ubermenu-target {
+    max-width: 320px !important;
+    border-bottom: 1px solid rgb(206 206 206 / 39%)!important;
+    margin-bottom: 20px !important;
+}
+
+img.outcome-image {
+    width: -webkit-fill-available;
+    max-width: 100%;
+    padding-bottom: 20px;
+     border-radius: 6px;
+}
+.outcome_table{
+ background-color: white;   
+}
+@media screen and (min-width: 993px) {
+ #myHeader.fixed 
+ .ubermenu .ubermenu-target-text {
+     color: black!important;
+}
+.contentBlock .contentArea .bannerGrid {
+    width: 100%;
+    display: flex!important;
+}
+.contentBlock .contentArea .bannerSlide {
+    width: 40%!important;
+}
+.contentBlock .contentArea .bannerGrid .bannerSlide .bannerBox {
+    height: 100%;
+    padding-top: 0;
+    min-height: 100%!important;
+}
+.contentBlock .contentArea .bannerSlide .bannerBox img {
+    width: 100%;
+    height: 100%;
+    position: relative!important;
+    left: 0;
+    top: 0;
+    -o-object-fit: cover;
+    object-fit: scale-down ;
+} 
+}
+@media screen and (max-width: 992px) {
+.contentBlock .contentArea .bannerGrid .bannerSlide .bannerBox {
+        padding-top: 0%!important; 
+        min-height: auto;
+}
+.contentBlock .contentArea .bannerSlide .bannerBox img{
+    position: relative!important;
+}
+}
+.cmn-admission-banner::before {
+    content: "";
+    position: absolute;
+    background: #003f7c !important;
+}
+.founderBanner .wp-block-column.is-layout-flow.wp-block-column-is-layout-flow {
+    display: block!important;
+    padding-bottom: 15px;
+}
+.sliderBlock {
+    width: 100%;
+    display: block;
+    background-color: #890E0E;
+    margin-top: -90px!important;
+    background-blend-mode: soft-light;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    position: relative;
+    padding: 100px 0 100px!important;
+}
+.eventBlock .eventArea .eventBox .eventCaption h4 a {
+    color: inherit;
+    font-size: 18px!important;
+}
+.singleBannerBlock {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    position: relative;
+    margin-top: -90px!important;
+    padding: 155px 0 90px!important;
+}
+
+
+.researchJobBlock {
+    width: 100%;
+    position: relative;
+    min-height: unset!important;
+    padding: 40px 0!important;
+    display: -webkit-box;
+    background-color:#2f709b;
+}
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: unset!important;
+    margin: auto;
+    text-align: center;
+}
