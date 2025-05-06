@@ -28,12 +28,15 @@ class Dashboard {
 	public function init() {
 		add_action( 'admin_menu', array( $this, 'register_menu_page' ) );
 		add_action( 'admin_init', array( $this, 'maybe_redirect' ) );
-		add_action( 'admin_notices', array( $this, 'maybe_add_otter_banner' ), 30 );
+		add_action( 'admin_notices', array( $this, 'form_submission_elements' ), 30 );
+		add_action( 'admin_head', array( $this, 'add_inline_css' ) );
 
 		$form_options = get_option( 'themeisle_blocks_form_emails' );
 		if ( ! empty( $form_options ) ) {
 			add_action( 'wp_dashboard_setup', array( $this, 'form_submissions_widget' ) );
 		}
+
+		add_filter( 'themeisle-sdk/survey/' . OTTER_PRODUCT_SLUG, array( $this, 'get_survey_metadata' ), 10, 2 );
 	}
 
 	/**
@@ -59,7 +62,7 @@ class Dashboard {
 		/**
 		 * Add shortcut to the Blocks tab in Dashboard.
 		 */
-		
+
 
 		add_submenu_page(
 			'otter',
@@ -71,8 +74,12 @@ class Dashboard {
 
 		add_submenu_page(
 			'otter',
-			__( 'Form Submissions', 'otter-blocks' ),
-			__( 'Form Submissions', 'otter-blocks' ),
+			__( 'Submissions', 'otter-blocks' ),
+			sprintf(
+				'<div class="o-menu-submissions">%s <span class="o-menu-badge">%s</span></div>',
+				esc_html__( 'Submissions', 'otter-blocks' ),
+				esc_html__( 'Pro', 'otter-blocks' )
+			),
 			'manage_options',
 			'form-submissions-free',
 			array( $this, 'form_submissions_callback' ),
@@ -90,6 +97,34 @@ class Dashboard {
 				<script>document.location.href = "/wp-admin/admin.php?page=otter#blocks";</script>';
 			}
 		);
+	}
+
+	/**
+	 * Add inline CSS.
+	 */
+	public function add_inline_css() {
+		?>
+		<style>
+			.o-menu-submissions {
+				display: flex;
+				align-items: center;
+			}
+
+			.o-menu-badge {
+				border: 1px solid;
+				border-radius: 16px;
+				color: inherit;
+				font-size: 10px;
+				font-weight: 600;
+				line-height: 8px;
+				margin: 0;
+				opacity: .8;
+				padding: 4px 6px;
+				text-transform: uppercase;
+			}
+		</style>
+		<?php
+
 	}
 
 	/**
@@ -146,7 +181,7 @@ class Dashboard {
 				<img style="max-width: 100%" src="<?php echo esc_url( OTTER_BLOCKS_URL . 'assets/images/form-submissions-upsell.svg' ); ?>" alt="Otter Form Submissions Upsell" />
 				<h2 style="line-height: 1"><?php esc_html_e( 'Collect Your Form Submissions', 'otter-blocks' ); ?></h2>
 				<p><?php esc_html_e( 'Store, manage and analyze your form submissions with ease – all in one place. With Otter powerful features, managing submissions has never been simpler.', 'otter-blocks' ); ?></p>
-				<a href="<?php echo esc_url( tsdk_utmify( 'https://themeisle.com/plugins/otter-blocks/upgrade/', 'form-submissions', 'admin' ) ); ?>" class="button button-primary" target="_blank"><?php esc_html_e( 'Explore Otter PRO', 'otter-blocks' ); ?></a>
+				<a href="<?php echo esc_url( tsdk_translate_link( tsdk_utmify( 'https://themeisle.com/plugins/otter-blocks/upgrade/', 'form-submissions', 'admin' ) ) ); ?>" class="button button-primary" target="_blank"><?php esc_html_e( 'Explore Otter PRO', 'otter-blocks' ); ?></a>
 			</div>
 		</div>
 		<?php
@@ -159,9 +194,7 @@ class Dashboard {
 	 * @access  public
 	 */
 	public function enqueue_options_assets() {
-		$wp_upload_dir = wp_upload_dir( null, false );
-		$basedir       = $wp_upload_dir['basedir'] . '/themeisle-gutenberg/';
-		$asset_file    = include OTTER_BLOCKS_PATH . '/build/dashboard/index.asset.php';
+		$asset_file = include OTTER_BLOCKS_PATH . '/build/dashboard/index.asset.php';
 
 		wp_enqueue_style(
 			'otter-blocks-styles',
@@ -173,35 +206,87 @@ class Dashboard {
 		wp_enqueue_script(
 			'otter-blocks-scripts',
 			OTTER_BLOCKS_URL . 'build/dashboard/index.js',
-			$asset_file['dependencies'],
+			array_merge( $asset_file['dependencies'], [ 'updates' ] ),
 			$asset_file['version'],
 			true
 		);
 
 		wp_set_script_translations( 'otter-blocks-scripts', 'otter-blocks' );
 
-		$offer = new LimitedOffers();
-
 		wp_localize_script(
 			'otter-blocks-scripts',
 			'otterObj',
-			apply_filters(
-				'otter_dashboard_data',
-				array(
-					'version'            => OTTER_BLOCKS_VERSION,
-					'assetsPath'         => OTTER_BLOCKS_URL . 'assets/',
-					'stylesExist'        => is_dir( $basedir ) || boolval( get_transient( 'otter_animations_parsed' ) ),
-					'hasPro'             => Pro::is_pro_installed(),
-					'upgradeLink'        => tsdk_utmify( Pro::get_url(), 'options', Pro::get_reference() ),
-					'docsLink'           => Pro::get_docs_url(),
-					'showFeedbackNotice' => $this->should_show_feedback_notice(),
-					'deal'               => ! Pro::is_pro_installed() ? $offer->get_localized_data() : array(),
-					'hasOnboarding'      => false !== get_theme_support( FSE_Onboarding::SUPPORT_KEY ),
-					'days_since_install' => round( ( time() - get_option( 'otter_blocks_install', time() ) ) / DAY_IN_SECONDS ),
-					'rootUrl'            => get_site_url(),
-				)
-			)
+			$this->get_dashboard_data()
 		);
+
+		do_action( 'themeisle_internal_page', OTTER_PRODUCT_SLUG, 'dashboard' );
+	}
+
+	/**
+	 * Get the dashboard data to store in global object.
+	 *
+	 * @return array
+	 */
+	public function get_dashboard_data() {
+		$wp_upload_dir = wp_upload_dir( null, false );
+		$basedir       = $wp_upload_dir['basedir'] . '/themeisle-gutenberg/';
+		$offer         = new LimitedOffers();
+
+		$global_data = array(
+			'version'                => OTTER_BLOCKS_VERSION,
+			'assetsPath'             => OTTER_BLOCKS_URL . 'assets/',
+			'stylesExist'            => is_dir( $basedir ) || boolval( get_transient( 'otter_animations_parsed' ) ),
+			'hasPro'                 => Pro::is_pro_installed(),
+			'upgradeLink'            => tsdk_translate_link( tsdk_utmify( Pro::get_url(), 'options', Pro::get_reference() ) ),
+			'upgradeLinkFromTc'      => tsdk_utmify( Pro::get_url(), 'templatecloud' ),
+			'tcUpgradeLink'          => tsdk_utmify( 'https://themeisle.com/plugins/templates-cloud/', 'templatecloud', 'otter-blocks' ),
+			'tcDocs'                 => 'https://docs.themeisle.com/article/2191-templates-cloud-collections',
+			'docsLink'               => Pro::get_docs_url(),
+			'showFeedbackNotice'     => $this->should_show_feedback_notice(),
+			'deal'                   => ! Pro::is_pro_installed() ? $offer->get_localized_data() : array(),
+			'hasOnboarding'          => false !== get_theme_support( FSE_Onboarding::SUPPORT_KEY ),
+			'days_since_install'     => intval( ( time() - get_option( 'otter_blocks_install', time() ) ) / DAY_IN_SECONDS ),
+			'rootUrl'                => get_site_url(),
+			'neveThemePreviewUrl'    => esc_url(
+				add_query_arg(
+					array(
+						'theme' => 'neve',
+					),
+					admin_url( 'theme-install.php' )
+				)
+			),
+			'neveThemeActivationUrl' => esc_url(
+				add_query_arg(
+					array(
+						'action'     => 'activate',
+						'stylesheet' => 'neve',
+						'_wpnonce'   => wp_create_nonce( 'switch-theme_neve' ),
+					),
+					admin_url( 'themes.php' )
+				)
+			),
+			'neveDashboardUrl'       => esc_url(
+				add_query_arg(
+					array(
+						'page' => 'neve-welcome',
+					),
+					admin_url( 'admin.php' )
+				)
+			),
+			'neveInstalled'          => defined( 'NEVE_VERSION' ),
+		);
+
+		$global_data = apply_filters( 'otter_dashboard_data', $global_data );
+		
+		if (
+			isset( $global_data['license'], $global_data['license']['key'] )
+			&& 'free' !== $global_data['license']['key']
+			&& 6 <= strlen( $global_data['license']['key'] )
+		) {
+			$global_data['license']['key'] = str_repeat( '*', 26 ) . substr( $global_data['license']['key'], -6 );
+		}
+
+		return $global_data;
 	}
 
 	/**
@@ -229,14 +314,18 @@ class Dashboard {
 	}
 
 	/**
-	 * Add the Otter banner on the 'edit-otter_form_record' page.
+	 * Add elements for Form Block submission page.
 	 *
 	 * @return void
 	 */
-	public function maybe_add_otter_banner() {
+	public function form_submission_elements() {
 		$screen = get_current_screen();
 		if ( 'edit-otter_form_record' === $screen->id || 'otter-blocks_page_form-submissions-free' === $screen->id ) {
 			$this->the_otter_banner();
+		}
+		
+		if ( 'edit-otter_form_record' === $screen->id ) {
+			do_action( 'themeisle_internal_page', OTTER_PRODUCT_SLUG, 'form-submissions' );
 		}
 	}
 
@@ -300,12 +389,13 @@ class Dashboard {
 				<img src="<?php echo esc_url( OTTER_BLOCKS_URL . 'assets/images/logo-alt.png' ); ?>" alt="<?php esc_attr_e( 'Otter Blocks', 'otter-blocks' ); ?>" style="width: 90px">
 			</div>
 			<div class="otter-banner__content">
-				<h1 class="otter-banner__title" style="line-height: normal;"><?php esc_html_e( 'Form Submissions', 'otter-blocks' ); ?>
-					<sub class="otter-banner__version"><?php echo esc_html( 'v' . OTTER_BLOCKS_VERSION ); ?></sub>
-				</h1>
+				<h1 class="otter-banner__title" style="line-height: normal;"><?php esc_html_e( 'Form Submissions', 'otter-blocks' ); ?></h1>
+
+				<?php if ( Pro::is_pro_active() ) : ?>
 				<button id="export-submissions" class="button">
 					<?php esc_html_e( 'Export', 'otter-blocks' ); ?>
 				</button>
+				<?php endif; ?>
 			</div>
 		</div>
 		<script>
@@ -657,6 +747,39 @@ class Dashboard {
 
 		</div>
 		<?php
+	}
+
+	/**
+	 * Register survey.
+	 * 
+	 * @param array  $data The data in Formbricks format.
+	 * @param string $page_slug The page slug.
+	 * 
+	 * @return array The data in Frombricks format.
+	 */
+	public function get_survey_metadata( $data, $page_slug ) {
+		$dash_data = $this->get_dashboard_data();
+		
+		$install_days_number = $dash_data['days_since_install'];
+
+		$data = array(
+			'environmentId' => 'clp9hqm8c1osfdl2ixwd0k0iz',
+			'attributes'    => array(
+				'install_days_number' => $install_days_number,
+				'plan'                => isset( $dash_data['license'], $dash_data['license']['type'] ) ? $dash_data['license']['type'] : 'free',
+				'freeVersion'         => $dash_data['version'],
+			),
+		);
+
+		if ( isset( $dash_data['license'], $dash_data['license']['key'] ) ) {
+			$data['attributes']['license_key'] = apply_filters( 'themeisle_sdk_secret_masking', apply_filters( 'product_otter_license_key', '' ) );
+		}
+
+		if ( isset( $dash_data['proVersion'] ) ) {
+			$data['attributes']['proVersion'] = $dash_data['proVersion'];
+		}
+
+		return $data;
 	}
 
 	/**

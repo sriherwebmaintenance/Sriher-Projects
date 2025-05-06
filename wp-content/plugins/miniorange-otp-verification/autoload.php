@@ -43,6 +43,7 @@ define( 'MOV_LOADER_URL', MOV_URL . 'includes/images/loader.gif' );
 define( 'MOV_DONATE', MOV_URL . 'includes/images/donate.png' );
 define( 'MOV_PAYPAL', MOV_URL . 'includes/images/paypal.png' );
 define( 'MOV_FIREBASE', MOV_URL . 'includes/images/firebase.png' );
+define( 'MOV_WHATSAPP', MOV_URL . 'includes/images/tourIcons/whatsApp.svg' );
 define( 'MOV_NETBANK', MOV_URL . 'includes/images/netbanking.png' );
 define( 'MOV_CARD', MOV_URL . 'includes/images/card.png' );
 define( 'MOV_LOGO_URL', MOV_URL . 'includes/images/logo.png' );
@@ -71,6 +72,17 @@ initialize_forms();
 
 if ( file_exists( MOV_DIR . MoConstants::LICENCE_SERVICE_FILE ) ) {
 	new Mo_License_Library();
+}
+
+$plugin_slug = 'resendcontrol/miniorange-rc-validation.php';
+if ( ! function_exists( 'deactivate_plugins' ) ) {
+	require_once ABSPATH . 'wp-admin/includes/plugin.php';
+}
+if ( ! function_exists( 'is_plugin_active' ) ) {
+	include_once ABSPATH . 'wp-admin/includes/plugin.php';
+}
+if ( is_plugin_active( $plugin_slug ) ) {
+	deactivate_plugins( $plugin_slug );
 }
 
 /**
@@ -114,11 +126,7 @@ function wp_ajax_url() {
  * @param string $string - option name to be deleted.
  */
 function mo_( $string ) {
-
-	$string = preg_replace( '/\s+/S', ' ', $string );
-	return is_scalar( $string )
-			? ( MoUtility::is_polylang_installed() && MOV_USE_POLYLANG ? pll__( $string ) : __( $string, 'miniorange-otp-verification' ) ) // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText --common function for string translation.
-			: $string;
+	return $string;
 }
 
 /**
@@ -185,14 +193,14 @@ function get_mo_class( $obj ) {
 
 /**
  * To check if package.json file can be found through WP site URL or not.
- * BuildScript.php updates the package.json file content in the below function instead of {{package.json}} to be used further in autoload.php
+ * BuildScript.php updates the package.json file content in the below function instead of package.json to be used further in autoload.php
  * example package.json string ["name"=>"miniorange-otp-verification","version"=>"3.5","type"=>"MiniOrangeGateway","testMode"=>false,"failMode"=>false,"hostname"=>"https:\/\/login.xecurify.com","dCustomerKey"=>"16555","dApiKey"=>"fFd2XcvTGDemZvbw1bcUesNJWEqKbbUq","sslVerify"=>false,"session"=>"SESSION"]
  */
 function initialize_package_json() {
 	$package = wp_json_encode(
 		array(
 			'name'         => 'miniorange-otp-verification',
-			'version'      => '5.2.3',
+			'version'      => '5.3.0',
 			'type'         => 'MiniOrangeGateway',
 			'testmode'     => false,
 			'failmode'     => false,

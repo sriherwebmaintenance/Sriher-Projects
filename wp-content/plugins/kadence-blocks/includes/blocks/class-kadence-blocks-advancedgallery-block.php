@@ -357,12 +357,26 @@ class Kadence_Blocks_Advancedgallery_Block extends Kadence_Blocks_Abstract_Block
 			$css->set_media_state( 'desktop');
 		}
 
+		$imageRadiusUnit = isset($attributes['imageRadiusUnit']) ? $attributes['imageRadiusUnit'] : 'px';
 		if ( isset( $attributes['imageRadius'] ) && is_array( $attributes['imageRadius'] ) && isset( $attributes['imageRadius'][0] ) && is_numeric( $attributes['imageRadius'][0] ) ) {
-			$css->set_selector('.kb-gallery-id-' . $unique_id . ' .kadence-blocks-gallery-item .kb-gal-image-radius' );
-			$css->add_property('border-radius', $attributes['imageRadius'][0] . 'px ' . ( is_numeric( $attributes['imageRadius'][1] ) ? $attributes['imageRadius'][1] : 0 ) . 'px ' . ( is_numeric( $attributes['imageRadius'][2] ) ? $attributes['imageRadius'][2] : 0 ) . 'px ' . ( is_numeric( $attributes['imageRadius'][3] ) ? $attributes['imageRadius'][3] : 0 ) . 'px' );
+			$css->set_selector('.kb-gallery-id-' . $unique_id . ' .kadence-blocks-gallery-item .kb-gal-image-radius, .kb-gallery-id-' . $unique_id . ' .kb-slide-item .kb-gal-image-radius img' );
+			$css->add_property('border-radius', $attributes['imageRadius'][0] . $imageRadiusUnit . ' ' . ( is_numeric( $attributes['imageRadius'][1] ) ? $attributes['imageRadius'][1] : 0 ) . $imageRadiusUnit . ' '  . ( is_numeric( $attributes['imageRadius'][2] ) ? $attributes['imageRadius'][2] : 0 ) . $imageRadiusUnit . ' '  . ( is_numeric( $attributes['imageRadius'][3] ) ? $attributes['imageRadius'][3] : 0 ) . $imageRadiusUnit . ';'  );
 		}
+		if ( isset( $attributes['tabletImageRadius'] ) && is_array( $attributes['tabletImageRadius'] ) && isset( $attributes['tabletImageRadius'][0] ) && is_numeric( $attributes['tabletImageRadius'][0] ) ) {
+			$css->set_media_state( 'tablet' );
+			$css->set_selector('.kb-gallery-id-' . $unique_id . ' .kadence-blocks-gallery-item .kb-gal-image-radius, .kb-gallery-id-' . $unique_id . ' .kb-slide-item .kb-gal-image-radius img' );
+			$css->add_property('border-radius', $attributes['tabletImageRadius'][0] . $imageRadiusUnit . ' '  . ( is_numeric( $attributes['tabletImageRadius'][1] ) ? $attributes['tabletImageRadius'][1] : 0 ) . $imageRadiusUnit . ' ' . ( is_numeric( $attributes['tabletImageRadius'][2] ) ? $attributes['tabletImageRadius'][2] : 0 ) . $imageRadiusUnit . ' ' . ( is_numeric( $attributes['tabletImageRadius'][3] ) ? $attributes['tabletImageRadius'][3] : 0 ) . $imageRadiusUnit . ';'  );
+		}
+		if ( isset( $attributes['mobileImageRadius'] ) && is_array( $attributes['mobileImageRadius'] ) && isset( $attributes['mobileImageRadius'][0] ) && is_numeric( $attributes['mobileImageRadius'][0] ) ) {
+			$css->set_media_state( 'mobile' );
+			$css->set_selector('.kb-gallery-id-' . $unique_id . ' .kadence-blocks-gallery-item .kb-gal-image-radius, .kb-gallery-id-' . $unique_id . ' .kb-slide-item .kb-gal-image-radius img' );
+			$css->add_property('border-radius', $attributes['mobileImageRadius'][0] . $imageRadiusUnit . ' ' . ( is_numeric( $attributes['mobileImageRadius'][1] ) ? $attributes['mobileImageRadius'][1] : 0 ) . $imageRadiusUnit . ' ' . ( is_numeric( $attributes['mobileImageRadius'][2] ) ? $attributes['mobileImageRadius'][2] : 0 ) . $imageRadiusUnit . ' ' . ( is_numeric( $attributes['mobileImageRadius'][3] ) ? $attributes['mobileImageRadius'][3] : 0 ) . $imageRadiusUnit . ';' );
+		}
+		$css->set_media_state( 'desktop' );
 
-		if ( isset( $attributes['displayShadow'] ) && ! empty( $attributes['displayShadow'] ) && true === $attributes['displayShadow'] ) {
+		if ( isset( $attributes['displayShadow'] ) && ! empty( $attributes['displayShadow'] ) && true === $attributes['displayShadow'] &&
+			( (isset( $attributes['type'] ) && $attributes['type'] !== 'mosaic') || ! isset( $attributes['type'] ) )
+		) {
 			$css->set_selector('.wp-block-kadence-advancedgallery.kb-gallery-wrap-id-' . $unique_id );
 			$css->add_property('overflow', 'visible' );
 
@@ -379,12 +393,12 @@ class Kadence_Blocks_Advancedgallery_Block extends Kadence_Blocks_Abstract_Block
 			}
 			if ( isset( $attributes['shadow'] ) && is_array( $attributes['shadow'] ) && is_array( $attributes['shadow'][ 0 ] ) ) {
 				$shadow = $attributes['shadow'][ 0 ];
-				$css->set_selector('.kb-gallery-id-' . $unique_id . ' .kadence-blocks-gallery-item .kb-gal-image-radius' );
+				$css->set_selector('.kb-gallery-id-' . $unique_id . ' .kadence-blocks-gallery-item .kb-gal-image-radius, .kb-gallery-id-' . $unique_id . ' .kadence-blocks-gallery-thumb-item .kb-gal-image-radius' );
 				$css->add_property('box-shadow', $shadow['hOffset'] . 'px ' . $shadow['vOffset'] . 'px ' . $shadow['blur'] . 'px ' . $shadow['spread'] . 'px ' . $css->render_color( $shadow['color'], $shadow['opacity'] ) );
 			}
 			if ( isset( $attributes['shadowHover'] ) && is_array( $attributes['shadowHover'] ) && is_array( $attributes['shadowHover'][ 0 ] ) ) {
 				$shadow_hover = $attributes['shadowHover'][ 0 ];
-				$css->set_selector('.kb-gallery-id-' . $unique_id . ' .kadence-blocks-gallery-item:hover .kb-gal-image-radius' );
+				$css->set_selector('.kb-gallery-id-' . $unique_id . ' .kadence-blocks-gallery-item:hover .kb-gal-image-radius, .kb-gallery-id-' . $unique_id . ' .kadence-blocks-gallery-thumb-item:hover .kb-gal-image-radius' );
 				$css->add_property('box-shadow', $shadow_hover['hOffset'] . 'px ' . $shadow_hover['vOffset'] . 'px ' . $shadow_hover['blur'] . 'px ' . $shadow_hover['spread'] . 'px ' . $css->render_color( $shadow_hover['color'], $shadow_hover['opacity'] ) );
 
 			} else {
@@ -400,10 +414,43 @@ class Kadence_Blocks_Advancedgallery_Block extends Kadence_Blocks_Abstract_Block
 			$css->render_typography( $caption_font, 'caption');
 
 			if ( isset( $caption_font['caption']['background'] ) && ! empty( $caption_font['caption']['background'] ) ) {
-				$css->set_selector('.kb-gallery-caption-style-cover-hover.kb-gallery-id-' . $unique_id . ' .kadence-blocks-gallery-item .kadence-blocks-gallery-item-inner .kadence-blocks-gallery-item__caption, .kb-gallery-caption-style-below.kb-gallery-id-' . $unique_id . ' .kadence-blocks-gallery-item .kadence-blocks-gallery-item-inner .kadence-blocks-gallery-item__caption' );
-				$css->add_property('background', $css->render_color( $caption_font['caption']['background'], ( isset( $caption_font['caption']['backgroundOpacity'] ) && is_numeric(  $caption_font['caption']['backgroundOpacity'] ) ) ?  $caption_font['caption']['backgroundOpacity'] : '0.5' ) );
+
+				// Caption background color
+				if( empty( $attributes['captionStyle'] ) || ( ! empty( $attributes['captionStyle'] ) && ( 'bottom' === $attributes['captionStyle'] || 'bottom-hover' === $attributes['captionStyle'] ) ) ) {
+					$css->set_selector('.kb-gallery-caption-style-bottom.kb-gallery-id-' . $unique_id . ' .kadence-blocks-gallery-item .kadence-blocks-gallery-item-inner .kadence-blocks-gallery-item__caption, .kb-gallery-caption-style-bottom-hover.kb-gallery-id-' . $unique_id . ' .kadence-blocks-gallery-item .kadence-blocks-gallery-item-inner .kadence-blocks-gallery-item__caption' );
+					$css->add_property('background', 'linear-gradient(0deg, '. $css->render_color( $caption_font['caption']['background'], ( isset( $caption_font['caption']['backgroundOpacity'] ) && is_numeric(  $caption_font['caption']['backgroundOpacity'] ) ) ?  $caption_font['caption']['backgroundOpacity'] : '0.5' ) .' 0, rgba(0, 0, 0, 0) 100%)');
+
+				} else {
+					$css->set_selector('.kb-gallery-caption-style-cover-hover.kb-gallery-id-' . $unique_id . ' .kadence-blocks-gallery-item .kadence-blocks-gallery-item-inner .kadence-blocks-gallery-item__caption, .kb-gallery-caption-style-below.kb-gallery-id-' . $unique_id . ' .kadence-blocks-gallery-item .kadence-blocks-gallery-item-inner .kadence-blocks-gallery-item__caption' );
+					$css->add_property('background', $css->render_color( $caption_font['caption']['background'], ( isset( $caption_font['caption']['backgroundOpacity'] ) && is_numeric(  $caption_font['caption']['backgroundOpacity'] ) ) ?  $caption_font['caption']['backgroundOpacity'] : '0.5' ) );
+				}
 			}
 		}
+		$gallery_type = ! empty( $attributes['type'] ) ? $attributes['type'] : 'masonry';
+
+		// Add CSS for the grid-pattern-container class.
+		if ( 'mosaic' === $gallery_type ) {
+			$css->set_selector('.kb-gallery-wrap-id-' . $unique_id . ' .kb-gallery-ul.kb-gallery-type-mosaic .grid-pattern-container');
+			$css->render_responsive_range(
+				$attributes,
+				'mosaicRowHeight',
+				'grid-auto-rows',
+				'mosaicRowHeightUnit',
+			);
+			$css->render_responsive_range(
+				$attributes,
+				'gutter',
+				'grid-gap',
+				'gutterUnit',
+			);
+			$css->render_responsive_range(
+				$attributes,
+				'gutter',
+				'gap',
+				'gutterUnit',
+			);
+		}
+
 
 		return $css->css_output();
 	}
@@ -486,7 +533,8 @@ class Kadence_Blocks_Advancedgallery_Block extends Kadence_Blocks_Abstract_Block
 				case 'carousel':
 					$content .= '<div class="' . esc_attr( implode( ' ', $gallery_classes ) ) . '" data-image-filter="' . esc_attr( $image_filter ) . '" data-lightbox-caption="' . ( $lightbox_cap ? 'true' : 'false' ) . '">';
 					$content .= '<div class="kt-blocks-carousel kt-carousel-container-dotstyle-' . esc_attr( $dot_style ) . '">';
-					$content .= '<div class="kt-blocks-carousel-init kb-gallery-carousel kt-carousel-arrowstyle-' . esc_attr( $arrow_style ) . ' kt-carousel-dotstyle-' . esc_attr( $dot_style ) . '" data-columns-xxl="' . esc_attr( $columns_xxl ) . '" data-columns-xl="' . esc_attr( $columns_xl ) . '" data-columns-md="' . esc_attr( $columns_md ) . '" data-columns-sm="' . esc_attr( $columns_sm ) . '" data-columns-xs="' . esc_attr( $columns_xs ) . '" data-columns-ss="' . esc_attr( $columns_ss ) . '" data-slider-anim-speed="' . esc_attr( $trans_speed ) . '" data-slider-scroll="' . esc_attr( $slides_sc ) . '" data-slider-arrows="' . esc_attr( 'none' === $arrow_style ? 'false' : 'true' ) . '" data-slider-dots="' . esc_attr( 'none' === $dot_style ? 'false' : 'true' ) . '" data-slider-hover-pause="false" data-slider-auto="' . esc_attr( $autoplay ) . '" data-slider-speed="' . esc_attr( $auto_speed ) . '" data-slider-gap="' . esc_attr( $gap . $gap_unit ) . '" data-slider-gap-tablet="' . esc_attr( $tablet_gap . $gap_unit ) . '" data-slider-gap-mobile="' . esc_attr( $mobile_gap . $gap_unit ) . '">';
+					$content .= '<div class="kt-blocks-carousel-init kb-gallery-carousel kt-carousel-arrowstyle-' . esc_attr( $arrow_style ) . ' kt-carousel-dotstyle-' . esc_attr( $dot_style ) . '" data-columns-xxl="' . esc_attr( $columns_xxl ) . '" data-columns-xl="' . esc_attr( $columns_xl ) . '" data-columns-md="' . esc_attr( $columns_md ) . '" data-columns-sm="' . esc_attr( $columns_sm ) . '" data-columns-xs="' . esc_attr( $columns_xs ) . '" data-columns-ss="' . esc_attr( $columns_ss ) . '" data-slider-anim-speed="' . esc_attr( $trans_speed ) . '" data-slider-scroll="' . esc_attr( $slides_sc ) . '" data-slider-arrows="' . esc_attr( 'none' === $arrow_style ? 'false' : 'true' ) . '" data-slider-dots="' . esc_attr( 'none' === $dot_style ? 'false' : 'true' ) . '" data-slider-hover-pause="false" data-slider-auto="' . esc_attr( $autoplay ) . '" data-slider-speed="' . esc_attr( $auto_speed ) . '" data-slider-gap="' . esc_attr( $gap . $gap_unit ) . '" data-slider-gap-tablet="' . esc_attr( $tablet_gap . $gap_unit ) . '" data-slider-gap-mobile="' . esc_attr( $mobile_gap . $gap_unit ) . '" aria-label="' . esc_attr( __( 'Photo Gallery Carousel', 'kadence-blocks' ) ) . '">';
+
 					foreach ( $images as $key => $image ) {
 						$content .= '<div class="kb-slide-item kb-gallery-carousel-item">';
 						$content .= $this->render_gallery_images( $image, $attributes );
@@ -548,6 +596,63 @@ class Kadence_Blocks_Advancedgallery_Block extends Kadence_Blocks_Abstract_Block
 						$content .= $this->render_gallery_images( $image, $attributes );
 					}
 					$content .= '</ul>';
+					break;
+				case 'mosaic':
+					$content .= '<div class="' . esc_attr( implode( ' ', $gallery_classes ) ) . '" data-image-filter="' . esc_attr( $image_filter ) . '" data-lightbox-caption="' . ( $lightbox_cap ? 'true' : 'false' ) . '"kb-mosaic-gallery grid-pattern-gallery">';
+					$content .= '<div class="grid-pattern-container">';
+
+					$grouped_images = array_chunk($images, 8);
+
+					foreach ($grouped_images as $group) {
+						foreach ($group as $image_index => $image) {
+							// Determine which grid item pattern to use (patterns repeat every 8 images)
+							$pattern_index = $image_index % 8;
+
+							$grid_class = '';
+							$is_last_image = $image_index === count($group) - 1;
+							$next_to_last_image = $image_index === count($group) - 2;
+
+							switch ($pattern_index) {
+								case 0: // First image: 1 row, 2 columns
+									$grid_class = $is_last_image ? 'grid-item-wide only-one' : 'grid-item-wide';
+									break;
+								case 1: // Second image: 2 columns, 2 rows
+									$grid_class = 'grid-item-large';
+									$grid_class .= $is_last_image ? ' only-two' : '';
+									break;
+								case 2: // Third image: 2 rows, 1 column
+									$grid_class = 'grid-item-tall';
+									$grid_class .= $is_last_image ? ' only-three' : '';
+									$grid_class .= $next_to_last_image ? ' only-four' : '';
+									break;
+								case 3: // Fourth image: 1 row, 1 column
+									$grid_class = 'grid-item-small';
+									break;
+								case 4: // Fifth image: 2 columns, 2 rows
+									$grid_class = 'grid-item-large';
+									$grid_class .= $is_last_image ? ' only-five' : '';
+									$grid_class .= $next_to_last_image ? ' only-six' : '';
+									break;
+								case 5: // Sixth image: 1 row, 1 column
+									$grid_class = $next_to_last_image ? 'grid-item-small only-seven' : 'grid-item-small';
+									break;
+								case 6: // Seventh image: 1 row, 1 column
+								case 7: // Eighth image: 1 row, 1 column
+									$grid_class = 'grid-item-small';
+									break;
+								default:
+									$grid_class = 'grid-item-small';
+							}
+
+							$content .= '<div class="kadence-blocks-gallery-item ' . esc_attr($grid_class) . '">';
+							$content .= $this->render_gallery_images($image, $attributes);
+							$content .= '</div>';
+						}
+					}
+
+					$content .= '</div>';
+					$content .= '</div>';
+
 					break;
 				default:
 					$content .= '<ul class="' . esc_attr( implode( ' ', $gallery_classes ) ) . '" data-image-filter="' . esc_attr( $image_filter ) . '" data-item-selector=".kadence-blocks-gallery-item" data-lightbox-caption="' . ( $lightbox_cap ? 'true' : 'false' ) . '" data-columns-xxl="' . esc_attr( $columns_xxl ) . '" data-columns-xl="' . esc_attr( $columns_xl ) . '" data-columns-md="' . esc_attr( $columns_md ) . '" data-columns-sm="' . esc_attr( $columns_sm ) . '" data-columns-xs="' . esc_attr( $columns_xs ) . '" data-columns-ss="' . esc_attr( $columns_ss ) . '">';
@@ -727,6 +832,13 @@ class Kadence_Blocks_Advancedgallery_Block extends Kadence_Blocks_Abstract_Block
 		$item_tag = ( ( 'carousel' === $type || 'slider' === $type || 'thumbslider' === $type || 'fluidcarousel' === $type ) ? 'div' : 'li' );
 		$fig_tag = ( empty( $href ) && 'below' === $caption_style ? 'figcaption' : 'div' );
 		$figcap = '<' . $fig_tag . ' class="kadence-blocks-gallery-item__caption">' . ( ! empty( $caption ) && is_string( $caption ) ? wp_kses_post( $caption ) : '' ) . '</' . $fig_tag . '>';
+
+		//links in the main gallery caption can mess with lightbox function, strip them out.
+		//they're okay in the lighbox though
+		if( $link_to === 'media' && $lightbox === 'magnific' && ! empty( $figcap ) && is_string( $figcap ) ) {
+			$figcap = preg_replace('#<a.*?>(.*?)</a>#i', '\1', $figcap);
+		}
+
 		$image_classes = array( 'wp-image-' . $image_id );
 		if ( 'carousel' === $type || 'slider' === $type || 'thumbslider' === $type || 'fluidcarousel' === $type ) {
 			$image_classes[] = 'skip-lazy';
@@ -746,7 +858,17 @@ class Kadence_Blocks_Advancedgallery_Block extends Kadence_Blocks_Abstract_Block
 		$output .= '<div class="kadence-blocks-gallery-item-inner">';
 		$output .= '<figure class="' . esc_attr( implode( ' ', $fig_classes ) ). '" ' . ( ! empty( $padding_bottom ) && 'below' === $caption_style ? 'style="max-width:' . $image['width'] . 'px;"' : '' ) . '">';
 		if ( ! empty( $href ) ) {
-			$output .= '<a href="' . esc_url( $href ) . '"' . ( $link_to === 'media' && $lightbox === 'magnific' && $lightbox_cap && ! empty( $caption ) && is_string( $caption ) ? ' data-description="' . esc_attr( strip_tags( html_entity_decode($caption, ENT_QUOTES, 'UTF-8') ) ) . '"' : '' ) . '' . ( $link_to === 'media' && $lightbox === 'magnific' && ! empty( $image_alt ) && is_string( $image_alt ) ? ' data-alt="' . esc_attr( $image_alt ) . '"' : '' ) . ' class="kb-gallery-item-link" ' . ( ( $link_to === 'custom' && '_blank' === $link_target ) || ( $link_to === 'media' && $lightbox === 'new_tab' ) ? 'target="_blank"' : '' ) . ' ' . ( ( $link_to === 'custom' && ! empty( $rel_attr ) ) || ( $link_to === 'media' && ! empty( $rel_attr ) ) ? 'rel="' . esc_attr( $rel_attr ) . '"' : '' ) . '>';
+			$safe_caption = '';
+			if( $link_to === 'media' && $lightbox === 'magnific' && $lightbox_cap && ! empty( $caption ) && is_string( $caption ) ) {
+				$safe_caption = wp_kses(html_entity_decode($caption, ENT_QUOTES, 'UTF-8'), array(
+					'a' => array(
+						'href' => true,
+						'target' => array('_blank', '_self'),
+						'rel' => true,
+					)
+				));
+			}
+			$output .= '<a href="' . esc_url( $href ) . '"' . ( !empty( $safe_caption ) ? ' data-description="' . esc_attr( $safe_caption ) . '"' : '' ) . '' . ( $link_to === 'media' && $lightbox === 'magnific' && ! empty( $image_alt ) && is_string( $image_alt ) ? ' data-alt="' . esc_attr( $image_alt ) . '"' : '' ) . ' class="kb-gallery-item-link" ' . ( ( $link_to === 'custom' && '_blank' === $link_target ) || ( $link_to === 'media' && $lightbox === 'new_tab' ) ? 'target="_blank"' : '' ) . ' ' . ( ( $link_to === 'custom' && ! empty( $rel_attr ) ) || ( $link_to === 'media' && ! empty( $rel_attr ) ) ? 'rel="' . esc_attr( $rel_attr ) . '"' : '' ) . '>';
 		}
 		$output .= '<div class="kb-gal-image-radius"' . ( ! empty( $padding_bottom ) ? ' style="max-width:' . esc_attr( $image['width'] ) . 'px;"' : '' ) . '>';
 		$output .= $img;
@@ -828,6 +950,26 @@ class Kadence_Blocks_Advancedgallery_Block extends Kadence_Blocks_Abstract_Block
 			array(
 				'moreText' => __( 'See more', 'kadence-blocks' ),
 				'lightBoxAriaLabel' => __('Display this image in a lightbox', 'kadence-blocks'),
+			)
+		);
+		wp_localize_script(
+			'kadence-blocks-splide-init',
+			'kb_splide',
+			array(
+				'i18n' => array(
+					'prev' => __( 'Previous slide', 'kadence-blocks' ),
+					'next' => __( 'Next slide', 'kadence-blocks' ),
+					'first' => __( 'Go to first slide', 'kadence-blocks' ),
+					'last' => __( 'Go to last slide', 'kadence-blocks' ),
+					'slideX' => __( 'Go to slide %s', 'kadence-blocks' ),
+					'pageX' => __( 'Go to page %s', 'kadence-blocks' ),
+					'play' => __( 'Start autoplay', 'kadence-blocks' ),
+					'pause' => __( 'Pause autoplay', 'kadence-blocks' ),
+					'carousel' => __( 'carousel', 'kadence-blocks' ),
+					'slide' => __( 'slide', 'kadence-blocks' ),
+					'select' => __( 'Select a slide to show', 'kadence-blocks' ),
+					'slideLabel' => __( '%s of %s', 'kadence-blocks' ),
+				),
 			)
 		);
 	}

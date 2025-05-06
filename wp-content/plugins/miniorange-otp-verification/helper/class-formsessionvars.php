@@ -21,6 +21,7 @@ if ( ! class_exists( 'FormSessionVars' ) ) {
 	class FormSessionVars {
 
 		const FLUENTFORM                    = 'fluent_form';
+		const FLUENT_CONV_FORM              = 'fluent_conv_form';
 		const WC_PROFILE_UPDATE             = 'wc_account_form';
 		const FORMINATOR                    = 'forminator';
 		const EASY_REG_FORM                 = 'mo_easyreg_form';
@@ -92,5 +93,7 @@ if ( ! class_exists( 'FormSessionVars' ) ) {
 		const AR_MEMBER_FORM                = 'mo_armember';
 		const HOUZEZ_REG                    = 'houzez_reg';
 		const WP_DEFAULT_PASS               = 'wp_default_pass';
+		const JET_BUILDER_FORM              = 'jet_builder_form';
+		const MO_WS_FORMS                   = 'mo_ws_form';
 	}
 }

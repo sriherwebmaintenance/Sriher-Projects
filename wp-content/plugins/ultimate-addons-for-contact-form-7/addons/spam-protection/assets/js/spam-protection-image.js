@@ -60,8 +60,9 @@
                 if (typeof userInput !== 'undefined' && userInput.trim() === '') {
                     // Field is empty, set warning message and prevent form submission
                     e.preventDefault(); // Prevent form submission
-                    refreshButton.trigger('click'); // Refresh CAPTCHA
-                    resultDiv.text("CAPTCHA field is required. Please enter the answer.").css("color", "#DC2626");
+                    // Refresh CAPTCHA
+                    refreshButton.trigger('click');
+                    resultDiv.text(uacf7_spam_protection_settings.captchaRequiredMessage).css("color", "#DC2626");
                     return false;
                 } else {
                     // If it's not empty, compare it with the expected value
@@ -72,12 +73,12 @@
                             // If it matches, perform the success actions
                             refreshButton.trigger('click');
                         }
-                        resultDiv.text("CAPTCHA validated successfully!").css("color", "#46b450");
+                        resultDiv.text(uacf7_spam_protection_settings.captchaSuccessMessage).css("color", "#46b450");
                     } else {
                         // If it does not match, set a failure message and prevent form submission
                         e.preventDefault();
                         refreshButton.trigger('click'); // Refresh CAPTCHA
-                        resultDiv.text("CAPTCHA validation failed. Please try again.").css("color", "#DC2626");
+                        resultDiv.text(uacf7_spam_protection_settings.captchaFailedMessage).css("color", "#DC2626");
                         return false;
                     }
                 }

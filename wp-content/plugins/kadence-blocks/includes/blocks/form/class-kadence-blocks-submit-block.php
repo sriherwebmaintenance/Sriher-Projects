@@ -142,7 +142,9 @@ class Kadence_Blocks_Submit_Block extends Kadence_Blocks_Advanced_Form_Input_Blo
 			$css->add_property( 'background', $attributes['gradient'] . ' !important' );
 		}
 		$css->render_typography( $attributes, 'typography' );
-		$css->render_measure_output( $attributes, 'borderRadius', 'border-radius' );
+		$css->render_measure_output( $attributes, 'borderRadius', 'border-radius', array(
+			'unit_key'=>'borderRadiusUnit'
+		) );
 		$css->render_border_styles( $attributes, 'borderStyle', true );
 		$css->render_measure_output( $attributes, 'padding', 'padding', [ 'unit_key' => 'paddingUnit' ] );
 		$css->render_measure_output( $attributes, 'margin', 'margin', [ 'unit_key' => 'marginUnit' ] );
@@ -161,12 +163,12 @@ class Kadence_Blocks_Submit_Block extends Kadence_Blocks_Advanced_Form_Input_Blo
 		$css->render_measure_output( $attributes, 'iconPadding', 'padding', array( 'unit_key' => 'iconPaddingUnit' ) );
 		$css->render_responsive_range( $attributes, 'iconSize', 'font-size', 'iconSizeUnit' );
 		// Icon Hover.
-		$css->set_selector( '.kb-btn' . $class_id . '.kb-button:hover .kb-svg-icon-wrap' );
+		$css->set_selector( '.kb-btn' . $class_id . '.kb-button:hover .kb-svg-icon-wrap, .kb-btn' . $class_id . '.kb-button:focus .kb-svg-icon-wrap' );
 		if ( ! empty( $attributes['iconColorHover'] ) ) {
 			$css->add_property( 'color', $css->render_color( $attributes['iconColorHover'] ) );
 		}
 		// Hover.
-		$css->set_selector( '.kb-submit-field .kb-btn' . $class_id . '.kb-button:hover' );
+		$css->set_selector( '.kb-submit-field .kb-btn' . $class_id . '.kb-button:hover, .kb-submit-field .kb-btn' . $class_id . '.kb-button:focus' );
 		if ( ! empty( $attributes['colorHover'] ) ) {
 			$css->add_property( 'color', $css->render_color( $attributes['colorHover'] ) );
 		}
@@ -194,7 +196,7 @@ class Kadence_Blocks_Submit_Block extends Kadence_Blocks_Advanced_Form_Input_Blo
 			$css->add_property( 'transition', 'opacity .3s ease-in-out' );
 		}
 		if ( 'gradient' === $bg_hover_type && ! empty( $attributes['gradientHover'] ) ) {
-			$css->set_selector( '.kb-btn' . $class_id . '.kb-button:hover::before' );
+			$css->set_selector( '.kb-btn' . $class_id . '.kb-button:hover::before, .kb-btn' . $class_id . '.kb-button:focus::before' );
 			$css->add_property( 'background', $attributes['gradientHover'] );
 			$css->set_selector( '.kb-btn' . $class_id . '.kb-button::before' );
 			$css->add_property( 'transition', 'opacity .3s ease-in-out' );

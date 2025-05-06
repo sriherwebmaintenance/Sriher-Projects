@@ -136,14 +136,14 @@ class CSS_Handler extends Base_CSS {
 						'id' => array(
 							'type'              => 'integer',
 							'required'          => true,
-							'description'       => __( 'ID of the Post.', 'otter-blocks' ),
+							'description'       => __( 'ID of the Post.', 'blocks-css' ),
 							'validate_callback' => function ( $param, $request, $key ) {
 								return is_numeric( $param );
 							},
 						),
 					),
-					'permission_callback' => function () {
-						return current_user_can( 'publish_posts' );
+					'permission_callback' => function ( $request ) {
+						return current_user_can( 'edit_post', $request->get_param( 'id' ) );
 					},
 				),
 			)
@@ -160,14 +160,14 @@ class CSS_Handler extends Base_CSS {
 						'id' => array(
 							'type'              => 'integer',
 							'required'          => true,
-							'description'       => __( 'ID of the Reusable Block.', 'otter-blocks' ),
+							'description'       => __( 'ID of the Reusable Block.', 'blocks-css' ),
 							'validate_callback' => function ( $param, $request, $key ) {
 								return is_numeric( $param );
 							},
 						),
 					),
-					'permission_callback' => function () {
-						return current_user_can( 'publish_posts' );
+					'permission_callback' => function ( $request ) {
+						return current_user_can( 'edit_post', $request->get_param( 'id' ) );
 					},
 				),
 			)
@@ -224,7 +224,7 @@ class CSS_Handler extends Base_CSS {
 
 		self::mark_review_block_metadata( $post_id );
 
-		return rest_ensure_response( array( 'message' => __( 'CSS updated.', 'otter-blocks' ) ) );
+		return rest_ensure_response( array( 'message' => __( 'CSS updated.', 'blocks-css' ) ) );
 	}
 
 	/**
@@ -311,7 +311,7 @@ class CSS_Handler extends Base_CSS {
 
 		self::mark_review_block_metadata( $post_id );
 
-		return rest_ensure_response( array( 'message' => __( 'CSS updated.', 'otter-blocks' ) ) );
+		return rest_ensure_response( array( 'message' => __( 'CSS updated.', 'blocks-css' ) ) );
 	}
 
 	/**
@@ -598,7 +598,7 @@ class CSS_Handler extends Base_CSS {
 	 */
 	public function __clone() {
 		// Cloning instances of the class is forbidden.
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'otter-blocks' ), '1.0.0' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'blocks-css' ), '1.0.0' );
 	}
 
 	/**
@@ -610,6 +610,6 @@ class CSS_Handler extends Base_CSS {
 	 */
 	public function __wakeup() {
 		// Unserializing instances of the class is forbidden.
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'otter-blocks' ), '1.0.0' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'blocks-css' ), '1.0.0' );
 	}
 }

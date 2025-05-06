@@ -9,6 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use OTP\Helper\MoMessages;
+
 $request_uri = remove_query_arg( array( 'addon', 'form', 'subpage' ), isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '' ); // phpcs:ignore -- false positive.
 $license_url = add_query_arg( array( 'page' => 'mootppricing' ), $request_uri );
 
@@ -17,6 +19,12 @@ echo '	<form name="f" method="post" action="" id="sms-configuration-form">';
 	echo '	<input type="hidden" name="option" value="mo_customer_validation_gateway_configuration" />
 			<div class="mo-header">
 				<p class="mo-heading flex-1">' . esc_html( mo_( 'Gateway Settings' ) ) . '</p>
+				<a  href="https://faq.miniorange.com/knowledgebase/use-own-gateway-plugin/" 
+					target="_blank"
+					id="mo_gateway_guide" 
+					class="mo-button secondary">
+					' . esc_html( mo_( 'Setup Guide' ) ) . '
+				</a>
 				<input type="submit" name="save" ' . esc_attr( $disabled ) . '
 							class="mo-button inverted" value="' . esc_attr( mo_( 'Save Settings' ) ) . '">
 			</div>
@@ -25,6 +33,8 @@ echo '	<form name="f" method="post" action="" id="sms-configuration-form">';
 							<div class="flex-1">
 								<h5 class="mo-title">' . esc_html( $sms_gateway_title ) . '</h5>
 								<p class="mo-caption mt-mo-2 mr-mo-8">' . esc_html( mo_( ' Configure Your SMS Gateway to send OTPs and notifications' ) ) . '</p>
+								<div class="mo-caption mt-mo-2 mr-mo-8">[ <u><i><a href="https://plugins.miniorange.com/supported-sms-email-gateways" target="_blank" >Click here</a></i></u> to check Supported Gateways list in our plugin. ]
+								</div>
 							</div>
 							<div class="flex-1 pr-mo-4 pl-mo-2 py-mo-4" id="gateway">
 								<div class="flex">
@@ -68,7 +78,11 @@ echo '	<form name="f" method="post" action="" id="sms-configuration-form">';
 											'class' => array(),
 											'id'    => array(),
 										),
-										'span'     => array( 'style' => array() ),
+										'span'     => array(
+											'style' => array(),
+											'class' => array(),
+											'id'    => array(),
+										),
 										'a'        => array(
 											'href'   => array(),
 											'target' => array(),
@@ -135,13 +149,32 @@ echo '	<form name="f" method="post" action="" id="sms-configuration-form">';
 						</div>
 						<div class="flex-1 pr-mo-4 pl-mo-2 py-mo-4">
 							<div class="flex-1">
-								<div class="pb-mo-2 pr-mo-10">
-									<div class="mo_otp_note my-mo-4">
-										<div class="my-mo-5 mr-mo-4">
-											You can configure your SMTP gateway from any third party SMTP plugin( For e.g <u><i><a href="https://wordpress.org/plugins/wp-mail-smtp/" target="_blank" >WP SMTP</a></i></u> ) or php.ini file.<br>
-											<b>Note:</b> You don\'t need to configure any extra settings in our plugin.
-										</div>
-									</div>
+								<div class="pb-mo-2 pr-mo-10 flex flex-col gap-mo-4">
+									<p>
+										<input  type="radio" ' . esc_attr( $disabled ) . ' 
+												id="mo_smtp_enable" 
+												name="mo_customer_validation_smtp_enable_type"
+												class="app_enable"
+												value="mo_smtp_enable" 
+												' . ( 'mo_smtp_enable' === $smtp_type ? 'checked' : '' ) . ' />
+										' . esc_html( mo_( 'Enable miniOrange SMTP' ) ) . '
+									</p>
+									<p>
+										<input  type="radio" ' . esc_attr( $disabled ) . ' 
+												id="mo_your_own_smtp_enable"
+												name="mo_customer_validation_smtp_enable_type"
+												class="app_enable"
+												value="mo_your_own_smtp_enable" 
+												' . ( 'mo_your_own_smtp_enable' === $smtp_type ? 'checked' : '' ) . ' />
+										' . esc_html( mo_( 'Enable your own SMTP' ) ) . '
+									
+									';
+		mo_draw_tooltip(
+			MoMessages::showMessage( MoMessages::USE_YOUR_SMTP_HEADER ),
+			MoMessages::showMessage( MoMessages::USE_YOUR_SMTP )
+		);
+									echo '
+									</p>
 								</div>
 							</div>
 						</div>
@@ -233,6 +266,7 @@ echo '	<form name="f" method="post" action="" id="sms-configuration-form">';
 				'a'        => array(
 					'href'  => array(),
 					'class' => array(),
+					'target' => array(),
 				),
 				'p'        => array(
 					'class' => array(),

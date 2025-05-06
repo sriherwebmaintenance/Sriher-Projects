@@ -564,12 +564,14 @@ class Kadence_Blocks_Table_Of_Contents {
 					$heading->textContent = $heading->getAttribute( 'data-alt-title' );
 				}
 
+				$headingWrapper = [
+					'element' => $heading,
+					'include' => ''
+				];
 				if( $heading->getAttribute( 'data-toc-include' ) === 'true' ){
-					$heading->include = true;
+					$headingWrapper['include'] = true;
 				} else if ( $heading->getAttribute( 'data-toc-include' ) === 'false' ) {
-					$heading->include = false;
-				} else {
-					$heading->include = '';
+					$headingWrapper['include'] = false;
 				}
 
 				if ( $anchor_string ) {
@@ -584,7 +586,7 @@ class Kadence_Blocks_Table_Of_Contents {
 							'anchor'  => $anchor_string,
 							'content' => $this->convert_smart_quotes( $heading->textContent ),
 							'level'   => $level,
-							'include'   => $heading->include,
+							'include'   => $headingWrapper['include'],
 							'page'    => $headings_page,
 						);
 					}
@@ -593,7 +595,7 @@ class Kadence_Blocks_Table_Of_Contents {
 					'anchor'  => $anchor,
 					'content' => $this->convert_smart_quotes( $heading->textContent ),
 					'level'   => $level,
-					'include'   => $heading->include,
+					'include'   => $headingWrapper['include'],
 					'page'    => $headings_page,
 				);
 			},
@@ -861,8 +863,11 @@ class Kadence_Blocks_Table_Of_Contents {
 				if ( kadence_blocks_is_not_amp() ) {
 					if ( isset( $attributes['enableScrollSpy'] ) && $attributes['enableScrollSpy'] ) {
 						wp_enqueue_script( 'kadence-blocks-gumshoe' );
+						//need to laod this script with the gumshoe dependency if scrollspy is enabled
+						wp_enqueue_script( 'kadence-blocks-table-of-contents', KADENCE_BLOCKS_URL . 'includes/assets/js/kb-table-of-contents.min.js', array('kadence-blocks-gumshoe') , KADENCE_BLOCKS_VERSION, true );
+					} else {
+						wp_enqueue_script( 'kadence-blocks-table-of-contents' );
 					}
-					wp_enqueue_script( 'kadence-blocks-table-of-contents' );
 				}
 				if ( ! doing_filter( 'the_content' ) ) {
 					if ( ! wp_style_is( 'kadence-blocks-table-of-contents', 'done' ) ) {

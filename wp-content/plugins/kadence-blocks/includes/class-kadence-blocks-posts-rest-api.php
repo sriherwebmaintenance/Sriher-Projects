@@ -202,6 +202,11 @@ class Kadence_Blocks_Post_Rest_Controller extends WP_REST_Controller {
 			$query_args['orderby']             = 'post__in';
 			$query_args['posts_per_page']      = -1;
 			$query_args['ignore_sticky_posts'] = 1;
+		} else if ( 'individual-ordered' === $query_type ) {
+			$query_args['post__in']            = $request->get_param( self::PROP_INCLUDE );
+			$query_args['orderby']             = $request->get_param( self::PROP_ORDER_BY );
+			$query_args['posts_per_page']      = -1;
+			$query_args['ignore_sticky_posts'] = 1;
 		} else {
 			$query_args['posts_per_page']      = $request->get_param( self::PROP_PER_PAGE );
 			$query_args['tax_query']           = array();
@@ -371,7 +376,19 @@ class Kadence_Blocks_Post_Rest_Controller extends WP_REST_Controller {
 			$data['comment_info'] = $comments_count->total_comments;
 		}
 		if ( 'post' === $post->post_type ) {
-			$data['category_info'] = get_the_category( $post->ID );
+			$categories = get_the_category( $post->ID );
+
+			// If the Kadence theme exists, get the custom archive category colors.
+			if ( class_exists( 'Kadence\Theme' ) ) {
+				$item_category_color = get_theme_mod( 'post_archive_item_category_color' );
+				$data['kt_archive_item_category_color'] = $item_category_color;
+				foreach ( $categories as $key => $category ) {
+					$categories[ $key ]->archive_category_color = get_term_meta( $category->term_id, 'archive_category_color', true );
+					$categories[ $key ]->archive_category_hover_color = get_term_meta( $category->term_id, 'archive_category_hover_color', true );
+				}
+			}
+
+			$data['category_info'] = $categories;
 			$data['tag_info']      = get_the_tags( $post->ID );
 		}
 		$taxonomies = get_object_taxonomies( $post->post_type, 'objects' );

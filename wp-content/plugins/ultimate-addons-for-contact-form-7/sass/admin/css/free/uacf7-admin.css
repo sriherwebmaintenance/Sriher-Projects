@@ -2,6 +2,7 @@
 /*
 Button
 */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap");
 .tf-admin-btn {
   display: inline-flex;
@@ -238,7 +239,9 @@ body.tf-modal-open:after {
 /*
 Fontawesome
 */
-.fa, .far, .fas {
+.fa,
+.far,
+.fas {
   font-family: "FontAwesome" !important;
 }
 
@@ -298,7 +301,7 @@ Fontawesome
 }
 
 .tf-booking-status-swt input:checked + .switcher {
-  background-color: #002C66;
+  background-color: #002c66;
 }
 
 .tf-booking-status-swt input:checked + .switcher::before {
@@ -325,6 +328,14 @@ Fontawesome
 #tf-booking-status-loader.show {
   visibility: visible;
   opacity: 1;
+}
+
+.tf-field.tf-field-notice.mailchimp_docs_notice {
+  margin-top: 0 !important;
+  margin-bottom: 20px !important;
+}
+.tf-field.tf-field-notice.mailchimp_docs_notice .tf-field-wrap {
+  padding-top: 0 !important;
 }
 
 .tf-post-states {
@@ -500,8 +511,8 @@ button.tf-order-remove {
   margin: 0px !important;
 }
 .tf-license-activate p.submit input {
-  background-color: #003C79 !important;
-  border-color: #003C79 !important;
+  background-color: #003c79 !important;
+  border-color: #003c79 !important;
   color: #fff;
   padding: 4px 25px;
   font-size: 1rem;
@@ -540,13 +551,13 @@ body.admin_page_uacf7-setup-wizard {
   font-family: "Inter", sans-serif !important;
   line-height: 1.7 !important;
   font-weight: 400 !important;
-  font-size: 16px !important;
+  font-size: 16px;
   color: #636266 !important;
 }
 body.admin_page_uacf7-setup-wizard p {
   line-height: 1.7 !important;
   font-weight: 400 !important;
-  font-size: 16px !important;
+  font-size: 16px;
   color: #636266 !important;
   font-family: "Inter", sans-serif !important;
 }
@@ -593,7 +604,7 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
 
 .uacf7-setup-widzard-btn {
   color: #fff;
-  font-family: Segoe UI;
+  font-family: "Inter", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -675,7 +686,7 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
   padding: 12px;
   color: var(--gray-700, #344054);
   text-align: center;
-  font-family: Segoe UI;
+  font-family: "Inter", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -748,16 +759,18 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
 .uacf7-setup-wizard .uacf7-step-content-container .uacf7-single-step-content.installation .uacf7-single-step-content-wrap .uacf7-single-step-content-inner p {
   color: #636266;
   text-align: center;
-  font-family: Segoe UI;
+  font-family: "Inter", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: 24px;
 }
 .uacf7-setup-wizard .uacf7-step-content-container .uacf7-single-step-content.installation .uacf7-single-step-content-wrap .uacf7-single-step-content-inner .uacf7-step-plugin-required {
-  padding-top: 32px;
+  padding-top: 0px;
+  display: inline-block;
 }
 .uacf7-setup-wizard .uacf7-step-content-container .uacf7-single-step-content.installation .uacf7-single-step-content-wrap .uacf7-single-step-content-inner .uacf7-step-plugin-required p {
+  margin-top: 10px;
   color: #06040c !important;
   text-align: center;
   font-size: 20px !important;
@@ -768,7 +781,7 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
   padding: 12px 16px;
   border: none;
   color: #fff;
-  font-family: Segoe UI;
+  font-family: "Inter", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -918,7 +931,7 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
   align-self: stretch;
   color: #06040c;
   text-align: center;
-  font-family: Segoe UI;
+  font-family: "Inter", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -1045,6 +1058,22 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
   justify-content: space-between;
   align-items: center;
 }
+.uacf7-setup-wizard .uacf7-wizard-footer .uacf7-wizard-footer-inner .uacf7-wizard-footer-right .wizard_uacf7_btn_back_addon {
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 4px;
+  border: 1px solid #382673;
+  background: #382673;
+  color: #fff !important;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  text-decoration: none;
+}
 .uacf7-setup-wizard .uacf7-wizard-footer .uacf7-wizard-footer-inner .uacf7-wizard-footer-left-link.uacf7-back-dashboard {
   padding: 12px 16px;
   justify-content: center;
@@ -1062,6 +1091,30 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
   text-decoration: none;
 }
 
+@media only screen and (max-width: 1400px) {
+  .uacf7-setup-wizard {
+    padding: 16px 25px;
+  }
+  .uacf7-setup-wizard .uacf7-step-content-container .uacf7-single-step-content.installation .uacf7-single-step-content-wrap .uacf7-single-step-content-inner h1 {
+    font-size: 35px;
+  }
+  .uacf7-setup-wizard .uacf7-step-content-container .uacf7-single-step-content.installation .uacf7-single-step-content-wrap .uacf7-single-step-content-inner p {
+    font-size: 14px;
+  }
+  .uacf7-setup-wizard .uacf7-step-content-container .uacf7-single-step-content.installation .uacf7-single-step-content-wrap .uacf7-single-step-content-inner .uacf7-step-plugin-required p {
+    font-size: 18px !important;
+    margin: 10px 0;
+  }
+  .uacf7-setup-wizard .uacf7-wizard-footer .uacf7-wizard-footer-inner {
+    padding: 16px 25px;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .uacf7-setup-wizard .uacf7-step-content-container .uacf7-single-step-content.installation .uacf7-single-step-content-wrap .uacf7-single-step-content-inner .uacf7-step-plugin-required {
+    display: inline-block;
+    padding-top: 0;
+  }
+}
 .uacf7-metabox {
   background-color: #fff;
   padding: 6px;
@@ -1273,7 +1326,26 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
   }
 }
 
-.tf-setting-dashboard .tf-setting-top-bar, .uacf7-metabox .tf-setting-top-bar {
+.status-success {
+  color: green;
+  font-weight: 500;
+}
+
+span.status-error {
+  color: rgba(253, 72, 0, 0.678) !important;
+  font-weight: 500;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.tf-setting-dashboard .tf-setting-top-bar,
+.uacf7-metabox .tf-setting-top-bar {
   background-color: #fff;
   padding: 15px 40px;
   margin-left: -20px;
@@ -1282,14 +1354,17 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
   justify-content: space-between;
   align-items: center;
 }
-.tf-setting-dashboard .tf-setting-top-bar .version, .uacf7-metabox .tf-setting-top-bar .version {
+.tf-setting-dashboard .tf-setting-top-bar .version,
+.uacf7-metabox .tf-setting-top-bar .version {
   display: flex;
   align-items: center;
 }
-.tf-setting-dashboard .tf-setting-top-bar .version img, .uacf7-metabox .tf-setting-top-bar .version img {
+.tf-setting-dashboard .tf-setting-top-bar .version img,
+.uacf7-metabox .tf-setting-top-bar .version img {
   width: 100px;
 }
-.tf-setting-dashboard .tf-setting-top-bar .version span, .uacf7-metabox .tf-setting-top-bar .version span {
+.tf-setting-dashboard .tf-setting-top-bar .version span,
+.uacf7-metabox .tf-setting-top-bar .version span {
   font-size: 11px;
   line-height: 11px;
   color: #000;
@@ -1301,14 +1376,16 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
   padding: 2px 6px;
   margin-left: 10px;
 }
-.tf-setting-dashboard .tf-setting-top-bar .other-document, .uacf7-metabox .tf-setting-top-bar .other-document {
+.tf-setting-dashboard .tf-setting-top-bar .other-document,
+.uacf7-metabox .tf-setting-top-bar .other-document {
   position: relative;
   width: 30px;
   height: 30px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
-.tf-setting-dashboard .tf-setting-top-bar .other-document .dropdown, .uacf7-metabox .tf-setting-top-bar .other-document .dropdown {
+.tf-setting-dashboard .tf-setting-top-bar .other-document .dropdown,
+.uacf7-metabox .tf-setting-top-bar .other-document .dropdown {
   position: absolute;
   cursor: context-menu;
   top: 60px;
@@ -1325,7 +1402,8 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
   transition: all 0.2s ease;
   z-index: 99;
 }
-.tf-setting-dashboard .tf-setting-top-bar .other-document .dropdown:after, .uacf7-metabox .tf-setting-top-bar .other-document .dropdown:after {
+.tf-setting-dashboard .tf-setting-top-bar .other-document .dropdown:after,
+.uacf7-metabox .tf-setting-top-bar .other-document .dropdown:after {
   content: "";
   position: absolute;
   border-left: 10px solid transparent;
@@ -1336,7 +1414,8 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
   margin-top: 0;
   z-index: 1;
 }
-.tf-setting-dashboard .tf-setting-top-bar .other-document .dropdown .list-item a, .uacf7-metabox .tf-setting-top-bar .other-document .dropdown .list-item a {
+.tf-setting-dashboard .tf-setting-top-bar .other-document .dropdown .list-item a,
+.uacf7-metabox .tf-setting-top-bar .other-document .dropdown .list-item a {
   font-size: 15px;
   font-weight: 500;
   color: #000;
@@ -1346,14 +1425,17 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
   text-decoration: none;
   padding: 10px 0px;
 }
-.tf-setting-dashboard .tf-setting-top-bar .other-document .dropdown .list-item a span, .uacf7-metabox .tf-setting-top-bar .other-document .dropdown .list-item a span {
+.tf-setting-dashboard .tf-setting-top-bar .other-document .dropdown .list-item a span,
+.uacf7-metabox .tf-setting-top-bar .other-document .dropdown .list-item a span {
   margin-left: 10px;
 }
-.tf-setting-dashboard .tf-setting-top-bar .other-document:hover .dropdown, .uacf7-metabox .tf-setting-top-bar .other-document:hover .dropdown {
+.tf-setting-dashboard .tf-setting-top-bar .other-document:hover .dropdown,
+.uacf7-metabox .tf-setting-top-bar .other-document:hover .dropdown {
   visibility: visible;
   opacity: 1;
 }
-.tf-setting-dashboard .tf-setting-banner, .uacf7-metabox .tf-setting-banner {
+.tf-setting-dashboard .tf-setting-banner,
+.uacf7-metabox .tf-setting-banner {
   background-color: transparent;
   padding: 30px 100px;
   border-radius: 10px;
@@ -1361,78 +1443,94 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-image: radial-gradient(at center center, #004A9E 0%, #001C39 75%);
+  background-image: radial-gradient(at center center, #004a9e 0%, #001c39 75%);
 }
 @media only screen and (max-width: 991.98px) {
-  .tf-setting-dashboard .tf-setting-banner, .uacf7-metabox .tf-setting-banner {
+  .tf-setting-dashboard .tf-setting-banner,
+  .uacf7-metabox .tf-setting-banner {
     display: flow-root;
   }
 }
 @media only screen and (max-width: 767.98px) {
-  .tf-setting-dashboard .tf-setting-banner, .uacf7-metabox .tf-setting-banner {
+  .tf-setting-dashboard .tf-setting-banner,
+  .uacf7-metabox .tf-setting-banner {
     padding: 30px 40px;
   }
 }
-.tf-setting-dashboard .tf-setting-banner .tf-setting-banner-content, .uacf7-metabox .tf-setting-banner .tf-setting-banner-content {
+.tf-setting-dashboard .tf-setting-banner .tf-setting-banner-content,
+.uacf7-metabox .tf-setting-banner .tf-setting-banner-content {
   width: 50%;
 }
 @media only screen and (max-width: 991.98px) {
-  .tf-setting-dashboard .tf-setting-banner .tf-setting-banner-content, .uacf7-metabox .tf-setting-banner .tf-setting-banner-content {
+  .tf-setting-dashboard .tf-setting-banner .tf-setting-banner-content,
+  .uacf7-metabox .tf-setting-banner .tf-setting-banner-content {
     width: 100%;
   }
 }
-.tf-setting-dashboard .tf-setting-banner .tf-setting-banner-content img, .uacf7-metabox .tf-setting-banner .tf-setting-banner-content img {
+.tf-setting-dashboard .tf-setting-banner .tf-setting-banner-content img,
+.uacf7-metabox .tf-setting-banner .tf-setting-banner-content img {
   width: 200px;
   display: block;
   margin-bottom: 15px;
 }
-.tf-setting-dashboard .tf-setting-banner .tf-setting-banner-content span, .uacf7-metabox .tf-setting-banner .tf-setting-banner-content span {
+.tf-setting-dashboard .tf-setting-banner .tf-setting-banner-content span,
+.uacf7-metabox .tf-setting-banner .tf-setting-banner-content span {
   color: #fff;
   font-size: 38px;
   line-height: 1.2;
   font-weight: 200;
 }
 @media only screen and (max-width: 575.98px) {
-  .tf-setting-dashboard .tf-setting-banner .tf-setting-banner-content span, .uacf7-metabox .tf-setting-banner .tf-setting-banner-content span {
+  .tf-setting-dashboard .tf-setting-banner .tf-setting-banner-content span,
+  .uacf7-metabox .tf-setting-banner .tf-setting-banner-content span {
     font-size: 26px;
   }
 }
-.tf-setting-dashboard .tf-setting-banner .tf-setting-banner-content span b, .uacf7-metabox .tf-setting-banner .tf-setting-banner-content span b {
+.tf-setting-dashboard .tf-setting-banner .tf-setting-banner-content span b,
+.uacf7-metabox .tf-setting-banner .tf-setting-banner-content span b {
   display: block;
   font-weight: 700;
 }
-.tf-setting-dashboard .tf-setting-banner .tf-setting-banner-image, .uacf7-metabox .tf-setting-banner .tf-setting-banner-image {
+.tf-setting-dashboard .tf-setting-banner .tf-setting-banner-image,
+.uacf7-metabox .tf-setting-banner .tf-setting-banner-image {
   width: 30%;
 }
 @media only screen and (max-width: 991.98px) {
-  .tf-setting-dashboard .tf-setting-banner .tf-setting-banner-image, .uacf7-metabox .tf-setting-banner .tf-setting-banner-image {
+  .tf-setting-dashboard .tf-setting-banner .tf-setting-banner-image,
+  .uacf7-metabox .tf-setting-banner .tf-setting-banner-image {
     width: 100%;
   }
 }
-.tf-setting-dashboard .tf-setting-banner .tf-setting-banner-image img, .uacf7-metabox .tf-setting-banner .tf-setting-banner-image img {
+.tf-setting-dashboard .tf-setting-banner .tf-setting-banner-image img,
+.uacf7-metabox .tf-setting-banner .tf-setting-banner-image img {
   width: 100%;
 }
-.tf-setting-dashboard .tf-setting-performace-section, .uacf7-metabox .tf-setting-performace-section {
+.tf-setting-dashboard .tf-setting-performace-section,
+.uacf7-metabox .tf-setting-performace-section {
   margin: 40px 20px 40px 0;
   position: relative;
 }
-.tf-setting-dashboard .tf-setting-performace-section h2, .uacf7-metabox .tf-setting-performace-section h2 {
+.tf-setting-dashboard .tf-setting-performace-section h2,
+.uacf7-metabox .tf-setting-performace-section h2 {
   font-size: 26px;
   font-weight: 600;
   line-height: 36px;
   color: #000;
   margin: 0 0 10px;
 }
-.tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid, .uacf7-metabox .tf-setting-performace-section .tf-performance-grid {
+.tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid,
+.uacf7-metabox .tf-setting-performace-section .tf-performance-grid {
   display: flex;
   justify-content: space-between;
 }
 @media only screen and (max-width: 1199.98px) {
-  .tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid, .uacf7-metabox .tf-setting-performace-section .tf-performance-grid {
+  .tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid,
+  .uacf7-metabox .tf-setting-performace-section .tf-performance-grid {
     display: flow-root;
   }
 }
-.tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid, .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid {
+.tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid,
+.uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid {
   padding: 20px;
   border-radius: 8px;
   background-color: #fff;
@@ -1442,58 +1540,69 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
   width: 16.5%;
 }
 @media only screen and (max-width: 1650px) {
-  .tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid, .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid {
+  .tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid,
+  .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid {
     padding: 12px;
   }
 }
 @media only screen and (max-width: 1199.98px) {
-  .tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid, .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid {
+  .tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid,
+  .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid {
     width: 42%;
     margin: 15px 1%;
     float: left;
   }
 }
 @media only screen and (max-width: 767.98px) {
-  .tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid, .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid {
+  .tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid,
+  .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid {
     width: 94%;
     margin: 15px 0px;
   }
 }
-.tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-icon, .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-icon {
+.tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-icon,
+.uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-icon {
   width: 70px;
   height: 70px;
   border-radius: 50%;
   flex-shrink: 0;
 }
-.tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-icon img, .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-icon img {
+.tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-icon img,
+.uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-icon img {
   width: 100%;
 }
 @media only screen and (max-width: 1650px) {
-  .tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-icon, .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-icon {
+  .tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-icon,
+  .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-icon {
     width: 42px;
     height: 42px;
   }
 }
-.tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content, .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content {
+.tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content,
+.uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content {
   padding-left: 25px;
 }
 @media only screen and (max-width: 1650px) {
-  .tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content, .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content {
+  .tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content,
+  .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content {
     padding-left: 10px;
   }
 }
-.tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content p, .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content p {
+.tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content p,
+.uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content p {
   font-size: 16px;
   font-weight: 600;
   color: #222;
   margin: 0 0 10px;
 }
 @media only screen and (max-width: 1650px) {
-  .tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content p, .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content p {
+  .tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content p,
+  .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content p {
     font-size: 14px;
   }
 }
-.tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content h3, .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content h3 {
+.tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content h3,
+.uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content h3 {
   margin: 0;
   font-size: 30px;
   font-weight: 700;
@@ -1501,11 +1610,13 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
   line-height: 0.8;
 }
 @media only screen and (max-width: 1650px) {
-  .tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content h3, .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content h3 {
+  .tf-setting-dashboard .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content h3,
+  .uacf7-metabox .tf-setting-performace-section .tf-performance-grid .tf-single-performance-grid .tf-single-performance-content h3 {
     font-size: 24px;
   }
 }
-.tf-setting-dashboard .tf-setting-performace-section #tf-report-loader, .uacf7-metabox .tf-setting-performace-section #tf-report-loader {
+.tf-setting-dashboard .tf-setting-performace-section #tf-report-loader,
+.uacf7-metabox .tf-setting-performace-section #tf-report-loader {
   position: absolute;
   height: 100%;
   width: 100%;
@@ -1518,41 +1629,49 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
   opacity: 0;
   visibility: hidden;
 }
-.tf-setting-dashboard .tf-setting-performace-section #tf-report-loader img, .uacf7-metabox .tf-setting-performace-section #tf-report-loader img {
+.tf-setting-dashboard .tf-setting-performace-section #tf-report-loader img,
+.uacf7-metabox .tf-setting-performace-section #tf-report-loader img {
   width: 120px;
 }
-.tf-setting-dashboard .tf-setting-performace-section #tf-report-loader.show, .uacf7-metabox .tf-setting-performace-section #tf-report-loader.show {
+.tf-setting-dashboard .tf-setting-performace-section #tf-report-loader.show,
+.uacf7-metabox .tf-setting-performace-section #tf-report-loader.show {
   opacity: 1;
   visibility: visible;
 }
-.tf-setting-dashboard .tf-setting-performace-section .tf-order-report, .uacf7-metabox .tf-setting-performace-section .tf-order-report {
+.tf-setting-dashboard .tf-setting-performace-section .tf-order-report,
+.uacf7-metabox .tf-setting-performace-section .tf-order-report {
   background: #fff;
   padding: 20px;
   border-radius: 10px;
 }
 @media only screen and (max-width: 640px) {
-  .tf-setting-dashboard .tf-setting-performace-section .tf-order-report, .uacf7-metabox .tf-setting-performace-section .tf-order-report {
+  .tf-setting-dashboard .tf-setting-performace-section .tf-order-report,
+  .uacf7-metabox .tf-setting-performace-section .tf-order-report {
     padding: 0;
   }
 }
-.tf-setting-dashboard .tf-setting-performace-section .tf-report-filter, .uacf7-metabox .tf-setting-performace-section .tf-report-filter {
+.tf-setting-dashboard .tf-setting-performace-section .tf-report-filter,
+.uacf7-metabox .tf-setting-performace-section .tf-report-filter {
   display: flex;
   justify-content: space-between;
 }
-.tf-setting-dashboard .tf-setting-performace-section .tf-report-filter .tf-month-filter, .uacf7-metabox .tf-setting-performace-section .tf-report-filter .tf-month-filter {
+.tf-setting-dashboard .tf-setting-performace-section .tf-report-filter .tf-month-filter,
+.uacf7-metabox .tf-setting-performace-section .tf-report-filter .tf-month-filter {
   margin-bottom: 15px;
   display: inline-block;
 }
-.tf-setting-dashboard .tf-setting-performace-section .tf-report-filter .tf-month-filter span, .uacf7-metabox .tf-setting-performace-section .tf-report-filter .tf-month-filter span {
+.tf-setting-dashboard .tf-setting-performace-section .tf-report-filter .tf-month-filter span,
+.uacf7-metabox .tf-setting-performace-section .tf-report-filter .tf-month-filter span {
   display: block;
   font-size: 11px;
   line-height: 13px;
   font-weight: 600;
-  color: #77797E;
+  color: #77797e;
   text-transform: uppercase;
   margin-bottom: 5px;
 }
-.tf-setting-dashboard .tf-setting-performace-section .tf-report-filter .tf-month-filter select, .uacf7-metabox .tf-setting-performace-section .tf-report-filter .tf-month-filter select {
+.tf-setting-dashboard .tf-setting-performace-section .tf-report-filter .tf-month-filter select,
+.uacf7-metabox .tf-setting-performace-section .tf-report-filter .tf-month-filter select {
   width: 180px;
   color: #222;
   border: 1px solid #ddd;
@@ -1605,7 +1724,7 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
 }
 .tf-settings-help-center .tf-help-center-banner .tf-help-center-content p {
   font-size: 1rem;
-  color: #71787C;
+  color: #71787c;
 }
 .tf-settings-help-center .tf-help-center-banner .tf-help-center-image {
   width: 35%;
@@ -1707,7 +1826,7 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
   }
 }
 .tf-settings-help-center .tf-settings-faq .tf-accordion-wrapper .tf-single-faq {
-  border: 1px solid #E4E6EB;
+  border: 1px solid #e4e6eb;
   border-radius: 8px;
 }
 @media only screen and (max-width: 767.98px) {
@@ -1752,7 +1871,7 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
 }
 .tf-settings-help-center .tf-settings-faq .tf-accordion-wrapper .tf-single-faq .tf-faq-desc p {
   font-size: 1rem;
-  color: #44464B;
+  color: #44464b;
 }
 
 .tf-setting-license {
@@ -2546,6 +2665,54 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
   border: 1px solid #c4cbd4;
 }
 .tf-field-text input:read-only:focus {
+  box-shadow: none;
+  border: 1px solid #c4cbd4;
+}
+
+.tf-field-password .tf-fieldset {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.tf-field-password .toggle-password {
+  position: absolute;
+  right: 10px;
+}
+.tf-field-password input {
+  width: 100%;
+  padding: 12px 8px 12px 12px;
+  border: 1px solid #c4cbd4;
+  background-color: #f5f8ff;
+  border-radius: 4px;
+  height: 48px;
+  color: #363e4a;
+  font-size: 14px;
+}
+.tf-field-password input:focus {
+  background: #ffffff;
+  box-shadow: 0 0 0 2px #2979ff;
+  border-radius: 4px;
+}
+.tf-field-password input::-moz-placeholder {
+  opacity: 1;
+  color: #a6b1bf;
+}
+.tf-field-password input::placeholder {
+  color: #a6b1bf;
+}
+.tf-field-password input:-moz-read-only {
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+  background-color: #ebf2ff;
+}
+.tf-field-password input:read-only {
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+  background-color: #ebf2ff;
+}
+.tf-field-password input:-moz-read-only:focus {
+  box-shadow: none;
+  border: 1px solid #c4cbd4;
+}
+.tf-field-password input:read-only:focus {
   box-shadow: none;
   border: 1px solid #c4cbd4;
 }
@@ -3613,6 +3780,25 @@ body.admin_page_uacf7-setup-wizard .select2-dropdown .select2-results ul li {
   border-radius: 5px;
 }
 
+.tf-field-backup .tf-field-wrap .tf-fieldset .tf-export-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+.tf-field-backup .tf-field-wrap .tf-fieldset .tf-export-wrapper #copyIndicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 3px;
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+  margin-top: -28px;
+  display: none;
+}
 .tf-field-backup textarea {
   width: 100%;
   margin-top: 10px;

@@ -66,7 +66,7 @@ echo '
                           <div class="mo-cloud-message-initial" id="mo-no-sms">
                             3) There was an error in sending the OTP. Please try again or contact site admin.
                           </div>
-                          <div class="mo-cloud-message-initial" id="mo-form" hidden>
+                          <div class="mo-cloud-message-initial hidden" id="mo-form">
                             3) Need help with the form setup
                           </div>
                           <div class="mo-cloud-message-initial" id="mo-premium">

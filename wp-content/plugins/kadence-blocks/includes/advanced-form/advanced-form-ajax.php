@@ -55,8 +55,8 @@ class KB_Ajax_Advanced_Form {
 
 		if ( isset( $_POST['_kb_adv_form_id'] ) && ! empty( $_POST['_kb_adv_form_id'] ) && isset( $_POST['_kb_adv_form_post_id'] ) && ! empty( $_POST['_kb_adv_form_post_id'] ) ) {
 			$this->start_buffer();
-
-			if ( apply_filters( 'kadence_blocks_form_verify_nonce', is_user_logged_in() ) && ! check_ajax_referer( 'kb_form_nonce', '_kb_form_verify', false ) ) {
+			// Nonce verification isn't used as it's not a login form but can be enabled with a filter. Note that caching the page will cause the nonce to fail after a cetain amount of time.
+			if ( apply_filters( 'kadence_blocks_form_verify_nonce', false ) && ! check_ajax_referer( 'kb_form_nonce', '_kb_form_verify', false ) ) {
 				$this->process_bail( __( 'Submission rejected, invalid security token. Reload the page and try again.', 'kadence-blocks' ), __( 'Token invalid', 'kadence-blocks' ) );
 			}
 			$post_id = sanitize_text_field( wp_unslash( $_POST['_kb_adv_form_post_id'] ) );
@@ -102,6 +102,18 @@ class KB_Ajax_Advanced_Form {
 			$processed_fields = apply_filters( 'kadence_blocks_advanced_form_processed_fields', $this->process_fields( $form_args['fields'] ) );
 
 			$form_args = apply_filters( 'kadence_blocks_advanced_form_form_args', $form_args, $processed_fields, $post_id );
+
+			$submission_rejected = apply_filters( 'kadence_blocks_advanced_form_submission_reject', false, $form_args, $processed_fields, $post_id );
+			if ( $submission_rejected ) {
+				$rejection_message = apply_filters(
+					'kadence_blocks_advanced_form_submission_reject_message',
+					__( 'Submission rejected.', 'kadence-blocks' ),
+					$form_args,
+					$processed_fields,
+					$post_id
+				);
+				$this->process_bail( $rejection_message, $rejection_message );
+			}
 
 			do_action( 'kadence_blocks_advanced_form_submission', $form_args, $processed_fields, $post_id );
 
@@ -188,7 +200,7 @@ class KB_Ajax_Advanced_Form {
 	public function after_submit_actions( $form_args, $processed_fields, $post_id ) {
 
 		$submission_results = array( 'success' => true );
-		$actions = isset( $form_args['attributes']['actions'] ) ? $form_args['attributes']['actions'] : array( 'email' );
+		$actions = apply_filters( 'kadence_blocks_advanced_form_actions', isset( $form_args['attributes']['actions'] ) ? $form_args['attributes']['actions'] : array( 'email' ), $form_args, $processed_fields, $post_id );
 
 		$submit_actions = new Kadence_Blocks_Advanced_Form_Submit_Actions( $form_args, $processed_fields, $post_id );
 
@@ -263,8 +275,8 @@ class KB_Ajax_Advanced_Form {
 
 			$value = $this->sanitize_field( $field['type'], isset( $_POST[ $expected_field ] ) ? $_POST[ $expected_field ] : '', empty( $field['multiSelect'] ) ? false : $field['multiSelect'] );
 
-			// Fail if this field is empty and is required.
-			if ( empty( $value ) && ! empty( $field['required'] ) && $field['required'] && $field['type'] !== 'file' && $field['type'] !== 'number') {
+			// Fail if this field is empty and is required. Note the strict comparison to empty string.
+			if ( $value === '' && ! empty( $field['required'] ) && $field['required'] && $field['type'] !== 'file' && $field['type'] !== 'number') {
 				$required_message = ! empty( $field['required_message'] ) ? $field['required_message'] : __( 'Missing a required field', 'kadence-blocks' );
 				$this->process_bail( __( 'Submission Failed', 'kadence-blocks' ), $required_message );
 				break;
@@ -541,6 +553,16 @@ class KB_Ajax_Advanced_Form {
 			),
 			'documents' => $document_type,
 			'document' => $document_type,
+			'design' => array( // New "design" category
+				'ai'    => 'application/postscript',                    // Adobe Illustrator
+				'ait'   => 'application/postscript',                    // Adobe Illustrator Template
+				'eps'   => 'application/postscript',                    // Encapsulated PostScript
+				'psd'   => 'image/vnd.adobe.photoshop',                 // Adobe Photoshop
+				'psb'   => 'image/vnd.adobe.photoshop',                 // Adobe Photoshop Large Document Format
+				'xcf'   => 'image/x-xcf',                               // GIMP File
+				'svg'   => 'image/svg+xml',                             // Scalable Vector Graphics
+				'svgz'  => 'image/svg+xml',                             // Gzipped Scalable Vector Graphics
+			),
 			'archive' => array(
 				'zip'  => 'application/zip',
 			),

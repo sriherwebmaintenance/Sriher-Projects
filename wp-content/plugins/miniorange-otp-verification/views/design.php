@@ -29,7 +29,7 @@ echo '	        <div class= "border-b flex flex-col gap-mo-6 px-mo-4">
 								<select id="select_popup_option" name="select_popup_option"  style="width:100%; height:42px" class=" active rounded-md"> ';
 
 foreach ( $mo_template_types as $key => $val ) {
-	echo '                             <option ' . esc_attr( $val['selected'] ) . ' id="' . esc_attr( $val['id'] ) . '" class="p-mo-5 m-mo-2">' . esc_attr( $key ) . ' </option><br>';
+	echo '                             <option ' . esc_attr( $val['selected'] ) . ' id="' . esc_attr( $val['id'] ) . '" class="p-mo-5 m-mo-2">' . esc_attr( $key ) . ' </option>';
 }
 echo '     
 								</select>';
@@ -185,7 +185,7 @@ echo '
 						<form name="defaultPreview" method="post" action="' . esc_url( admin_post_url() ) . '" target="defaultPreview">
 							<div class="flex px-mo-6 py-mo-4 space-x-mo-4">
 								<div class="design-template-div"> 
-									<div class="design-template-note">The popup should contain these tags: {{JQUERY}}, {{GO_BACK_ACTION_CALL}}, {{FORM_ID}}, {{OTP_FIELD_NAME}}, {{REQUIRED_FIELDS}}, {{REQUIRED_FORMS_SCRIPTS}}</div>  
+									<div class="design-template-note"><b>The popup should contain these tags:</b><br> {{JQUERY}}, {{GO_BACK_ACTION_CALL}}, {{FORM_ID}}, {{OTP_FIELD_NAME}}, {{REQUIRED_FIELDS}}, {{REQUIRED_FORMS_SCRIPTS}}, {{BUTTON_NAME}}, {{BUTTON_ID}}, {{BUTTON_TYPE}}, {{OTP_FIELD_CLASS}}, {{OTP_FIELD_HIDDEN}}, {{OTP_FIELD_ID}}</div>  
 									<input type="hidden" class="mo-input" id="popactionvalue" name="action" value=""> 
 									<input type="hidden" class="mo-input" name="popuptype" value="' . esc_attr( $default_template_type ) . '"> ';
 wp_nonce_field( $nonce, 'popup_display_nonce' );
@@ -212,7 +212,7 @@ echo '                          </div>
 					<form name="userchoicePreview" method="post" action="' . esc_url( admin_post_url() ) . '" target="userchoicePreview">
 						<div class="flex px-mo-6 py-mo-4 space-x-mo-4">
 							<div class="design-template-div">
-								<div class="design-template-note">The popup should contain these tags: {{JQUERY}}, {{GO_BACK_ACTION_CALL}}, {{FORM_ID}}, {{OTP_FIELD_NAME}}, {{REQUIRED_FIELDS}}, {{REQUIRED_FORMS_SCRIPTS}}</div>
+								<div class="design-template-note"><b>The popup should contain these tags:</b><br> {{JQUERY}}, {{GO_BACK_ACTION_CALL}}, {{FORM_ID}}, {{MESSAGE}}, {{REQUIRED_FIELDS}}, {{REQUIRED_FORMS_SCRIPTS}}</div>
 								<input type="hidden" id="popactionvalue" name="action" value=""> 
 								<input type="hidden" name="popuptype" value="' . esc_attr( ( $userchoice_template_type ) ) . '"> ';
 wp_nonce_field( $nonce, 'popup_display_nonce' );
@@ -239,7 +239,7 @@ echo '                      </div>
 					<form name="externalPreview" method="post" action="' . esc_attr( admin_post_url() ) . '" target="externalPreview">
 						<div class="flex px-mo-6 py-mo-4 space-x-mo-4">
 							<div class="design-template-div">   
-								<div class="design-template-note">The popup should contain these tags: {{JQUERY}}, {{GO_BACK_ACTION_CALL}}, {{FORM_ID}}, {{OTP_FIELD_NAME}}, {{REQUIRED_FIELDS}}, {{REQUIRED_FORMS_SCRIPTS}}</div>
+								<div class="design-template-note"><b>The popup should contain these tags:</b><br> {{JQUERY}}, {{GO_BACK_ACTION_CALL}}, {{FORM_ID}}, {{REQUIRED_FIELDS}}, {{MESSAGE}}, {{PHONE_FIELD_NAME}}, {{OTP_MESSAGE_BOX}}, {{VERIFY_CODE_BOX}}, {{VERIFICATION_FIELD_NAME}}, {{VALIDATE_BTN_ID}}, {{SEND_OTP_BTN_ID}}</div>
 								<input type="hidden" id="popactionvalue" name="action" value="">
 								<input type="hidden" name="popuptype" value="' . esc_attr( $external_template_type ) . '"> ';
 wp_nonce_field( $nonce, 'popup_display_nonce' );
@@ -268,7 +268,7 @@ echo '
 					<form name="errorPreview" method="post" action="' . esc_html( admin_post_url() ) . '" target="errorPreview">
 						<div class="flex px-mo-6 py-mo-4 space-x-mo-4">
 							<div class="design-template-div">   
-								<div class="design-template-note">The popup should contain these tags: {{JQUERY}}, {{GO_BACK_ACTION_CALL}}, {{FORM_ID}}, {{OTP_FIELD_NAME}}, {{REQUIRED_FIELDS}}, {{REQUIRED_FORMS_SCRIPTS}}</div> 
+								<div class="design-template-note"><b>The popup should contain these tags:</b><br> {{JQUERY}}, {{GO_BACK_ACTION_CALL}}, {{FORM_ID}}, {{MESSAGE}}, {{REQUIRED_FIELDS}}, {{REQUIRED_FORMS_SCRIPTS}}</div> 
 								<input type="hidden" id="popactionvalue" name="action" value="">
 								<input type="hidden" name="popuptype" value="' . esc_attr( $error_template_type ) . '"> ';
 wp_nonce_field( $nonce, 'popup_display_nonce' );

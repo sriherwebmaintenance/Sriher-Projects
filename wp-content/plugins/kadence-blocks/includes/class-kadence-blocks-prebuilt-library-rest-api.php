@@ -95,7 +95,10 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	 * Handle image Industry.
 	 */
 	const PROP_INDUSTRY = 'industry';
-
+	/**
+	 * Handle image Industry.
+	 */
+	const PROP_META = 'meta';
 	/**
 	 * The library folder.
 	 *
@@ -161,6 +164,13 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	private $product_id = '';
 
 	/**
+	 * API product for kadence
+	 *
+	 * @var string
+	 */
+	private $product_slug = '';
+
+	/**
 	 * The remote URL.
 	 *
 	 * @access protected
@@ -222,7 +232,7 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	 * @access protected
 	 * @var string
 	 */
-	protected $initial_contexts = array(
+	protected $initial_contexts = [
 		'about',
 		'achievements',
 		// 'blog',
@@ -252,14 +262,14 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 		// 'volunteer',
 		'welcome',
 		'work',
-	);
+	];
 	/**
 	 * The library folder.
 	 *
 	 * @access protected
 	 * @var string
 	 */
-	protected $all_contexts = array(
+	protected $all_contexts = [
 		'about',
 		'achievements',
 		'blog',
@@ -289,8 +299,26 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 		'volunteer',
 		'welcome',
 		'work',
-	);
-
+	];
+	/**
+	 * Blocks that are based on CPT
+	 *
+	 * @var array
+	 */
+	private $kadence_cpt_blocks = [
+		'kadence/header',
+		'kadence/navigation',
+		'kadence/query',
+		'kadence/query-card',
+		'kadence/advanced-form',
+	];
+	/**
+	 * The environment.
+	 *
+	 * @access protected
+	 * @var string
+	 */
+	public $env = '';
 	/**
 	 * @var Block_Library_Cache
 	 */
@@ -327,223 +355,222 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 		register_rest_route(
 			$this->namespace,
 			'/' . $this->rest_base,
-			array(
-				array(
+			[
+				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_items' ),
-					'permission_callback' => array( $this, 'get_items_permission_check' ),
+					'callback'            => [ $this, 'get_items' ],
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
 					'args'                => $this->get_collection_params(),
-				),
-			)
+				],
+			]
 		);
 		register_rest_route(
 			$this->namespace,
 			'/get_all_items',
-			array(
-				array(
+			[
+				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_all_items' ),
-					'permission_callback' => array( $this, 'get_items_permission_check' ),
+					'callback'            => [ $this, 'get_all_items' ],
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
 					'args'                => $this->get_collection_params(),
-				),
-			)
+				],
+			]
 		);
 		register_rest_route(
 			$this->namespace,
 			'/get-all-ai',
-			array(
-				array(
+			[
+				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_all_ai_items' ),
-					'permission_callback' => array( $this, 'get_items_permission_check' ),
+					'callback'            => [ $this, 'get_all_ai_items' ],
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
 					'args'                => $this->get_collection_params(),
-				),
-			)
+				],
+			]
 		);
 		register_rest_route(
 			$this->namespace,
 			'/get_remaining_jobs',
-			array(
-				array(
+			[
+				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_remaining_jobs' ),
-					'permission_callback' => array( $this, 'get_items_permission_check' ),
+					'callback'            => [ $this, 'get_remaining_jobs' ],
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
 					'args'                => $this->get_collection_params(),
-				),
-			)
+				],
+			]
 		);
 		register_rest_route(
 			$this->namespace,
 			'/get_library',
-			array(
-				array(
+			[
+				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_library' ),
-					'permission_callback' => array( $this, 'get_items_permission_check' ),
+					'callback'            => [ $this, 'get_library' ],
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
 					'args'                => $this->get_collection_params(),
-				),
-			)
+				],
+			]
 		);
 		register_rest_route(
 			$this->namespace,
 			'/get_library_categories',
-			array(
-				array(
+			[
+				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_library_categories' ),
-					'permission_callback' => array( $this, 'get_items_permission_check' ),
+					'callback'            => [ $this, 'get_library_categories' ],
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
 					'args'                => $this->get_collection_params(),
-				),
-			)
+				],
+			]
 		);
 		register_rest_route(
 			$this->namespace,
 			'/get_local_contexts',
-			array(
-				array(
+			[
+				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_local_contexts' ),
-					'permission_callback' => array( $this, 'get_items_permission_check' ),
+					'callback'            => [ $this, 'get_local_contexts' ],
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
 					'args'                => $this->get_collection_params(),
-				),
-			)
+				],
+			]
 		);
 		register_rest_route(
 			$this->namespace,
 			'/get_verticals',
-			array(
-				array(
+			[
+				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_industry_verticals' ),
-					'permission_callback' => array( $this, 'get_items_permission_check' ),
+					'callback'            => [ $this, 'get_industry_verticals' ],
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
 					'args'                => $this->get_collection_params(),
-				),
-			)
+				],
+			]
 		);
 		register_rest_route(
 			$this->namespace,
 			'/get_keywords',
-			array(
-				array(
+			[
+				[
 					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'get_keyword_suggestions' ),
-					'permission_callback' => array( $this, 'get_items_permission_check' ),
+					'callback'            => [ $this, 'get_keyword_suggestions' ],
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
 					'args'                => $this->get_collection_params(),
-				),
-			)
+				],
+			]
 		);
 		register_rest_route(
 			$this->namespace,
 			'/get_initial_jobs',
-			array(
-				array(
+			[
+				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_initial_jobs' ),
-					'permission_callback' => array( $this, 'get_items_permission_check' ),
+					'callback'            => [ $this, 'get_initial_jobs' ],
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
 					'args'                => $this->get_collection_params(),
-				),
-			)
+				],
+			]
 		);
 		register_rest_route(
 			$this->namespace,
 			'/get_search_query',
-			array(
-				array(
+			[
+				[
 					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'get_image_search_query' ),
-					'permission_callback' => array( $this, 'get_items_permission_check' ),
+					'callback'            => [ $this, 'get_image_search_query' ],
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
 					'args'                => $this->get_collection_params(),
-				),
-			)
+				],
+			]
 		);
 		register_rest_route(
 			$this->namespace,
 			'/get_images',
-			array(
-				array(
+			[
+				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_images_by_industry' ),
-					'permission_callback' => array( $this, 'get_items_permission_check' ),
+					'callback'            => [ $this, 'get_images_by_industry' ],
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
 					'args'                => $this->get_collection_params(),
-				),
-			)
+				],
+			]
 		);
 		register_rest_route(
 			$this->namespace,
 			'/get_image_collections',
-			array(
-				array(
+			[
+				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_image_collections' ),
-					'permission_callback' => array( $this, 'get_items_permission_check' ),
+					'callback'            => [ $this, 'get_image_collections' ],
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
 					'args'                => $this->get_collection_params(),
-				),
-			)
+				],
+			]
 		);
 		register_rest_route(
 			$this->namespace,
 			'/get_pattern_content',
-			array(
-				array(
+			[
+				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_pattern_content' ),
-					'permission_callback' => array( $this, 'get_items_permission_check' ),
+					'callback'            => [ $this, 'get_pattern_content' ],
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
 					'args'                => $this->get_collection_params(),
-				),
-			)
+				],
+			]
 		);
 		register_rest_route(
 			$this->namespace,
 			'/process_pattern',
-			array(
-				array(
+			[
+				[
 					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'process_pattern' ),
-					'permission_callback' => array( $this, 'get_items_permission_check' ),
+					'callback'            => [ $this, 'process_pattern' ],
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
 					'args'                => $this->get_collection_params(),
-				),
-			)
+				],
+			]
 		);
 		register_rest_route(
 			$this->namespace,
 			'/process_images',
-			array(
-				array(
+			[
+				[
 					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'process_images' ),
-					'permission_callback' => array( $this, 'get_items_permission_check' ),
+					'callback'            => [ $this, 'process_images' ],
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
 					'args'                => $this->get_collection_params(),
-				),
-			)
+				],
+			]
 		);
 		register_rest_route(
 			$this->namespace,
 			'/get_remaining_credits',
-			array(
-				array(
+			[
+				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_remaining_credits' ),
-					'permission_callback' => array( $this, 'get_items_permission_check' ),
+					'callback'            => [ $this, 'get_remaining_credits' ],
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
 					'args'                => $this->get_collection_params(),
-				),
-			)
+				],
+			]
 		);
 		register_rest_route(
 			$this->namespace,
 			'/' . $this->reset,
-			array(
-				array(
+			[
+				[
 					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'reset_items' ),
-					'permission_callback' => array( $this, 'get_items_permission_check' ),
+					'callback'            => [ $this, 'reset_items' ],
+					'permission_callback' => [ $this, 'get_items_permission_check' ],
 					'args'                => $this->get_collection_params(),
-				),
-			)
+				],
+			]
 		);
 	}
 	/**
 	 * Checks if a given request has access to search content.
-	 *
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return true|WP_Error True if the request has search access, WP_Error object otherwise.
@@ -562,9 +589,9 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	public function get_all_ai_items( $request ) {
 		$this->get_license_keys();
 		$reload            = $request->get_param( self::PROP_FORCE_RELOAD );
-		$available_prompts = get_option( 'kb_design_library_prompts', array() );
+		$available_prompts = get_option( 'kb_design_library_prompts', [] );
 		$contexts          = $reload ? $this->initial_contexts : $this->all_contexts;
-		$return_data       = array();
+		$return_data       = [];
 		$has_error         = false;
 		$ready             = true;
 		if ( ! empty( $contexts ) && is_array( $contexts ) ) {
@@ -621,11 +648,11 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	 */
 	public function get_images_by_industry( WP_REST_Request $request ) {
 		$this->get_license_keys();
-		$industries    = $request->get_param( self::PROP_INDUSTRIES );
-		$search_query  = $request->get_param( self::PROP_INDUSTRY );
-		$image_type    = $request->get_param( self::PROP_IMAGE_TYPE );
-		$image_sizes   = $request->get_param( self::PROP_IMAGE_SIZES );
-		$reload        = $request->get_param( self::PROP_FORCE_RELOAD );
+		$industries   = $request->get_param( self::PROP_INDUSTRIES );
+		$search_query = $request->get_param( self::PROP_INDUSTRY );
+		$image_type   = $request->get_param( self::PROP_IMAGE_TYPE );
+		$image_sizes  = $request->get_param( self::PROP_IMAGE_SIZES );
+		$reload       = $request->get_param( self::PROP_FORCE_RELOAD );
 
 		if ( empty( $industries ) || ! is_array( $industries ) ) {
 			return rest_ensure_response( 'error' );
@@ -698,9 +725,9 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_image_collections( WP_REST_Request $request ) {
-		$reload        = $request->get_param( self::PROP_FORCE_RELOAD );
+		$reload = $request->get_param( self::PROP_FORCE_RELOAD );
 		$this->get_license_keys();
-		$identifier    = 'image_collections';
+		$identifier = 'image_collections';
 
 		if ( ! $reload ) {
 			try {
@@ -748,6 +775,12 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 		}
 		if ( ! empty( $data['email'] ) ) {
 			$this->api_email = $data['email'];
+		}
+		if ( ! empty( $data['product'] ) ) {
+			$this->product_slug = $data['product'];
+		}
+		if ( ! empty( $data['env'] ) ) {
+			$this->env = $data['env'];
 		}
 	}
 
@@ -800,46 +833,353 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	 *
 	 * @param string $content The content to process.
 	 */
-	public function process_forms( $content, $forms ) {
-		$new_forms = array();
-		foreach ( $forms as $form_id => $form_content ) {
-			if ( empty( $form_content['name'] ) ) {
-				continue;
-			}
-			$import_key = $form_id . sanitize_key( $form_content['name'] );
-			// Lets not duplicate forms.
-			$has_form = get_posts( array(
-				'post_type'  => 'kadence_form',
-				'meta_key' => '_kad_form_importId',
-				'meta_value' => $import_key,
-				'title'      => $form_content['name'],
-			) );
-			if ( $has_form ) {
-				$new_forms[ $form_id ] = $has_form[0]->ID;
-				continue;
-			}
-			$new_form_id = wp_insert_post(
-				array(
-					'post_title'   => wp_strip_all_tags( $form_content['name'] ),
-					'post_content' => $form_content['content'],
-					'post_status'  => 'publish',
-					'post_type'    => 'kadence_form',
-				)
-			);
-			if ( ! is_wp_error( $new_form_id ) ) {
-				if ( ! empty( $form_content['meta'] ) ) {
-					foreach ( $form_content['meta'] as $meta_key => $meta_value ) {
-						update_post_meta( $new_form_id, $meta_key, $meta_value );
+	public function process_cpt( $content, $cpt_blocks, $style ) {
+		foreach ( $cpt_blocks as $cpt_block_name => $cpt_block_content ) {
+			switch ( $cpt_block_name ) {
+				case 'kadence/header':
+				case 'kadence/navigation':
+				case 'kadence/advanced-form':
+				case 'kadence/query':
+				case 'kadence/query-card':
+					foreach ( $cpt_block_content as $cpt_key => $cpt_data ) {
+						$old_id = $cpt_data['ID'];
+						$id_map = [];
+						if ( ! empty( $cpt_data['inner_posts'] ) && is_array( $cpt_data['inner_posts'] ) ) {
+							foreach ( $cpt_data['inner_posts'] as $inner_post_key => $inner_post ) {
+								$temp_old_id = $inner_post['ID'];
+								$temp_id     = $this->install_inner_posts_cpt( $inner_post, [], $style );
+								if ( $temp_id ) {
+									$id_map[ $temp_old_id ] = $temp_id;
+								}
+							}
+						}
+						$id = $this->install_single_cpt( $cpt_data, $id_map, $style );
+						if ( $id ) {
+							$new_id_map            = [];
+							$new_id_map[ $old_id ] = $id;
+							$content               = $this->update_block_ids( $content, $new_id_map );
+						}
 					}
-				}
-				update_post_meta( $new_form_id, '_kad_form_importId', $import_key );
-				$new_forms[ $form_id ] = $new_form_id;
+					break;
 			}
-		}
-		foreach ( $new_forms as $old_id => $new_id ) {
-			$content = str_replace( '"id":' . absint( $old_id) . ',', '"id":' . absint( $new_id  ) . ',', $content );
 		}
 		return $content;
+	}
+	/**
+	 * Install CPT.
+	 *
+	 * @param array  $cpt_data The cpt data.
+	 * @param string $style The style.
+	 * @return int The cpt id.
+	 */
+	public function install_inner_posts_cpt( $cpt_data, $id_map = [], $style = 'light' ) {
+		$inner_id_map = [];
+		if ( ! empty( $cpt_data['inner_posts'] ) && is_array( $cpt_data['inner_posts'] ) ) {
+			foreach ( $cpt_data['inner_posts'] as $inner_post_key => $inner_post ) {
+				$temp_old_id = $inner_post['ID'];
+				$temp_id     = $this->install_inner_posts_cpt( $inner_post, [], $style );
+				if ( $temp_id ) {
+					$inner_id_map[ $temp_old_id ] = $temp_id;
+				}
+			}
+		}
+		return $this->install_single_cpt( $cpt_data, $inner_id_map, $style );
+	}
+	/**
+	 * Install CPT.
+	 *
+	 * @param array  $cpt_data The cpt data.
+	 * @param string $style The style.
+	 * @return int The cpt id.
+	 */
+	public function install_single_cpt( $cpt_data, $id_map = [], $style = 'light' ) {
+		// Check if the post already exists.
+		$title       = ! empty( $style ) && 'light' !== $style ? $cpt_data['post_title'] . ' ' . ucfirst( $style ) : $cpt_data['post_title'];
+		$post_exists = get_posts(
+			[
+				'post_type' => $cpt_data['post_type'],
+				'title'     => $title,
+			] 
+		);
+		if ( $post_exists ) {
+			return $post_exists[0]->ID;
+		}
+		$temp_content = $cpt_data['post_content'];
+		$new_post_id  = wp_insert_post(
+			[
+				'post_type'    => $cpt_data['post_type'],
+				'post_title'   => $title,
+				'post_content' => '',
+				'post_status'  => 'publish',
+			],
+			true
+		);
+
+		if ( ! is_wp_error( $new_post_id ) ) {
+			if ( ! empty( $cpt_data['meta'] ) ) {
+				foreach ( $cpt_data['meta'] as $meta_key => $meta_values ) {
+					foreach ( $meta_values as $meta_value ) {
+						if ( ! empty( $style ) && 'light' !== $style ) {
+							$meta_value = $this->cpt_switch_meta_color( $meta_value, $meta_key, $style );
+						}
+						add_post_meta( $new_post_id, $meta_key, $meta_value );
+					}
+				}
+			}
+			if ( ! empty( $id_map ) ) {
+				$temp_content = $this->update_block_ids( $temp_content, $id_map );
+			}
+			if ( ! empty( $style ) && 'light' !== $style ) {
+				$temp_content = $this->cpt_switch_color( $temp_content, $style );
+			}
+			wp_update_post(
+				[
+					'ID'           => $new_post_id,
+					'post_content' => $temp_content,
+				]
+			);
+
+			return $new_post_id;
+		}
+		return false;
+	}
+	/**
+	 * Retrieves a collection of objects.
+	 *
+	 * @param string $content The content to search.
+	 * @param string $style The style to search for.
+	 * @return string The content with the style replaced.
+	 */
+	public function cpt_switch_meta_color( $meta_value, $meta_key, $style ) {
+		$temp_meta_value = wp_json_encode( $meta_value );
+		if ( $style === 'highlight' ) {
+			$temp_meta_value = str_replace( 'palette1', 'placeholder-kb-pal9', $temp_meta_value );
+			$temp_meta_value = str_replace( 'palette2', 'placeholder-kb-pal8', $temp_meta_value );
+			$temp_meta_value = str_replace( 'palette3', 'placeholder-kb-pal9', $temp_meta_value );
+			$temp_meta_value = str_replace( 'palette4', 'placeholder-kb-pal9', $temp_meta_value );
+			$temp_meta_value = str_replace( 'palette5', 'placeholder-kb-pal8', $temp_meta_value );
+			$temp_meta_value = str_replace( 'palette6', 'placeholder-kb-pal7', $temp_meta_value );
+			$temp_meta_value = str_replace( 'palette7', 'placeholder-kb-pal2', $temp_meta_value );
+			$temp_meta_value = str_replace( 'palette8', 'placeholder-kb-pal2', $temp_meta_value );
+			$temp_meta_value = str_replace( 'palette9', 'placeholder-kb-pal1', $temp_meta_value );
+		} else {
+			$temp_meta_value = str_replace( 'palette3', 'placeholder-kb-pal9', $temp_meta_value );
+			$temp_meta_value = str_replace( 'palette4', 'placeholder-kb-pal8', $temp_meta_value );
+			$temp_meta_value = str_replace( 'palette5', 'placeholder-kb-pal7', $temp_meta_value );
+			$temp_meta_value = str_replace( 'palette6', 'placeholder-kb-pal7', $temp_meta_value );
+			$temp_meta_value = str_replace( 'palette7', 'placeholder-kb-pal3', $temp_meta_value );
+			$temp_meta_value = str_replace( 'palette8', 'placeholder-kb-pal3', $temp_meta_value );
+			$temp_meta_value = str_replace( 'palette9', 'placeholder-kb-pal4', $temp_meta_value );
+		}
+		$temp_meta_value = str_replace( 'placeholder-kb-pal1', 'palette1', $temp_meta_value );
+		$temp_meta_value = str_replace( 'placeholder-kb-pal2', 'palette2', $temp_meta_value );
+		$temp_meta_value = str_replace( 'placeholder-kb-pal3', 'palette3', $temp_meta_value );
+		$temp_meta_value = str_replace( 'placeholder-kb-pal4', 'palette4', $temp_meta_value );
+		$temp_meta_value = str_replace( 'placeholder-kb-pal5', 'palette5', $temp_meta_value );
+		$temp_meta_value = str_replace( 'placeholder-kb-pal6', 'palette6', $temp_meta_value );
+		$temp_meta_value = str_replace( 'placeholder-kb-pal7', 'palette7', $temp_meta_value );
+		$temp_meta_value = str_replace( 'placeholder-kb-pal8', 'palette8', $temp_meta_value );
+		$temp_meta_value = str_replace( 'placeholder-kb-pal9', 'palette9', $temp_meta_value );
+
+		return json_decode( $temp_meta_value, true );
+	}
+	/**
+	 * Retrieves a collection of objects.
+	 */
+	public function cpt_switch_color( $content, $style ) {
+		$content = str_replace( 'Logo-ploaceholder.png', 'Logo-ploaceholder-white.png', $content );
+		$content = str_replace( 'Logo-ploaceholder-1.png', 'Logo-ploaceholder-1-white.png', $content );
+		$content = str_replace( 'Logo-ploaceholder-2.png', 'Logo-ploaceholder-2-white.png', $content );
+		$content = str_replace( 'Logo-ploaceholder-3.png', 'Logo-ploaceholder-3-white.png', $content );
+		$content = str_replace( 'Logo-ploaceholder-4.png', 'Logo-ploaceholder-4-white.png', $content );
+		$content = str_replace( 'Logo-ploaceholder-5.png', 'Logo-ploaceholder-5-white.png', $content );
+		$content = str_replace( 'Logo-ploaceholder-6.png', 'Logo-ploaceholder-6-white.png', $content );
+		$content = str_replace( 'Logo-ploaceholder-7.png', 'Logo-ploaceholder-7-white.png', $content );
+		$content = str_replace( 'Logo-ploaceholder-8.png', 'Logo-ploaceholder-8-white.png', $content );
+
+		$content = str_replace( 'logo-placeholder.png', 'logo-placeholder-white.png', $content );
+		$content = str_replace( 'logo-placeholder-1.png', 'logo-placeholder-1-white.png', $content );
+		$content = str_replace( 'logo-placeholder-2.png', 'logo-placeholder-2-white.png', $content );
+		$content = str_replace( 'logo-placeholder-3.png', 'logo-placeholder-3-white.png', $content );
+		$content = str_replace( 'logo-placeholder-4.png', 'logo-placeholder-4-white.png', $content );
+		$content = str_replace( 'logo-placeholder-5.png', 'logo-placeholder-5-white.png', $content );
+		$content = str_replace( 'logo-placeholder-6.png', 'logo-placeholder-6-white.png', $content );
+		$content = str_replace( 'logo-placeholder-7.png', 'logo-placeholder-7-white.png', $content );
+		$content = str_replace( 'logo-placeholder-8.png', 'logo-placeholder-8-white.png', $content );
+		$content = str_replace( 'logo-placeholder-9.png', 'logo-placeholder-9-white.png', $content );
+		$content = str_replace( 'logo-placeholder-10.png', 'logo-placeholder-10-white.png', $content );
+		
+		if ( $style === 'highlight' ) {
+			$form_content = $this->get_string_inbetween( $content, '"submit":[{', ']}', 'wp:kadence/form' );
+			if ( $form_content ) {
+				$form_content_org = $form_content;
+				$form_content     = str_replace( '"color":""', '"color":"placeholder-kb-pal9"', $form_content );
+				$form_content     = str_replace( '"background":""', '"background":"placeholder-kb-pal3"', $form_content );
+				$form_content     = str_replace( '"colorHover":""', '"colorHover":"placeholder-kb-pal9"', $form_content );
+				$form_content     = str_replace( '"backgroundHover":""', '"backgroundHover":"placeholder-kb-pal4"', $form_content );
+				$content          = str_replace( $form_content_org, $form_content, $content );
+			}
+			$content = str_replace( '"inheritStyles":"inherit"', '"color":"placeholder-kb-pal9","background":"placeholder-kb-pal3","colorHover":"placeholder-kb-pal9","backgroundHover":"placeholder-kb-pal4","inheritStyles":"inherit"', $content );
+
+			$content = str_replace( 'has-theme-palette-1', 'placeholder-kb-class9', $content );
+			$content = str_replace( 'has-theme-palette-2', 'placeholder-kb-class8', $content );
+			$content = str_replace( 'has-theme-palette-3', 'placeholder-kb-class9', $content );
+			$content = str_replace( 'has-theme-palette-4', 'placeholder-kb-class9', $content );
+			$content = str_replace( 'has-theme-palette-5', 'placeholder-kb-class8', $content );
+			$content = str_replace( 'has-theme-palette-6', 'placeholder-kb-class7', $content );
+			$content = str_replace( 'has-theme-palette-7', 'placeholder-kb-class2', $content );
+			$content = str_replace( 'has-theme-palette-8', 'placeholder-kb-class2', $content );
+			$content = str_replace( 'has-theme-palette-9', 'placeholder-kb-class1', $content );
+
+			$content = str_replace( 'theme-palette1', 'placeholder-class-pal9', $content );
+			$content = str_replace( 'theme-palette2', 'placeholder-class-pal8', $content );
+			$content = str_replace( 'theme-palette3', 'placeholder-class-pal9', $content );
+			$content = str_replace( 'theme-palette4', 'placeholder-class-pal9', $content );
+			$content = str_replace( 'theme-palette5', 'placeholder-class-pal8', $content );
+			$content = str_replace( 'theme-palette6', 'placeholder-class-pal7', $content );
+			$content = str_replace( 'theme-palette7', 'placeholder-class-pal2', $content );
+			$content = str_replace( 'theme-palette8', 'placeholder-class-pal2', $content );
+			$content = str_replace( 'theme-palette9', 'placeholder-class-pal1', $content );
+
+			$content = str_replace( 'palette1', 'placeholder-kb-pal9', $content );
+			$content = str_replace( 'palette2', 'placeholder-kb-pal8', $content );
+			$content = str_replace( 'palette3', 'placeholder-kb-pal9', $content );
+			$content = str_replace( 'palette4', 'placeholder-kb-pal9', $content );
+			$content = str_replace( 'palette5', 'placeholder-kb-pal8', $content );
+			$content = str_replace( 'palette6', 'placeholder-kb-pal7', $content );
+			$content = str_replace( 'palette7', 'placeholder-kb-pal2', $content );
+			$content = str_replace( 'palette8', 'placeholder-kb-pal2', $content );
+			$content = str_replace( 'palette9', 'placeholder-kb-pal1', $content );
+
+		} else {
+			$white_text_content = $this->get_string_inbetween_when( $content, '<!-- wp:kadence/column', 'kt-inside-inner-col', 'kb-pattern-light-color', 0 );
+			if ( $white_text_content ) {
+				$white_text_content_org = $white_text_content;
+				$white_text_content     = str_replace( '"textColor":"palette9"', '"textColor":"placeholder-kb-pal9"', $white_text_content );
+				$white_text_content     = str_replace( '"linkColor":"palette9"', '"linkColor":"placeholder-kb-pal9"', $white_text_content );
+				$white_text_content     = str_replace( '"linkHoverColor":"palette9"', '"linkHoverColor":"placeholder-kb-pal9"', $white_text_content );
+				$content                = str_replace( $white_text_content_org, $white_text_content, $content );
+			}
+			$content = str_replace( 'has-theme-palette-3', 'placeholder-kb-class9', $content );
+			$content = str_replace( 'has-theme-palette-4', 'placeholder-kb-class8', $content );
+			$content = str_replace( 'has-theme-palette-5', 'placeholder-kb-class7', $content );
+			$content = str_replace( 'has-theme-palette-6', 'placeholder-kb-class7', $content );
+			$content = str_replace( 'has-theme-palette-7', 'placeholder-kb-class3', $content );
+			$content = str_replace( 'has-theme-palette-8', 'placeholder-kb-class3', $content );
+			$content = str_replace( 'has-theme-palette-9', 'placeholder-kb-class4', $content );
+
+			$content = str_replace( 'theme-palette3', 'placeholder-class-pal9', $content );
+			$content = str_replace( 'theme-palette4', 'placeholder-class-pal8', $content );
+			$content = str_replace( 'theme-palette5', 'placeholder-class-pal7', $content );
+			$content = str_replace( 'theme-palette6', 'placeholder-class-pal7', $content );
+			$content = str_replace( 'theme-palette7', 'placeholder-class-pal3', $content );
+			$content = str_replace( 'theme-palette8', 'placeholder-class-pal3', $content );
+			$content = str_replace( 'theme-palette9', 'placeholder-class-pal4', $content );
+
+			$content = str_replace( 'palette3', 'placeholder-kb-pal9', $content );
+			$content = str_replace( 'palette4', 'placeholder-kb-pal8', $content );
+			$content = str_replace( 'palette5', 'placeholder-kb-pal7', $content );
+			$content = str_replace( 'palette6', 'placeholder-kb-pal7', $content );
+			$content = str_replace( 'palette7', 'placeholder-kb-pal3', $content );
+			$content = str_replace( 'palette8', 'placeholder-kb-pal3', $content );
+			$content = str_replace( 'palette9', 'placeholder-kb-pal4', $content );
+		}
+		$content = str_replace( 'placeholder-kb-class1', 'has-theme-palette-1', $content );
+		$content = str_replace( 'placeholder-kb-class2', 'has-theme-palette-2', $content );
+		$content = str_replace( 'placeholder-kb-class3', 'has-theme-palette-3', $content );
+		$content = str_replace( 'placeholder-kb-class4', 'has-theme-palette-4', $content );
+		$content = str_replace( 'placeholder-kb-class5', 'has-theme-palette-5', $content );
+		$content = str_replace( 'placeholder-kb-class6', 'has-theme-palette-6', $content );
+		$content = str_replace( 'placeholder-kb-class7', 'has-theme-palette-7', $content );
+		$content = str_replace( 'placeholder-kb-class8', 'has-theme-palette-8', $content );
+		$content = str_replace( 'placeholder-kb-class9', 'has-theme-palette-9', $content );
+
+		$content = str_replace( 'placeholder-class-pal1', 'theme-palette1', $content );
+		$content = str_replace( 'placeholder-class-pal2', 'theme-palette2', $content );
+		$content = str_replace( 'placeholder-class-pal3', 'theme-palette3', $content );
+		$content = str_replace( 'placeholder-class-pal4', 'theme-palette4', $content );
+		$content = str_replace( 'placeholder-class-pal5', 'theme-palette5', $content );
+		$content = str_replace( 'placeholder-class-pal6', 'theme-palette6', $content );
+		$content = str_replace( 'placeholder-class-pal7', 'theme-palette7', $content );
+		$content = str_replace( 'placeholder-class-pal8', 'theme-palette8', $content );
+		$content = str_replace( 'placeholder-class-pal9', 'theme-palette9', $content );
+
+		$content = str_replace( 'placeholder-kb-pal1', 'palette1', $content );
+		$content = str_replace( 'placeholder-kb-pal2', 'palette2', $content );
+		$content = str_replace( 'placeholder-kb-pal3', 'palette3', $content );
+		$content = str_replace( 'placeholder-kb-pal4', 'palette4', $content );
+		$content = str_replace( 'placeholder-kb-pal5', 'palette5', $content );
+		$content = str_replace( 'placeholder-kb-pal6', 'palette6', $content );
+		$content = str_replace( 'placeholder-kb-pal7', 'palette7', $content );
+		$content = str_replace( 'placeholder-kb-pal8', 'palette8', $content );
+		$content = str_replace( 'placeholder-kb-pal9', 'palette9', $content );
+		return $content;
+	}
+	/**
+	 * Retrieves a collection of objects.
+	 *
+	 * @param string $string The string to search.
+	 * @param string $start The start of the string.
+	 * @param string $end The end of the string.
+	 * @param string $verify The string to verify.
+	 * @return string The string in between the start and end.
+	 */
+	public function get_string_inbetween( $string, $start, $end, $verify ) {
+		if ( strpos( $string, $verify ) == 0 ) {
+			return '';
+		}
+		$ini = strpos( $string, $start );
+		if ( $ini == 0 ) {
+			return '';
+		}
+		$ini += strlen( $start );
+		$len  = strpos( $string, $end, $ini ) - $ini;
+		return substr( $string, $ini, $len );
+	}
+	/**
+	 * Retrieves a collection of objects.
+	 *
+	 * @param string $string The string to search.
+	 * @param string $start The start of the string.
+	 * @param string $end The end of the string.
+	 * @param string $verify The string to verify.
+	 * @param int    $from The position to start searching from.
+	 * @return string The string in between the start and end.
+	 */
+	public function get_string_inbetween_when( $string, $start, $end, $verify, $from ) {
+		$ini = strpos( $string, $start, $from );
+		if ( $ini == 0 ) {
+			return '';
+		}
+		$ini       += strlen( $start );
+		$len        = strpos( $string, $end, $ini ) - $ini;
+		$sub_string = substr( $string, $ini, $len );
+		if ( strpos( $sub_string, $verify ) == 0 ) {
+			return $this->get_string_inbetween_when( $string, $start, $end, $verify, $ini );
+		}
+		return $sub_string;
+	}
+	/**
+	 * Update block ID in content with new ID
+	 */
+	private function update_block_ids( $content, $id_map ) {
+		$blocks = parse_blocks( $content );
+
+		foreach ( $blocks as &$block ) {
+			if ( in_array( $block['blockName'], $this->kadence_cpt_blocks )
+				&& ! empty( $block['attrs']['id'] )
+				&& isset( $id_map[ $block['attrs']['id'] ] ) ) {
+				$block['attrs']['id'] = $id_map[ $block['attrs']['id'] ];
+			}
+
+			if ( ! empty( $block['innerBlocks'] ) ) {
+				$inner_content         = serialize_blocks( $block['innerBlocks'] );
+				$updated_inner_content = $this->update_block_ids( $inner_content, $id_map );
+				$block['innerBlocks']  = parse_blocks( $updated_inner_content );
+			}
+		}
+
+		return serialize_blocks( $blocks );
 	}
 	/**
 	 * Retrieves a collection of objects.
@@ -852,11 +1192,12 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 		if ( empty( $parameters['content'] ) ) {
 			return rest_ensure_response( 'failed' );
 		}
-		$content = $parameters['content'];
-		$forms = isset( $parameters['forms'] ) ? $parameters['forms'] : array();
+		$content       = $parameters['content'];
+		$cpt_blocks    = $parameters['cpt_blocks'] ?? [];
+		$style         = $parameters['style'] ?? '';
 		$image_library = $parameters['image_library'];
-		if ( ! empty( $forms ) ) {
-			$content = $this->process_forms( $content, $forms );
+		if ( ! empty( $cpt_blocks ) ) {
+			$content = $this->process_cpt( $content, $cpt_blocks, $style );
 		}
 		// Find all urls.
 		preg_match_all( '/https?:\/\/[^\'" ]+/i', $content, $match );
@@ -866,8 +1207,8 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 		if ( empty( $all_urls ) ) {
 			return $content;
 		}
-		$map_urls    = array();
-		$image_urls  = array();
+		$map_urls   = [];
+		$image_urls = [];
 		// Find all the images.
 		foreach ( $all_urls as $key => $link ) {
 			if ( $this->check_for_image( $link ) ) {
@@ -884,32 +1225,33 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 		if ( ! empty( $image_urls ) ) {
 			foreach ( $image_urls as $key => $image_url ) {
 				// Download remote image.
-				$image            = array(
+				$image = [
 					'url' => $image_url,
 					'id'  => 0,
-				);
+				];
 				// If it's a pexels image, get the data.
 				if ( substr( $image_url, 0, strlen( 'https://images.pexels.com' ) ) === 'https://images.pexels.com' ) {
 					$image_data = $this->get_image_info( $image_library, $image_url );
 					if ( $image_data ) {
-						$alt                        = ! empty( $image_data['alt'] ) ? $image_data['alt'] : '';
-						$image['filename']          = ! empty( $image_data['filename'] ) ? $image_data['filename'] : $this->create_filename_from_alt( $alt );
-						$image['photographer']      = ! empty( $image_data['photographer'] ) ? $image_data['photographer'] : '';
-						$image['photographer_url']  = ! empty( $image_data['photographer_url'] ) ? $image_data['photographer_url'] : '';
-						$image['photograph_url']    = ! empty( $image_data['url'] ) ? $image_data['url'] : '';
-						$image['alt']               = $alt;
-						$image['title']             = __( 'Photo by', 'kadence-blocks' ) . ' ' . $image['photographer'];
+						$alt                       = ! empty( $image_data['alt'] ) ? $image_data['alt'] : '';
+						$image['filename']         = ! empty( $image_data['filename'] ) ? $image_data['filename'] : $this->create_filename_from_alt( $alt );
+						$image['photographer']     = ! empty( $image_data['photographer'] ) ? $image_data['photographer'] : '';
+						$image['photographer_url'] = ! empty( $image_data['photographer_url'] ) ? $image_data['photographer_url'] : '';
+						$image['photograph_url']   = ! empty( $image_data['url'] ) ? $image_data['url'] : '';
+						$image['alt']              = $alt;
+						$image['title']            = __( 'Photo by', 'kadence-blocks' ) . ' ' . $image['photographer'];
 					}
 				}
 				$downloaded_image       = $this->import_image( $image );
-				$map_urls[ $image_url ] = array(
+				$map_urls[ $image_url ] = [
 					'url' => $downloaded_image['url'],
 					'id'  => $downloaded_image['id'],
-				);
+				];
 			}
 		}
 		// Regex to find wp:kadence/image blocks with id and src.
-		$pattern = '/<!-- wp:kadence\/image .*?"id":(\d+),.*?"uniqueID":"[^"]+".*?-->(.*?)<img src="([^"]+)".*?<!-- \/wp:kadence\/image -->/s';
+		$pattern = '/<!-- wp:kadence\/image\b[^>]*?(?:"id":(\d+)),.*?"uniqueID":"[^"]+".*?-->(.*?)<img src="([^"]+)".*?<!-- \/wp:kadence\/image -->/s';
+
 		// Use preg_match_all to find all matches
 		if ( preg_match_all( $pattern, $content, $block_matches, PREG_SET_ORDER ) ) {
 			foreach ( $block_matches as $block_match ) {
@@ -917,18 +1259,18 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 				// $block_match[1] is the id
 				// $block_match[2] is the content before <img src
 				// $block_match[3] is the src
-				$old_id            = ( isset( $block_match[1] ) ? $block_match[1] : '' );
-				$old_src           = ( isset( $block_match[3] ) ? $block_match[3] : '' );
-				$block_replacement = ( isset( $block_match[0] ) ? $block_match[0] : '' );
+				$old_id            = ( $block_match[1] ?? '' );
+				$old_src           = ( $block_match[3] ?? '' );
+				$block_replacement = ( $block_match[0] ?? '' );
 				// Replace old id if it exists in the map
 				if ( isset( $map_urls[ $old_src ]['id'] ) ) {
-					$new_id = $map_urls[ $old_src ]['id'];
+					$new_id            = $map_urls[ $old_src ]['id'];
 					$block_replacement = preg_replace( '/"id":' . $old_id . '/', '"id":' . $new_id, $block_replacement );
 					$block_replacement = str_replace( 'wp-image-' . strval( $old_id ), 'wp-image-' . strval( $new_id ), $block_replacement );
 				}
 				// Replace old src with new one if it exists in the map.
 				if ( isset( $map_urls[ $old_src ]['url'] ) ) {
-					$new_src = $map_urls[ $old_src ]['url'];
+					$new_src           = $map_urls[ $old_src ]['url'];
 					$block_replacement = str_replace( $old_src, $new_src, $block_replacement );
 				}
 
@@ -940,9 +1282,9 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 		foreach ( $map_urls as $old_url => $new_image ) {
 			$content = str_replace( $old_url, $new_image['url'], $content );
 			// Replace the slashed URLs if any exist.
-			$old_url = str_replace( '/', '/\\', $old_url );
+			$old_url          = str_replace( '/', '/\\', $old_url );
 			$new_image['url'] = str_replace( '/', '/\\', $new_image['url'] );
-			$content = str_replace( $old_url, $new_image['url'], $content );
+			$content          = str_replace( $old_url, $new_image['url'], $content );
 		}
 		return $content;
 	}
@@ -969,36 +1311,51 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 		}
 
 		if ( ! empty( $library ) ) {
-			$args = array(
-				'type'    => ( ! empty( $pattern_type ) ? $pattern_type : 'pattern' ),
-				'key'     => $key,
-				'id'      => $pattern_id,
-				'site'    => get_original_domain(),
-			);
+			$args = [
+				'type' => ( ! empty( $pattern_type ) ? $pattern_type : 'pattern' ),
+				'key'  => $key,
+				'id'   => $pattern_id,
+				'site' => get_original_domain(),
+			];
 			if ( ! empty( $pattern_style ) ) {
 				$args['style'] = $pattern_style;
 			}
+			if ( 'section' === $library ) {
+				$args['data'] = 'true';
+			}
 			if ( 'templates' === $library || 'section' === $library || 'pages' === $library || 'template' === $library ) {
-				$args['api_key']    = $this->api_key;
+				$args['api_key'] = $this->api_key;
 				if ( ! empty( $this->api_email ) ) {
 					// Send in case we need to verify with old api.
 					$args['email'] = $this->api_email;
 				}
-				$args['product_id'] = $this->product_id;
+				if ( ! empty( $this->product_slug ) ) {
+					$args['product'] = $this->product_slug;
+				}
 				if ( 'iThemes' === $this->api_email ) {
 					$args['site_url'] = $args['site'];
+				}
+				if ( ! empty( $this->env ) ) {
+					$args['env'] = $this->env;
 				}
 			}
 			// Get the response.
 			$api_url  = add_query_arg( $args, $library_url );
 			$response = wp_safe_remote_get(
 				$api_url,
-				array(
+				[
 					'timeout' => 20,
-				)
+				]
 			);
 			// Early exit if there was an error.
 			if ( is_wp_error( $response ) || $this->is_response_code_error( $response ) ) {
+				$contents = wp_remote_retrieve_body( $response );
+				if ( ! empty( $contents ) ) {
+					$contents = json_decode( $contents, true );
+				}
+				if ( ! empty( $contents['code'] ) && $contents['code'] === 'invalid_access' ) {
+					return rest_ensure_response( new WP_Error( 'invalid_access', __( 'Invalid Request, Incorrect Access Key', 'kadence-blocks' ), [ 'status' => 401 ] ) );
+				}
 				return rest_ensure_response( 'error' );
 			}
 			// Get the CSS from our response.
@@ -1024,16 +1381,16 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	 */
 	public function get_library_categories( WP_REST_Request $request ) {
 		$this->get_license_keys();
-		$reload           = $request->get_param( self::PROP_FORCE_RELOAD );
-		$library          = $request->get_param( self::PROP_LIBRARY );
-		$library_url      = $request->get_param( self::PROP_LIBRARY_URL );
-		$key              = $request->get_param( self::PROP_KEY );
+		$reload      = $request->get_param( self::PROP_FORCE_RELOAD );
+		$library     = $request->get_param( self::PROP_LIBRARY );
+		$library_url = $request->get_param( self::PROP_LIBRARY_URL );
+		$key         = $request->get_param( self::PROP_KEY );
 
 		if ( ! empty( $library_url ) ) {
 			$library_url = rtrim( $library_url, '/' ) . '/wp-json/kadence-cloud/v1/categories/';
 		} elseif ( ! empty( $library ) && 'pages' === $library ) {
 			$library_url = $this->remote_pages_cat_url;
-			$key = 'new-pages';
+			$key         = 'new-pages';
 		} else {
 			$library_url = $this->remote_cat_url;
 		}
@@ -1092,18 +1449,20 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	/**
 	 * Get the section data if available locally.
 	 */
-	public function get_local_library_data() {
+	public function get_local_library_data( $type = '' ) {
 		$this->get_license_keys();
-		$reload           = false;
-		$library          = 'section';
-		$library_url      = $this->remote_url;
-		$key              = 'section';
+		$reload      = false;
+		$library     = 'section';
+		$library_url = $this->remote_url;
+		$key         = 'section';
 
 		$identifier = 'library' . $library;
 		if ( 'section' === $library ) {
 			$identifier .= '_' . KADENCE_BLOCKS_VERSION;
 		}
-
+		if ( ! empty( $type ) ) {
+			$identifier .= '_' . $type;
+		}
 		if ( ! empty( $this->api_key ) ) {
 			$identifier .= '_' . $this->api_key;
 		}
@@ -1116,7 +1475,7 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 			return $this->block_library_cache->get( $identifier );
 		} catch ( NotFoundException $e ) {
 		}
-		return array();
+		return [];
 	}
 	/**
 	 * Retrieves a collection of objects.
@@ -1126,16 +1485,17 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	 */
 	public function get_library( WP_REST_Request $request ) {
 		$this->get_license_keys();
-		$reload           = $request->get_param( self::PROP_FORCE_RELOAD );
-		$library          = $request->get_param( self::PROP_LIBRARY );
-		$library_url      = $request->get_param( self::PROP_LIBRARY_URL );
-		$key              = $request->get_param( self::PROP_KEY );
+		$reload      = $request->get_param( self::PROP_FORCE_RELOAD );
+		$library     = $request->get_param( self::PROP_LIBRARY );
+		$library_url = $request->get_param( self::PROP_LIBRARY_URL );
+		$key         = $request->get_param( self::PROP_KEY );
+		$meta        = $request->get_param( self::PROP_META );
 
 		if ( ! empty( $library_url ) ) {
 			$library_url = rtrim( $library_url, '/' ) . '/wp-json/kadence-cloud/v1/get/';
 		} elseif ( ! empty( $library ) && 'pages' === $library ) {
 			$library_url = $this->remote_pages_url;
-			$key = 'new-pages';
+			$key         = 'new-pages';
 		} else {
 			$library_url = $this->remote_url;
 		}
@@ -1143,6 +1503,9 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 		$identifier = 'library' . $library;
 		if ( 'section' === $library ) {
 			$identifier .= '_' . KADENCE_BLOCKS_VERSION;
+		}
+		if ( ! empty( $meta ) ) {
+			$identifier .= '_' . $meta;
 		}
 		if ( ! empty( $this->api_key ) ) {
 			$identifier .= '_' . $this->api_key;
@@ -1183,13 +1546,13 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 		}
 
 		if ( 'custom' === $library ) {
-			wp_json_encode( apply_filters( 'kadence_block_library_custom_array', array() ) );
+			wp_json_encode( apply_filters( 'kadence_block_library_custom_array', [] ) );
 		}
 		// Access via remote.
-		$response = $this->get_remote_library_contents( $library, $library_url, $key );
+		$response = $this->get_remote_library_contents( $library, $library_url, $key, $meta );
 
-		if ( 'error' === $response ) {
-			return rest_ensure_response( 'error' );
+		if ( is_wp_error( $response ) ) {
+			return rest_ensure_response( $response );
 		}
 
 		$this->block_library_cache->cache( $identifier, $response );
@@ -1204,9 +1567,9 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_local_contexts( WP_REST_Request $request ) {
-		$available_prompts = get_option( 'kb_design_library_prompts', array() );
-		if ( ! empty( $available_prompts && is_array( $available_prompts) ) ) {
-			$contexts_available = array();
+		$available_prompts = get_option( 'kb_design_library_prompts', [] );
+		if ( ! empty( $available_prompts && is_array( $available_prompts ) ) ) {
+			$contexts_available = [];
 			foreach ( $available_prompts as $key => $prompt ) {
 				if ( ! empty( $prompt ) ) {
 					$contexts_available[] = $key;
@@ -1230,8 +1593,8 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_all_items( WP_REST_Request $request ) {
-		$available_prompts = get_option( 'kb_design_library_prompts', array() );
-		$return_data       = array();
+		$available_prompts = get_option( 'kb_design_library_prompts', [] );
+		$return_data       = [];
 
 		if ( ! empty( $available_prompts ) && is_array( $available_prompts ) ) {
 			foreach ( $available_prompts as $context => $prompt ) {
@@ -1267,8 +1630,7 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	public function get_items( $request ) {
 		$context           = $request->get_param( self::PROP_CONTEXT );
 		$reload            = $request->get_param( self::PROP_FORCE_RELOAD );
-		$available_prompts = get_option( 'kb_design_library_prompts', array() );
-
+		$available_prompts = get_option( 'kb_design_library_prompts', [] );
 		// Check if we have captured prompt.
 		if ( ! empty( $available_prompts[ $context ] ) && ! $reload ) {
 
@@ -1279,27 +1641,34 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 			}
 
 			// Log event for context generation request.
-			do_action( 'kadenceblocks/ai/event', 'Context Generation Requested', [
-				'context_name'    => $context,
-				'is_regeneration' => true,
-			] );
+			do_action(
+				'kadenceblocks/ai/event',
+				'Context Generation Requested',
+				[
+					'context_name'    => $context,
+					'is_regeneration' => true,
+				] 
+			);
 
 			// Check if we have a remote file.
 			$response = $this->get_remote_contents( $available_prompts[ $context ] );
 			$body     = wp_remote_retrieve_body( $response );
-
 			if ( is_wp_error( $response ) ) {
-				$current_prompts = get_option( 'kb_design_library_prompts', array() );
+				$current_prompts = get_option( 'kb_design_library_prompts', [] );
 				if ( isset( $current_prompts[ $context ] ) ) {
 					unset( $current_prompts[ $context ] );
 					update_option( 'kb_design_library_prompts', $current_prompts );
 				}
 				// Log event for failed context generation.
-				do_action( 'kadenceblocks/ai/event', 'Context Generation Failed', [
-					'context_name'    => $context,
-					'is_regeneration' => true,
-					'errors'          => $response->get_error_messages(),
-				] );
+				do_action(
+					'kadenceblocks/ai/event',
+					'Context Generation Failed',
+					[
+						'context_name'    => $context,
+						'is_regeneration' => true,
+						'errors'          => $response->get_error_messages(),
+					] 
+				);
 
 				return rest_ensure_response( 'error' );
 			}
@@ -1312,7 +1681,7 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 				}
 
 				// The remote job failed.
-				$current_prompts = get_option( 'kb_design_library_prompts', array() );
+				$current_prompts = get_option( 'kb_design_library_prompts', [] );
 
 				if ( isset( $current_prompts[ $context ] ) ) {
 					unset( $current_prompts[ $context ] );
@@ -1322,27 +1691,35 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 				// Note: This event is logged on an external server.
 				return rest_ensure_response( 'error' );
 			}
-
+			if ( empty( $body ) ) {
+				return rest_ensure_response( 'error' );
+			}
+			if ( 'error' === $body ) {
+				return rest_ensure_response( 'error' );
+			}
 			// Cache the AI content.
 			$this->ai_cache->cache( $available_prompts[ $context ], $body );
 
 			// Log event for successful context generation.
-			do_action( 'kadenceblocks/ai/event', 'Context Generation Completed', [
-				'context_name'    => $context,
-				'credits_after'   => $this->get_remote_remaining_credits(),
-				'is_regeneration' => true,
-			] );
+			do_action(
+				'kadenceblocks/ai/event',
+				'Context Generation Completed',
+				[
+					'context_name'    => $context,
+					'credits_after'   => $this->get_remote_remaining_credits(),
+					'is_regeneration' => true,
+				] 
+			);
 
 			return rest_ensure_response( $body );
 		} else {
 			// Create a job.
 			$response = $this->get_new_remote_contents( $context );
 			$data     = json_decode( $response, true );
-
 			if ( $response === 'error' || $response === 'credits' ) {
 				return rest_ensure_response( $response );
-			} else if ( isset( $data['data']['job_id'] ) ) {
-				$current_prompts             = get_option( 'kb_design_library_prompts', array() );
+			} elseif ( isset( $data['data']['job_id'] ) ) {
+				$current_prompts             = get_option( 'kb_design_library_prompts', [] );
 				$current_prompts[ $context ] = $data['data']['job_id'];
 				update_option( 'kb_design_library_prompts', $current_prompts );
 
@@ -1360,22 +1737,22 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_initial_jobs( WP_REST_Request $request ) {
-		update_option( 'kb_design_library_prompts', array() );
-		$contexts = $this->initial_contexts;
-		$available_prompts = array();
-		$contexts_available = array();
-		$has_error = false;
+		update_option( 'kb_design_library_prompts', [] );
+		$contexts           = $this->initial_contexts;
+		$available_prompts  = [];
+		$contexts_available = [];
+		$has_error          = false;
 		foreach ( $contexts as $context ) {
 			// Check if we have captured prompt.
 			if ( empty( $available_prompts[ $context ] ) ) {
 				// Create a job.
 				$response = $this->get_new_remote_contents( $context );
-				$data = json_decode( $response, true );
+				$data     = json_decode( $response, true );
 				if ( $response === 'error' ) {
 					$has_error = true;
-				} else if ( isset( $data['data']['job_id'] ) ) {
+				} elseif ( isset( $data['data']['job_id'] ) ) {
 					$available_prompts[ $context ] = $data['data']['job_id'];
-					$contexts_available[] = $context;
+					$contexts_available[]          = $context;
 				} else {
 					$has_error = true;
 				}
@@ -1399,8 +1776,8 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	public function get_remaining_jobs( WP_REST_Request $request ) {
 		$reload = $request->get_param( self::PROP_FORCE_RELOAD );
 		$this->get_license_keys();
-		$available_prompts = get_option( 'kb_design_library_prompts', array() );
-		$contexts = array(
+		$available_prompts  = get_option( 'kb_design_library_prompts', [] );
+		$contexts           = [
 			'about',
 			'achievements',
 			'blog',
@@ -1430,20 +1807,20 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 			'volunteer',
 			'welcome',
 			'work',
-		);
-		$contexts_available = array();
-		$has_error = false;
+		];
+		$contexts_available = [];
+		$has_error          = false;
 		foreach ( $contexts as $context ) {
 			// Check if we have captured prompt.
 			if ( empty( $available_prompts[ $context ] ) || $reload ) {
 				// Create a job.
 				$response = $this->get_new_remote_contents( $context );
-				$data = json_decode( $response, true );
+				$data     = json_decode( $response, true );
 				if ( $response === 'error' ) {
 					$has_error = true;
-				} else if ( isset( $data['data']['job_id'] ) ) {
+				} elseif ( isset( $data['data']['job_id'] ) ) {
 					$available_prompts[ $context ] = $data['data']['job_id'];
-					$contexts_available[] = $context;
+					$contexts_available[]          = $context;
 				} else {
 					$has_error = true;
 				}
@@ -1453,7 +1830,12 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 		if ( ! empty( $contexts_available && ! $has_error ) ) {
 			return rest_ensure_response( $contexts_available );
 		} elseif ( ! empty( $contexts_available && $has_error ) ) {
-			return rest_ensure_response( array( 'context' => $contexts_available, 'error' => true ) );
+			return rest_ensure_response(
+				[
+					'context' => $contexts_available,
+					'error'   => true,
+				] 
+			);
 		} else {
 			return rest_ensure_response( 'failed' );
 		}
@@ -1485,10 +1867,10 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	public function get_new_remote_contents( $context ) {
 		$prophecy_data = json_decode( get_option( 'kadence_blocks_prophecy' ), true );
 		// Get the response.
-		$body = array(
+		$body            = [
 			'context' => 'kadence',
-		);
-		$body['company'] = ! empty( $prophecy_data['companyName'] )	? $prophecy_data['companyName'] : '';
+		];
+		$body['company'] = ! empty( $prophecy_data['companyName'] ) ? $prophecy_data['companyName'] : '';
 		if ( ! empty( $prophecy_data['industrySpecific'] ) && 'Other' !== $prophecy_data['industrySpecific'] ) {
 			$body['industry'] = ! empty( $prophecy_data['industrySpecific'] ) ? $prophecy_data['industrySpecific'] : '';
 		} elseif ( ! empty( $prophecy_data['industrySpecific'] ) && 'Other' === $prophecy_data['industrySpecific'] && ! empty( $prophecy_data['industryOther'] ) ) {
@@ -1499,148 +1881,148 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 			$body['industry'] = ! empty( $prophecy_data['industry'] ) ? $prophecy_data['industry'] : '';
 		}
 		$body['location'] = ! empty( $prophecy_data['location'] ) ? $prophecy_data['location'] : '';
-		$body['mission'] = ! empty( $prophecy_data['missionStatement'] ) ? $prophecy_data['missionStatement'] : '';
-		$body['tone'] = ! empty( $prophecy_data['tone'] ) ? $prophecy_data['tone'] : '';
+		$body['mission']  = ! empty( $prophecy_data['missionStatement'] ) ? $prophecy_data['missionStatement'] : '';
+		$body['tone']     = ! empty( $prophecy_data['tone'] ) ? $prophecy_data['tone'] : '';
 		$body['keywords'] = ! empty( $prophecy_data['keywords'] ) ? $prophecy_data['keywords'] : '';
-		$body['lang'] = ! empty( $prophecy_data['lang'] ) ? $prophecy_data['lang'] : '';
+		$body['lang']     = ! empty( $prophecy_data['lang'] ) ? $prophecy_data['lang'] : '';
 		switch ( $context ) {
 			case 'about':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'about',
 					'about-hero',
 					'about-columns',
 					'about-list',
 					'about-videos',
-				);
+				];
 				break;
 			case 'achievements':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'achievements',
 					'achievements-columns',
 					'achievements-list',
 					'achievements-videos',
-				);
+				];
 				break;
 			case 'blog':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'blog-post-loop',
 					'blog-table-contents',
-				);
+				];
 				break;
 			case 'call-to-action':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'call-to-action',
 					'call-to-action-columns',
 					'call-to-action-list',
 					'call-to-action-videos',
-				);
+				];
 				break;
 			case 'careers':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'careers',
 					'careers-hero',
 					'careers-columns',
 					'careers-list',
 					'careers-videos',
-				);
+				];
 				break;
 			case 'contact-form':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'contact-form',
-				);
+				];
 				break;
 			case 'donate':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'donate',
 					'donate-hero',
 					'donate-columns',
 					'donate-list',
 					'donate-videos',
-				);
+				];
 				break;
 			case 'events':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'events',
 					'events-hero',
 					'events-columns',
 					'events-list',
 					'events-videos',
-				);
+				];
 				break;
 			case 'faq':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'faq-accordion',
-				);
+				];
 				break;
 			case 'get-started':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'get-started',
 					'get-started-accordion',
 					'get-started-columns',
 					'get-started-list',
-				);
+				];
 				break;
 			case 'history':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'history',
 					'history-columns',
 					'history-list',
 					'history-videos',
-				);
+				];
 				break;
 			case 'industries':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'industries',
 					'industries-accordion',
 					'industries-list',
 					'industries-columns',
 					'industries-tabs',
-				);
+				];
 				break;
 			case 'location':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'location',
 					'location-columns',
 					'location-tabs',
-				);
+				];
 				break;
 			case 'mission':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'mission',
 					'mission-columns',
 					'mission-list',
 					'mission-videos',
-				);
+				];
 				break;
 			case 'news':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'news-post-loop',
-				);
+				];
 				break;
 			case 'partners':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'partners',
 					'partners-columns',
 					'partners-list',
-				);
+				];
 				break;
 			case 'podcast':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'podcast',
-				);
+				];
 				break;
 			case 'pricing-table':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'pricing-pricing-table',
-				);
+				];
 				break;
 			case 'product-details':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'product-details-accordion',
-				);
+				];
 				break;
 			case 'products-services':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'products-services',
 					'products-services-columns',
 					'products-services-hero',
@@ -1649,91 +2031,91 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 					'products-services-tabs',
 					'products-services-videos',
 					'product-details-accordion',
-				);
+				];
 				break;
 			case 'profile':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'profile',
 					'profile-columns',
 					'profile-list',
 					'profile-videos',
-				);
+				];
 				break;
 			case 'subscribe-form':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'subscribe-form',
-				);
+				];
 				break;
 			case 'support':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'support',
 					'support-columns',
 					'support-list',
 					'support-videos',
-				);
+				];
 				break;
 			case 'team':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'team',
 					'team-columns',
 					'team-list',
 					'team-people',
 					'team-videos',
-				);
+				];
 				break;
 			case 'testimonials':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'testimonials-testimonials',
-				);
+				];
 				break;
 			case 'value-prop':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'value-prop',
 					'value-prop-columns',
 					'value-prop-hero',
 					'value-prop-list',
 					'value-prop-tabs',
 					'value-prop-videos',
-				);
+				];
 				break;
 			case 'volunteer':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'volunteer',
 					'volunteer-hero',
 					'volunteer-list',
 					'volunteer-columns',
 					'volunteer-videos',
-				);
+				];
 				break;
 			case 'welcome':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'welcome',
 					'welcome-hero',
 					'welcome-list',
 					'welcome-columns',
 					'welcome-videos',
-				);
+				];
 				break;
 			case 'work':
-				$body['prompts'] = array(
+				$body['prompts'] = [
 					'work',
 					'work-columns',
 					'work-counter-stats',
 					'work-list',
 					'work-videos',
-				);
+				];
 				break;
 		}
 		$response = wp_remote_post(
 			$this->remote_ai_url . 'content/create',
-			array(
+			[
 				'timeout' => 20,
-				'headers' => array(
+				'headers' => [
 					'X-Prophecy-Token' => $this->get_token_header(),
 					'Content-Type'     => 'application/json',
-				),
+				],
 				'body'    => json_encode( $body ),
-			)
+			]
 		);
 		// Early exit if there was an error.
 		if ( is_wp_error( $response ) || $this->is_response_code_error( $response ) ) {
@@ -1779,16 +2161,16 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	 * @return \WP_Error|array{headers: array, body: string, response: array{code: int, message: string}, cookies: \WP_HTTP_Cookie[]} Return the job response.
 	 */
 	public function get_remote_contents( $job ) {
-		$api_url  = $this->remote_ai_url . 'content/job/' . $job;
+		$api_url = $this->remote_ai_url . 'content/job/' . $job;
 
 		return wp_safe_remote_get(
 			$api_url,
-			array(
+			[
 				'timeout' => 20,
-				'headers' => array(
+				'headers' => [
 					'X-Prophecy-Token' => $this->get_token_header(),
-				),
-			)
+				],
+			]
 		);
 	}
 
@@ -1798,17 +2180,19 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	 * @access public
 	 * @return string Returns the remote URL contents.
 	 */
-	public function get_remote_library_contents( $library, $library_url, $key ) {
+	public function get_remote_library_contents( $library, $library_url, $key, $meta ) {
 		$site_url = get_original_domain();
-		$args = array(
+		$args     = [
 			'key'  => $key,
 			'site' => $site_url,
-		);
+		];
 		if ( 'templates' === $library || 'section' === $library || 'pages' === $library || 'template' === $library ) {
 			$args['api_email']  = $this->api_email;
 			$args['api_key']    = $this->api_key;
 			$args['product_id'] = $this->product_id;
-
+			if ( ! empty( $this->env ) ) {
+				$args['env'] = $this->env;
+			}
 			if ( 'iThemes' === $this->api_email ) {
 				$args['site_url'] = $site_url;
 			}
@@ -1816,24 +2200,31 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 		if ( 'templates' === $library ) {
 			$args['request'] = 'blocks';
 		}
+		if ( ! empty( $meta ) ) {
+			$args['meta'] = $meta;
+		}
 		// Get the response.
 		$api_url  = add_query_arg( $args, $library_url );
 		$response = wp_safe_remote_get(
 			$api_url,
-			array(
+			[
 				'timeout' => 30,
-			)
+			]
 		);
 		// Early exit if there was an error.
-		if ( is_wp_error( $response ) || $this->is_response_code_error( $response ) ) {
-			return 'error';
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+		if ( $this->is_response_code_error( $response ) ) {
+			$response_code = wp_remote_retrieve_response_code( $response );
+			return new WP_Error( 'error', sprintf( esc_html__( 'Response Code Error: %s', 'kadence-blocks' ), $response_code ), [ 'status' => 400 ] );
 		}
 
 		// Get the CSS from our response.
 		$contents = wp_remote_retrieve_body( $response );
 		// Early exit if there was an error.
 		if ( is_wp_error( $contents ) ) {
-			return 'error';
+			return $contents;
 		}
 
 		return $contents;
@@ -1847,15 +2238,17 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	 */
 	public function get_remote_library_categories( $library, $library_url, $key ) {
 		$site_url = get_original_domain();
-		$args = array(
+		$args     = [
 			'key'  => $key,
 			'site' => $site_url,
-		);
+		];
 		if ( 'templates' === $library || 'section' === $library || 'pages' === $library || 'template' === $library ) {
 			$args['api_email']  = $this->api_email;
 			$args['api_key']    = $this->api_key;
 			$args['product_id'] = $this->product_id;
-
+			if ( ! empty( $this->env ) ) {
+				$args['env'] = $this->env;
+			}
 			if ( 'iThemes' === $this->api_email ) {
 				$args['site_url'] = $site_url;
 			}
@@ -1867,9 +2260,9 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 		$api_url  = add_query_arg( $args, $library_url );
 		$response = wp_safe_remote_get(
 			$api_url,
-			array(
+			[
 				'timeout' => 30,
-			)
+			]
 		);
 		// Early exit if there was an error.
 		if ( is_wp_error( $response ) || $this->is_response_code_error( $response ) ) {
@@ -1891,40 +2284,40 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	 * @access public
 	 * @return string Returns the remote URL contents.
 	 */
-	public function get_remote_search_images( $search_query, $image_type = 'JPEG', $sizes = array() ) {
+	public function get_remote_search_images( $search_query, $image_type = 'JPEG', $sizes = [] ) {
 		if ( empty( $search_query ) ) {
 			return 'error';
 		}
 		if ( empty( $sizes ) ) {
-			$sizes = array(
-				array(
-					"id" => "2048x2048",
-					"width" => 2048,
-					"height" => 2048,
-					"crop" => false,
-				),
-			);
+			$sizes = [
+				[
+					'id'     => '2048x2048',
+					'width'  => 2048,
+					'height' => 2048,
+					'crop'   => false,
+				],
+			];
 		}
 		if ( empty( $image_type ) ) {
 			$image_type = 'JPEG';
 		}
-		$body = array(
-			'query' => $search_query,
+		$body     = [
+			'query'      => $search_query,
 			'image_type' => $image_type,
-			'sizes' => $sizes,
-			'page' => 1,
-			'per_page' => 24,
-		);
+			'sizes'      => $sizes,
+			'page'       => 1,
+			'per_page'   => 24,
+		];
 		$response = wp_remote_post(
 			$this->remote_ai_url . 'images/search',
-			array(
+			[
 				'timeout' => 20,
-				'headers' => array(
+				'headers' => [
 					'X-Prophecy-Token' => $this->get_token_header(),
 					'Content-Type'     => 'application/json',
-				),
+				],
 				'body'    => json_encode( $body ),
-			)
+			]
 		);
 		// Early exit if there was an error.
 		if ( is_wp_error( $response ) || $this->is_response_code_error( $response ) ) {
@@ -1945,42 +2338,42 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	 *
 	 * @return string Returns the remote URL contents.
 	 */
-	public function get_remote_industry_images( $industries, $image_type = 'JPEG', $sizes = array() ) {
+	public function get_remote_industry_images( $industries, $image_type = 'JPEG', $sizes = [] ) {
 		if ( empty( $industries ) ) {
 			return 'error';
 		}
 
 		if ( empty( $sizes ) ) {
-			$sizes = array(
-				array(
+			$sizes = [
+				[
 					'id'     => '2048x2048',
 					'width'  => 2048,
 					'height' => 2048,
 					'crop'   => false,
-				),
-			);
+				],
+			];
 		}
 
 		if ( empty( $image_type ) ) {
 			$image_type = 'JPEG';
 		}
 
-		$body = array(
+		$body = [
 			'industries' => $industries,
 			'image_type' => $image_type,
 			'sizes'      => $sizes,
-		);
+		];
 
 		$response = wp_remote_post(
 			$this->remote_ai_url . 'images/collections',
-			array(
+			[
 				'timeout' => 20,
-				'headers' => array(
+				'headers' => [
 					'X-Prophecy-Token' => $this->get_token_header(),
 					'Content-Type'     => 'application/json',
-				),
+				],
 				'body'    => json_encode( $body ),
-			)
+			]
 		);
 
 		// Early exit if there was an error.
@@ -2006,20 +2399,25 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	 * @return string Returns the remote URL contents.
 	 */
 	public function get_remote_remaining_credits() {
-		$args = array(
-			'site'  => get_license_domain(),
-			'key'   => $this->api_key,
-		);
+		$product_slug = ( ! empty( $this->product_slug ) && $this->product_slug === 'kadence-blocks-pro' ? 'kadence-blocks-pro' : 'kadence-blocks' );
+		$args         = [
+			'site'        => get_license_domain(),
+			'key'         => $this->api_key,
+			'plugin_slug' => apply_filters( 'kadence-blocks-auth-slug', $product_slug ),
+		];
 		if ( ! empty( $this->api_email ) ) {
 			// Send in case we need to verify with old api.
 			$args['email'] = $this->api_email;
 		}
+		if ( ! empty( $this->env ) ) {
+			$args['env'] = $this->env;
+		}
 		$api_url  = add_query_arg( $args, $this->remote_credits_url . 'get-remaining' );
 		$response = wp_safe_remote_get(
 			$api_url,
-			array(
+			[
 				'timeout' => 20,
-			)
+			]
 		);
 		// Early exit if there was an error.
 		if ( is_wp_error( $response ) || $this->is_response_code_error( $response ) ) {
@@ -2045,12 +2443,12 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 		$api_url  = $this->remote_ai_url . 'images/collections';
 		$response = wp_safe_remote_get(
 			$api_url,
-			array(
+			[
 				'timeout' => 20,
-				'headers' => array(
+				'headers' => [
 					'X-Prophecy-Token' => $this->get_token_header(),
-				),
-			)
+				],
+			]
 		);
 		// Early exit if there was an error.
 		if ( is_wp_error( $response ) || $this->is_response_code_error( $response ) ) {
@@ -2074,27 +2472,27 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	 */
 	public function get_image_search_query( $request ) {
 		$parameters = $request->get_json_params();
-		if ( empty( $parameters['name'] ) || empty( $parameters['entity_type'] ) || empty($parameters['industry']) || empty($parameters['location']) || empty($parameters['description']) ) {
-			return new WP_REST_Response( array( 'error' => 'Missing parameters' ), 400 );
+		if ( empty( $parameters['name'] ) || empty( $parameters['entity_type'] ) || empty( $parameters['industry'] ) || empty( $parameters['location'] ) || empty( $parameters['description'] ) ) {
+			return new WP_REST_Response( [ 'error' => 'Missing parameters' ], 400 );
 		}
 		$api_url  = $this->remote_ai_url . 'proxy/intake/search-query';
-		$body = array(
-			'name' => $parameters['name'],
+		$body     = [
+			'name'        => $parameters['name'],
 			'entity_type' => $parameters['entity_type'],
-			'industry' => $parameters['industry'],
-			'location' => $parameters['location'],
+			'industry'    => $parameters['industry'],
+			'location'    => $parameters['location'],
 			'description' => $parameters['description'],
-		);
+		];
 		$response = wp_remote_post(
 			$api_url,
-			array(
+			[
 				'timeout' => 20,
-				'headers' => array(
+				'headers' => [
 					'X-Prophecy-Token' => $this->get_token_header(),
 					'Content-Type'     => 'application/json',
-				),
+				],
 				'body'    => json_encode( $body ),
-			)
+			]
 		);
 		$contents = wp_remote_retrieve_body( $response );
 		// Early exit if there was an error.
@@ -2113,28 +2511,28 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	public function get_keyword_suggestions( WP_REST_Request $request ) {
 		$parameters = $request->get_json_params();
 		if ( empty( $parameters['name'] ) || empty( $parameters['entity_type'] ) || empty( $parameters['industry'] ) || empty( $parameters['location'] ) || empty( $parameters['description'] ) ) {
-			return new WP_REST_Response( array( 'error' => 'Missing parameters' ), 400 );
+			return new WP_REST_Response( [ 'error' => 'Missing parameters' ], 400 );
 		}
 		$api_url  = $this->remote_ai_url . 'proxy/intake/suggest-keywords';
-		$body = array(
-			'name' => $parameters['name'],
+		$body     = [
+			'name'        => $parameters['name'],
 			'entity_type' => $parameters['entity_type'],
-			'industry' => $parameters['industry'],
-			'location' => $parameters['location'],
+			'industry'    => $parameters['industry'],
+			'location'    => $parameters['location'],
 			'description' => $parameters['description'],
-			'lang' => ! empty( $parameters['lang'] ) ? $parameters['lang'] : '',
-			'count' => $parameters['count'],
-		);
+			'lang'        => ! empty( $parameters['lang'] ) ? $parameters['lang'] : '',
+			'count'       => $parameters['count'],
+		];
 		$response = wp_remote_post(
 			$api_url,
-			array(
+			[
 				'timeout' => 20,
-				'headers' => array(
+				'headers' => [
 					'X-Prophecy-Token' => $this->get_token_header(),
 					'Content-Type'     => 'application/json',
-				),
+				],
 				'body'    => json_encode( $body ),
-			)
+			]
 		);
 
 		$contents = wp_remote_retrieve_body( $response );
@@ -2155,9 +2553,9 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 		$api_url  = $this->remote_ai_url . 'verticals';
 		$response = wp_safe_remote_get(
 			$api_url,
-			array(
+			[
 				'timeout' => 20,
-			)
+			]
 		);
 		// Early exit if there was an error.
 		if ( is_wp_error( $response ) || $this->is_response_code_error( $response ) ) {
@@ -2180,103 +2578,108 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	 * @return array Collection parameters.
 	 */
 	public function get_collection_params() {
-		$query_params  = parent::get_collection_params();
+		$query_params = parent::get_collection_params();
 
-		$query_params[ self::PROP_CONTEXT ] = array(
-			'description' => __( 'The requested ai context.', 'kadence-blocks' ),
-			'type'        => 'string',
+		$query_params[ self::PROP_CONTEXT ]     = [
+			'description'       => __( 'The requested ai context.', 'kadence-blocks' ),
+			'type'              => 'string',
 			'sanitize_callback' => 'sanitize_text_field',
-		);
-		$query_params[ self::PROP_LIBRARY ] = array(
-			'description' => __( 'The requested library.', 'kadence-blocks' ),
-			'type'        => 'string',
+		];
+		$query_params[ self::PROP_LIBRARY ]     = [
+			'description'       => __( 'The requested library.', 'kadence-blocks' ),
+			'type'              => 'string',
 			'sanitize_callback' => 'sanitize_text_field',
-		);
-		$query_params[ self::PROP_LIBRARY_URL ] = array(
-			'description' => __( 'The requested library URL.', 'kadence-blocks' ),
-			'type'        => 'string',
+		];
+		$query_params[ self::PROP_LIBRARY_URL ] = [
+			'description'       => __( 'The requested library URL.', 'kadence-blocks' ),
+			'type'              => 'string',
 			'sanitize_callback' => 'sanitize_text_field',
-		);
+		];
 
-		$query_params[ self::PROP_FORCE_RELOAD ] = array(
+		$query_params[ self::PROP_FORCE_RELOAD ]  = [
 			'description' => __( 'Force a refresh of the context.', 'kadence-blocks' ),
 			'type'        => 'boolean',
 			'default'     => false,
-		);
-		$query_params[ self::PROP_KEY ] = array(
+		];
+		$query_params[ self::PROP_KEY ]           = [
 			'description'       => __( 'Library Key.', 'kadence-blocks' ),
 			'type'              => 'string',
 			'sanitize_callback' => 'sanitize_text_field',
-		);
-		$query_params[ self::PROP_API_KEY ] = array(
+		];
+		$query_params[ self::PROP_API_KEY ]       = [
 			'description'       => __( 'Kadence License Key.', 'kadence-blocks' ),
 			'type'              => 'string',
 			'sanitize_callback' => 'sanitize_text_field',
-		);
-		$query_params[ self::PROP_API_EMAIL ] = array(
+		];
+		$query_params[ self::PROP_API_EMAIL ]     = [
 			'description'       => __( 'Kadence License Email.', 'kadence-blocks' ),
 			'type'              => 'string',
 			'sanitize_callback' => 'sanitize_text_field',
-		);
-		$query_params[ self::PROP_API_PRODUCT ] = array(
+		];
+		$query_params[ self::PROP_API_PRODUCT ]   = [
 			'description'       => __( 'Kadence License Product ID.', 'kadence-blocks' ),
 			'type'              => 'string',
 			'sanitize_callback' => 'sanitize_text_field',
-		);
-		$query_params[ self::PROP_PATTERN_TYPE ] = array(
+		];
+		$query_params[ self::PROP_PATTERN_TYPE ]  = [
 			'description'       => __( 'Pattern Type', 'kadence-blocks' ),
 			'type'              => 'string',
 			'sanitize_callback' => 'sanitize_text_field',
-		);
-		$query_params[ self::PROP_PATTERN_STYLE ] = array(
+		];
+		$query_params[ self::PROP_PATTERN_STYLE ] = [
 			'description'       => __( 'Pattern Style', 'kadence-blocks' ),
 			'type'              => 'string',
 			'sanitize_callback' => 'sanitize_text_field',
-		);
-		$query_params[ self::PROP_PATTERN_ID ] = array(
+		];
+		$query_params[ self::PROP_PATTERN_ID ]    = [
 			'description'       => __( 'Pattern ID', 'kadence-blocks' ),
 			'type'              => 'string',
 			'sanitize_callback' => 'sanitize_text_field',
-		);
-		$query_params[ self::PROP_INDUSTRY ] = array(
+		];
+		$query_params[ self::PROP_INDUSTRY ]      = [
 			'description'       => __( 'The selected Industry', 'kadence-blocks' ),
 			'type'              => 'string',
 			'sanitize_callback' => 'sanitize_text_field',
-		);
-		$query_params[ self::PROP_IMAGE_TYPE ] = array(
+		];
+		$query_params[ self::PROP_IMAGE_TYPE ]    = [
 			'description'       => __( 'The Image type to return', 'kadence-blocks' ),
 			'type'              => 'string',
 			'sanitize_callback' => 'sanitize_text_field',
-		);
-		$query_params[ self::PROP_INDUSTRIES ] = array(
+		];
+		$query_params[ self::PROP_INDUSTRIES ]    = [
 			'description'       => __( 'The industries to return', 'kadence-blocks' ),
 			'type'              => 'array',
-			'sanitize_callback' => array( $this, 'sanitize_industries_array' ),
-		);
-		$query_params[ self::PROP_IMAGE_SIZES ] = array(
+			'sanitize_callback' => [ $this, 'sanitize_industries_array' ],
+		];
+		$query_params[ self::PROP_IMAGE_SIZES ]   = [
 			'description'       => __( 'The Image type to return', 'kadence-blocks' ),
 			'type'              => 'array',
-			'sanitize_callback' => array( $this, 'sanitize_image_sizes_array' ),
-		);
+			'sanitize_callback' => [ $this, 'sanitize_image_sizes_array' ],
+		];
+		$query_params[ self::PROP_META ]          = [
+			'description'       => __( 'The meta to return', 'kadence-blocks' ),
+			'type'              => 'string',
+			'sanitize_callback' => 'sanitize_text_field',
+		];
 		return $query_params;
 	}
 	/**
 	 * Sanitizes an array of industries.
 	 *
-	 * @param array    $industries One or more size arrays.
+	 * @param array           $industries One or more size arrays.
 	 * @param WP_REST_Request $request   Full details about the request.
 	 * @param string          $parameter Parameter name.
 	 * @return array|WP_Error List of valid subtypes, or WP_Error object on failure.
 	 */
 	public function sanitize_industries_array( $industries, $request ) {
 		if ( ! empty( $industries ) && is_array( $industries ) ) {
-			$new_industries = array();
+			$new_industries = [];
 			foreach ( $industries as $key => $value ) {
 				$new_industries[] = sanitize_text_field( $value );
 			}
 			return $new_industries;
 		}
-		return array();
+		return [];
 	}
 
 	/**
@@ -2318,7 +2721,7 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 		// Check if the image is from Pexels and get the filename.
 		if ( substr( $image_data['url'], 0, strlen( 'https://images.pexels.com' ) ) === 'https://images.pexels.com' ) {
 			$image_path = parse_url( $image_data['url'], PHP_URL_PATH );
-			$filename = basename( $image_path );
+			$filename   = basename( $image_path );
 		}
 		$info = wp_check_filetype( $image_path );
 		$ext  = empty( $info['ext'] ) ? '' : $info['ext'];
@@ -2333,10 +2736,10 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 		$file_content = wp_remote_retrieve_body(
 			wp_safe_remote_get(
 				$image_data['url'],
-				array(
+				[
 					'timeout'   => '60',
 					'sslverify' => false,
-				)
+				]
 			)
 		);
 		// Empty file content?
@@ -2344,14 +2747,14 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 			return $image_data;
 		}
 
-		$upload = wp_upload_bits( $filename, null, $file_content );
-		$post = array(
+		$upload                 = wp_upload_bits( $filename, null, $file_content );
+		$post                   = [
 			'post_title' => ( ! empty( $image_data['title'] ) ? $image_data['title'] : $filename ),
 			'guid'       => $upload['url'],
-		);
+		];
 		$post['post_mime_type'] = $type;
 		if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
-			include( ABSPATH . 'wp-admin/includes/image.php' );
+			include ABSPATH . 'wp-admin/includes/image.php';
 		}
 		$post_id = wp_insert_attachment( $post, $upload['file'] );
 		wp_update_attachment_metadata(
@@ -2372,10 +2775,10 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 		}
 		update_post_meta( $post_id, '_kadence_blocks_image_hash', sha1( $image_data['url'] ) );
 
-		return array(
+		return [
 			'id'  => $post_id,
 			'url' => $upload['url'],
-		);
+		];
 	}
 	/**
 	 * Gets a src url from an array of image data for a certain size.
@@ -2398,7 +2801,7 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	/**
 	 * Get information for our image.
 	 *
-	 * @param array $images the image url.
+	 * @param array  $images the image url.
 	 * @param string $target_src the image url.
 	 */
 	public function get_image_info( $images, $target_src ) {
@@ -2407,12 +2810,12 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 				foreach ( $image_group['images'] as $image ) {
 					foreach ( $image['sizes'] as $size ) {
 						if ( $size['src'] === $target_src ) {
-							return array(
+							return [
 								'alt'              => ! empty( $image['alt'] ) ? $image['alt'] : '',
 								'photographer'     => ! empty( $image['photographer'] ) ? $image['photographer'] : '',
 								'url'              => ! empty( $image['url'] ) ? $image['url'] : '',
 								'photographer_url' => ! empty( $image['photographer_url'] ) ? $image['photographer_url'] : '',
-							);
+							];
 						}
 					}
 				}
@@ -2433,14 +2836,14 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 			$image_id = attachment_url_to_postid( $image_data['url'] );
 			if ( empty( $image_id ) ) {
 				// Get unsized version use Regular expression to find the pattern -numberxnumber
-				$pattern = "/-\d+x\d+/";
+				$pattern = '/-\d+x\d+/';
 				// Replace the pattern with an empty string.
 				$cleaned_url = preg_replace( $pattern, '', $image_data['url'] );
 				if ( $cleaned_url !== $image_data['url'] ) {
 					$image_id = attachment_url_to_postid( $cleaned_url );
 					if ( empty( $image_id ) ) {
 						$scaled_url = preg_replace( $pattern, '-scaled', $image_data['url'] );
-						$image_id = attachment_url_to_postid( $scaled_url );
+						$image_id   = attachment_url_to_postid( $scaled_url );
 					}
 				}
 			}
@@ -2459,19 +2862,19 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 			);
 		}
 		if ( ! empty( $image_id ) ) {
-			$local_image = array(
+			$local_image = [
 				'id'  => $image_id,
 				'url' => ( ! empty( $image_data['url'] ) && strpos( $image_data['url'], get_site_url() ) !== false ) ? $image_data['url'] : wp_get_attachment_url( $image_id ),
-			);
-			return array(
+			];
+			return [
 				'status' => true,
 				'image'  => $local_image,
-			);
+			];
 		}
-		return array(
+		return [
 			'status' => false,
 			'image'  => $image_data,
-		);
+		];
 	}
 	/**
 	 * Check if link is for an image.
@@ -2494,19 +2897,22 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 	 *
 	 * @return string The base64 encoded string.
 	 */
-	public function get_token_header( $args = array() ) {
+	public function get_token_header( $args = [] ) {
 
 		$site_url     = get_original_domain();
 		$site_name    = get_bloginfo( 'name' );
 		$license_data = kadence_blocks_get_current_license_data();
-
-		$defaults = [
+		$product_slug = ( ! empty( $license_data['product'] ) && $license_data['product'] === 'kadence-blocks-pro' ? 'kadence-blocks-pro' : 'kadence-blocks' );
+		$defaults     = [
 			'domain'          => $site_url,
 			'key'             => ! empty( $license_data['key'] ) ? $license_data['key'] : '',
 			'site_name'       => sanitize_title( $site_name ),
-			'product_slug'    => apply_filters( 'kadence-blocks-auth-slug', 'kadence-blocks' ),
+			'product_slug'    => apply_filters( 'kadence-blocks-auth-slug', $product_slug ),
 			'product_version' => KADENCE_BLOCKS_VERSION,
 		];
+		if ( ! empty( $license_data['env'] ) ) {
+			$defaults['env'] = $license_data['env'];
+		}
 
 		$parsed_args = wp_parse_args( $args, $defaults );
 
@@ -2530,5 +2936,4 @@ class Kadence_Blocks_Prebuilt_Library_REST_Controller extends WP_REST_Controller
 
 		return $status === WP_Http::CONFLICT;
 	}
-
 }

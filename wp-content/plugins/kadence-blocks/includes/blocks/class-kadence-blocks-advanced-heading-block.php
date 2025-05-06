@@ -147,7 +147,7 @@ class Kadence_Blocks_Advancedheading_Block extends Kadence_Blocks_Abstract_Block
 			$css->add_property( 'letter-spacing', $attributes['mobileLetterSpacing'] . ( ! isset( $attributes['letterSpacingType'] ) ? 'px' : $attributes['letterSpacingType'] ) );
 			$css->set_media_state('desktop');
 		}
-		if ( isset( $attributes['color'] ) && ! empty( $attributes['color'] ) ) {
+		if ( ! empty( $attributes['color'] ) && empty( $attributes['enableTextGradient'] ) ) {
 			if ( class_exists( 'Kadence\Theme' ) ) {
 				if ( isset( $attributes['colorClass'] ) && empty( $attributes['colorClass'] ) || ! isset( $attributes['colorClass'] ) ) {
 					$css->add_property( 'color', $css->render_color( $attributes['color'] ) );
@@ -158,7 +158,18 @@ class Kadence_Blocks_Advancedheading_Block extends Kadence_Blocks_Abstract_Block
 				$css->add_property( 'color', $css->render_color( $attributes['color'] ) );
 			}
 		}
-		if ( isset( $attributes['background'] ) && ! empty( $attributes['background'] ) ) {
+		if( !empty( $attributes['textGradient'] ) && ! empty( $attributes['enableTextGradient'] ) ) {
+			$css->set_selector( '.wp-block-kadence-advancedheading.kt-adv-heading' . $unique_id . ', .wp-block-kadence-advancedheading.kt-adv-heading' . $unique_id . '[data-kb-block="kb-adv-heading' . $unique_id . '"] .kb-adv-text-inner' );
+			$css->add_property( 'background-image', $attributes['textGradient'] );
+			$css->add_property( 'background-clip', 'text' );
+			$css->add_property( '-webkit-box-decoration-break', 'clone' );
+			$css->add_property( 'box-decoration-break', 'clone' );
+			$css->add_property( '-webkit-background-clip', 'text' );
+			$css->add_property( '-webkit-text-fill-color', 'transparent' );
+			$css->set_selector( '.wp-block-kadence-advancedheading.kt-adv-heading' . $unique_id . ', .wp-block-kadence-advancedheading.kt-adv-heading' . $unique_id . '[data-kb-block="kb-adv-heading' . $unique_id . '"]' );
+
+		}
+		if ( ! empty( $attributes['background'] ) && empty( $attributes['enableTextGradient'] ) ) {
 			if ( class_exists( 'Kadence\Theme' ) ) {
 				if ( isset( $attributes['backgroundColorClass'] ) && empty( $attributes['backgroundColorClass'] ) || ! isset( $attributes['backgroundColorClass'] ) ) {
 					$css->add_property( 'background-color', $css->render_color( $attributes['background'] ) );
@@ -169,9 +180,42 @@ class Kadence_Blocks_Advancedheading_Block extends Kadence_Blocks_Abstract_Block
 				$css->add_property( 'background-color', $css->render_color( $attributes['background'] ) );
 			}
 		}
-		if ( isset( $attributes['textShadow'] ) && is_array( $attributes['textShadow'] ) && isset( $attributes['textShadow'][0] ) && is_array( $attributes['textShadow'][0] ) && isset( $attributes['textShadow'][0]['enable'] ) && $attributes['textShadow'][0]['enable'] ) {
-			$css->add_property( 'text-shadow', ( isset( $attributes['textShadow'][0]['hOffset'] ) ? $attributes['textShadow'][0]['hOffset'] : 1 ) . 'px ' . ( isset( $attributes['textShadow'][0]['vOffset'] ) ? $attributes['textShadow'][0]['vOffset'] : 1 ) . 'px ' . ( isset( $attributes['textShadow'][0]['blur'] ) ? $attributes['textShadow'][0]['blur'] : 1 ) . 'px ' . ( isset( $attributes['textShadow'][0]['color'] ) ? $css->render_color( $attributes['textShadow'][0]['color'] ) : 'rgba(0,0,0,0.2)' ) );
+		if ((isset($attributes['enableTextShadow']) && !empty($attributes['enableTextShadow']))
+			|| (isset($attributes['textShadow']) && !empty($attributes['textShadow'][0]['enable']))) {
+
+			if (empty($attributes['textShadow'])) {
+				$attributes['textShadow'] = [
+					[
+						'hOffset' => 1,
+						'vOffset' => 1,
+						'blur'    => 1,
+						'color'   => '#000000',
+						'opacity' => 0.2,
+					],
+				];
+			}
+
+			$this->render_text_shadow( $attributes, $css ); // This should be all that is required.
+			$css->set_media_state('desktop');
 		}
+
+		if (isset($attributes['textOrientation'])) {
+			$this->handle_text_orientation($css, $attributes['textOrientation']);
+			$this->handle_max_height($css, $attributes, 0, 'textOrientation');
+		}
+
+		if (isset($attributes['tabletTextOrientation'])) {
+			$css->set_media_state('tablet');
+			$this->handle_text_orientation($css, $attributes['tabletTextOrientation']);
+			$this->handle_max_height($css, $attributes, 1, 'tabletTextOrientation');
+		}
+
+		if (isset($attributes['mobileTextOrientation'])) {
+			$css->set_media_state('mobile');
+			$this->handle_text_orientation($css, $attributes['mobileTextOrientation']);
+			$this->handle_max_height($css, $attributes, 2, 'mobileTextOrientation');
+		}
+
 		$css->set_media_state( 'tablet' );
 		// Old size first.
 		if ( ! empty( $attributes['tabSize'] ) ) {
@@ -263,7 +307,7 @@ class Kadence_Blocks_Advancedheading_Block extends Kadence_Blocks_Abstract_Block
 		}
 
 		// Highlight.
-		$css->set_selector( '.wp-block-kadence-advancedheading.kt-adv-heading' . $unique_id . ' mark, .wp-block-kadence-advancedheading.kt-adv-heading' . $unique_id . '[data-kb-block="kb-adv-heading' . $unique_id . '"] mark' );
+		$css->set_selector( '.wp-block-kadence-advancedheading.kt-adv-heading' . $unique_id . ' mark.kt-highlight, .wp-block-kadence-advancedheading.kt-adv-heading' . $unique_id . '[data-kb-block="kb-adv-heading' . $unique_id . '"] mark.kt-highlight' );
 		if ( isset( $attributes['markLetterSpacing'] ) && ! empty( $attributes['markLetterSpacing'] ) ) {
 			$css->add_property( 'letter-spacing', $attributes['markLetterSpacing'] . ( ! isset( $attributes['markLetterSpacingType'] ) ? 'px' : $attributes['markLetterSpacingType'] ) );
 		}
@@ -285,13 +329,26 @@ class Kadence_Blocks_Advancedheading_Block extends Kadence_Blocks_Abstract_Block
 		if ( ! empty( $attributes['markFontStyle'] ) ) {
 			$css->add_property( 'font-style', $attributes['markFontStyle'] );
 		}
-		if ( ! empty( $attributes['markColor'] ) ) {
+		if( !empty( $attributes['textGradient'] ) && ! empty( $attributes['enableTextGradient'] ) ) {
+			$css->add_property( '-webkit-text-fill-color', 'initial !important' );
+			$css->add_property( '-webkit-background-clip', 'initial !important' );
+			$css->add_property( 'background-clip', 'initial !important' );
+		}
+		if ( ! empty( $attributes['markColor'] ) && empty( $attributes['enableMarkGradient'] ) ) {
 			$css->add_property( 'color', $css->render_color( $attributes['markColor'] ) );
+		} else if ( !empty( $attributes['markGradient'] ) && ! empty( $attributes['enableMarkGradient'] ) ) {
+			$css->add_property( 'background-image', $attributes['markGradient'] );
+			$css->add_property( '-webkit-background-clip', 'text' );
+			$css->add_property( 'background-clip', 'text' );
+			$css->add_property( '-webkit-text-fill-color', 'transparent' );
+		}
+		if ( ! empty($attributes['enableMarkBackgroundGradient']) && ! empty($attributes['markBackgroundGradient']) ) {
+			$css->add_property( 'background-image', $attributes['markBackgroundGradient'] );
 		}
 		if ( ! empty( $attributes['markTextTransform'] ) ) {
 			$css->add_property( 'text-transform', $attributes['markTextTransform'] );
 		}
-		if ( ! empty( $attributes['markBG'] ) ) {
+		if ( ! empty( $attributes['markBG'] ) && empty( $attributes['enableMarkGradient'] ) && empty( $attributes['enableMarkBackgroundGradient'] ) ) {
 			$alpha = ( isset( $attributes['markBGOpacity'] ) && ! empty( $attributes['markBGOpacity'] ) ? $attributes['markBGOpacity'] : 1 );
 			$css->add_property( 'background', $css->render_color( $attributes['markBG'], $alpha ) );
 		}
@@ -307,7 +364,8 @@ class Kadence_Blocks_Advancedheading_Block extends Kadence_Blocks_Abstract_Block
 		}
 		$css->render_border_styles( $attributes, 'markBorderStyles' );
 		$css->render_border_radius( $attributes, 'markBorderRadius', ( ! empty( $attributes['markBorderRadiusUnit'] ) ? $attributes['markBorderRadiusUnit'] : 'px' ) );
-
+		$css->add_property( '-webkit-box-decoration-break', 'clone' );
+		$css->add_property( 'box-decoration-break', 'clone' );
 		$css->set_media_state( 'tablet' );
 		$css->render_border_radius( $attributes, 'tabletMarkBorderRadius', ( ! empty( $attributes['markBorderRadiusUnit'] ) ? $attributes['markBorderRadiusUnit'] : 'px' ) );
 		$css->set_media_state( 'desktop' );
@@ -348,7 +406,7 @@ class Kadence_Blocks_Advancedheading_Block extends Kadence_Blocks_Abstract_Block
 		}
 		// Tablet.
 		$css->set_media_state( 'tablet' );
-		$css->set_selector( '.wp-block-kadence-advancedheading.kt-adv-heading' . $unique_id . ' mark, .wp-block-kadence-advancedheading.kt-adv-heading' . $unique_id . '[data-kb-block="kb-adv-heading' . $unique_id . '"] mark' );
+		$css->set_selector( '.wp-block-kadence-advancedheading.kt-adv-heading' . $unique_id . ' mark.kt-highlight, .wp-block-kadence-advancedheading.kt-adv-heading' . $unique_id . '[data-kb-block="kb-adv-heading' . $unique_id . '"] mark.kt-highlight' );
 		if ( ! empty( $attributes['markSize'][1] ) ) {
 			$css->add_property( 'font-size', $css->get_font_size( $attributes['markSize'][1], ( ! isset( $attributes['markSizeType'] ) ? 'px' : $attributes['markSizeType'] ) ) );
 		}
@@ -381,7 +439,11 @@ class Kadence_Blocks_Advancedheading_Block extends Kadence_Blocks_Abstract_Block
 		if ( strpos( $content, 'kb-tooltips') !== false || ( ! empty( $attributes['icon'] ) && ! empty( $attributes['iconTooltip'] ) ) ) {
 			$this->enqueue_script( 'kadence-blocks-tippy' );
 		}
-		if ( ! empty( $attributes['icon'] ) ) {
+
+		$should_wrap_content = ! empty( $attributes['icon'] ) ||
+		                       ( ! empty( $attributes['enableTextGradient'] ) && strpos( $content, 'kt-typed-text' ) === false );
+
+		if ( $should_wrap_content ) {
 			$tag_name     = $this->get_html_tag( $attributes, 'htmlTag', 'h2', $this->allowed_html_tags, 'level' );
 			$text_content = $this->get_inner_content( $content, $tag_name );
 			// Start empty.
@@ -389,7 +451,10 @@ class Kadence_Blocks_Advancedheading_Block extends Kadence_Blocks_Abstract_Block
 			$reveal_animation = ( ! empty( $attributes['kadenceAnimation'] ) && ( 'reveal-left' === $attributes['kadenceAnimation'] || 'reveal-right' === $attributes['kadenceAnimation'] || 'reveal-up' === $attributes['kadenceAnimation'] || 'reveal-down' === $attributes['kadenceAnimation'] ) ? true : false );
 			$wrapper = $reveal_animation ? true : false;
 			$icon_side = ! empty( $attributes['iconSide'] ) ? $attributes['iconSide'] : 'left';
-			$classes = array( 'kt-adv-heading' . $unique_id, 'wp-block-kadence-advancedheading', 'kt-adv-heading-has-icon' );
+			$classes = array( 'kt-adv-heading' . $unique_id, 'wp-block-kadence-advancedheading' );
+			if ( ! empty( $attributes['icon'] ) ) {
+				$classes[] = 'kt-adv-heading-has-icon';
+			}
 			if ( ! empty( $attributes['link'] ) && ! empty( $attributes['linkStyle'] ) ) {
 				$classes[] = 'hls-' . $attributes['linkStyle'];
 			}
@@ -419,11 +484,13 @@ class Kadence_Blocks_Advancedheading_Block extends Kadence_Blocks_Abstract_Block
 			$inner_content_attributes = implode( ' ', $inner_content_attributes );
 			$icon_left = '';
 			$icon_right = '';
-			if ( 'left' === $icon_side ) {
-				$icon_left = $this->get_icon( $attributes );
-			}
-			if ( 'right' === $icon_side ) {
-				$icon_right = $this->get_icon( $attributes );
+			if ( ! empty( $attributes['icon'] ) ) {
+				if ( 'left' === $icon_side ) {
+					$icon_left = $this->get_icon( $attributes );
+				}
+				if ( 'right' === $icon_side ) {
+					$icon_right = $this->get_icon( $attributes );
+				}
 			}
 			$content = sprintf( '<%1$s %2$s>%3$s<span class="kb-adv-text-inner">%4$s</span>%5$s</%1$s>', $tag_name, $inner_content_attributes, $icon_left, $text_content, $icon_right );
 			if ( ! empty( $attributes['link'] ) ) {
@@ -509,7 +576,7 @@ class Kadence_Blocks_Advancedheading_Block extends Kadence_Blocks_Abstract_Block
 			return;
 		}
 		wp_register_style( 'kadence-blocks-' . $this->block_name, false );
-		$heading_css = '.wp-block-kadence-advancedheading mark{background:transparent;border-style:solid;border-width:0}.wp-block-kadence-advancedheading mark.kt-highlight{color:#f76a0c;}.kb-adv-heading-icon{display: inline-flex;justify-content: center;align-items: center;}';
+		$heading_css = '.wp-block-kadence-advancedheading mark{background:transparent;border-style:solid;border-width:0}.wp-block-kadence-advancedheading mark.kt-highlight{color:#f76a0c;}.kb-adv-heading-icon{display: inline-flex;justify-content: center;align-items: center;} .is-layout-constrained > .kb-advanced-heading-link {display: block;}';
 		// Short term fix for an issue with heading wrapping.
 		if ( class_exists( '\Kadence\Theme' ) ) {
 			$heading_css .= '.single-content .kadence-advanced-heading-wrapper h1, .single-content .kadence-advanced-heading-wrapper h2, .single-content .kadence-advanced-heading-wrapper h3, .single-content .kadence-advanced-heading-wrapper h4, .single-content .kadence-advanced-heading-wrapper h5, .single-content .kadence-advanced-heading-wrapper h6 {margin: 1.5em 0 .5em;}.single-content .kadence-advanced-heading-wrapper+* { margin-top:0;}';
@@ -566,6 +633,197 @@ class Kadence_Blocks_Advancedheading_Block extends Kadence_Blocks_Abstract_Block
 		return '<span class="kb-svg-icon-wrap kb-adv-heading-icon kb-svg-icon-' . esc_attr( $attributes['icon'] ) . ' kb-adv-heading-icon-side-' . esc_attr( $icon_side ) . '"' . ( ! empty( $attributes['iconTooltip'] ) ? ' data-kb-tooltip-content="' . esc_attr( $attributes['iconTooltip'] ) . '" tabindex="0"' . $tooltip_placement : '' ) . '>' . $svg_icon . '</span>';
 	}
 
+	/**
+	 * Handles the text orientation by updating CSS properties based on the specified orientation.
+	 *
+	 * @param object $css The CSS processor object used to apply properties.
+	 * @param string $textOrientation The specified text orientation. Possible values are 'horizontal', 'stacked', 'sideways-down', and 'sideways-up'.
+	 * @return void
+	 */
+	private function handle_text_orientation($css, $textOrientation) {
+		switch ($textOrientation) {
+			case 'horizontal':
+				$css->add_property('writing-mode', 'horizontal-tb');
+				$css->add_property('text-orientation', 'mixed');
+				break;
+			case 'stacked':
+				$css->add_property('writing-mode', 'vertical-lr');
+				$css->add_property('text-orientation', 'upright');
+				break;
+			case 'sideways-down':
+				$css->add_property('writing-mode', 'vertical-lr');
+				$css->add_property('text-orientation', 'sideways');
+				break;
+			case 'sideways-up':
+				$css->add_property('writing-mode', 'sideways-lr');
+				$css->add_property('text-orientation', 'sideways');
+				break;
+		}
+	}
+
+	/**
+	 * Handles the max-height property for CSS generation based on block attributes.
+	 *
+	 * @param object $css The CSS generator object.
+	 * @param array $attributes The block attributes.
+	 * @param int $deviceIndex The index representing the current device context.
+	 * @param string $orientationKey The key that defines the orientation for the current context.
+	 *
+	 * @return void
+	 */
+	private function handle_max_height($css, $attributes, $deviceIndex, $orientationKey) {
+		if (
+			isset($attributes['maxHeight']) &&
+			is_array($attributes['maxHeight']) &&
+			!empty($attributes['maxHeight'][$deviceIndex]) &&
+			$attributes[$orientationKey] !== 'horizontal'
+		) {
+			$css->add_property(
+				'max-height',
+				$attributes['maxHeight'][$deviceIndex] .
+				( !isset($attributes['maxHeightType'][$deviceIndex]) ? 'px' : $attributes['maxHeightType'][$deviceIndex] )
+			);
+		}
+	}
+
+	/**
+	 * Renders the text shadow styles across desktop, tablet, and mobile devices based on the provided attributes.
+	 *
+	 * @param array $attributes An array of attributes containing text shadow properties for different breakpoints (desktop, tablet, and mobile).
+	 * @return void
+	 */
+	public function render_text_shadow( $attributes, $css ) {
+
+		if (!empty($attributes['textShadow']) &&
+			is_array($attributes['textShadow'][0]) &&
+			(!empty($attributes['enableTextShadow']) || !empty($attributes['textShadow'][0]['enable']))
+		) {
+			$textShadow = $attributes['textShadow'][0] ?? [];
+			$textShadow['hOffset'] = $textShadow['hOffset'] ?? 1;
+			$textShadow['vOffset'] = $textShadow['vOffset'] ?? 1;
+			$textShadow['blur']    = $textShadow['blur'] ?? 1;
+			$textShadow['color']   = $textShadow['color'] ?? null;
+			$textShadow['opacity'] = $textShadow['opacity'] ?? 1.0; // Default is 0.2, but if it's undefed they set it at a time when the block defaults it to 1.0
+		}
+
+		if (!empty($attributes['textShadowTablet']) && is_array($attributes['textShadowTablet'][0])) {
+			$textShadowTablet = $attributes['textShadowTablet'][0] ?? [];
+			$textShadowTablet['hOffset'] = $this->get_cascading_value(
+				null, // No mobile value is considered here for tablet logic
+				$textShadowTablet['hOffset'] ?? null,
+				$attributes['textShadow'][0]['hOffset'] ?? null,
+				1
+			);
+			$textShadowTablet['vOffset'] = $this->get_cascading_value(
+				null,
+				$textShadowTablet['vOffset'] ?? null,
+				$attributes['textShadow'][0]['vOffset'] ?? null,
+				1
+			);
+			$textShadowTablet['blur'] = $this->get_cascading_value(
+				null,
+				$textShadowTablet['blur'] ?? null,
+				$attributes['textShadow'][0]['blur'] ?? null,
+				1
+			);
+			$textShadowTablet['color'] = $this->get_cascading_value(
+				null,
+				$textShadowTablet['color'] ?? null,
+				$attributes['textShadow'][0]['color'] ?? null,
+				null // Default fallback value for color
+			);
+			$textShadowTablet['opacity'] = $this->get_cascading_value(
+				null,
+				$textShadowTablet['opacity'] ?? null,
+				$attributes['textShadow'][0]['opacity'] ?? null,
+				1
+			);
+		}
+		if (!empty($attributes['textShadowMobile']) && is_array($attributes['textShadowMobile'][0])) {
+			$textShadowMobile = $attributes['textShadowMobile'][0] ?? [];
+			$textShadowMobile['hOffset'] = $this->get_cascading_value(
+				$textShadowMobile['hOffset'] ?? null,
+				$attributes['textShadowTablet'][0]['hOffset'] ?? null,
+				$attributes['textShadow'][0]['hOffset'] ?? null,
+				1
+			);
+			$textShadowMobile['vOffset'] = $this->get_cascading_value(
+				$textShadowMobile['vOffset'] ?? null,
+				$attributes['textShadowTablet'][0]['vOffset'] ?? null,
+				$attributes['textShadow'][0]['vOffset'] ?? null,
+				1
+			);
+			$textShadowMobile['blur'] = $this->get_cascading_value(
+				$textShadowMobile['blur'] ?? null,
+				$attributes['textShadowTablet'][0]['blur'] ?? null,
+				$attributes['textShadow'][0]['blur'] ?? null,
+				1
+			);
+			$textShadowMobile['color'] = $this->get_cascading_value(
+				$textShadowMobile['color'] ?? null,
+				$attributes['textShadowTablet'][0]['color'] ?? null,
+				$attributes['textShadow'][0]['color'] ?? null,
+				null
+			);
+			$textShadowMobile['opacity'] = $this->get_cascading_value(
+				$textShadowMobile['opacity'] ?? null,
+				$attributes['textShadowTablet'][0]['opacity'] ?? null,
+				$attributes['textShadow'][0]['opacity'] ?? null,
+				1
+			);
+		}
+
+		$responsiveTextShadow = [$textShadow, $textShadowTablet ?? null, $textShadowMobile ?? null];
+
+		foreach ($responsiveTextShadow as $key => $textShadow) {
+			if (!empty($textShadow)) {
+				if ( strpos($textShadow['color'], 'rgba') !== false ) {
+					$shadow_string = ( ! empty( $textShadow['hOffset'] ) ? $textShadow['hOffset'] : '0' ) . 'px '
+						. ( ! empty( $textShadow['vOffset'] ) ? $textShadow['vOffset'] : '0' ) . 'px '
+						. ( ! empty( $textShadow['blur'] ) ? $textShadow['blur'] : '0' ) . 'px '
+						. ( ! empty( $textShadow['color'] )
+							? $css->render_color( $textShadow['color'] )
+							: $css->render_color( '#000000', $textShadow['opacity'] )
+						);
+				} else {
+					$shadow_string = ( ! empty( $textShadow['hOffset'] ) ? $textShadow['hOffset'] : '0' ) . 'px '
+						. ( ! empty( $textShadow['vOffset'] ) ? $textShadow['vOffset'] : '0' ) . 'px '
+						. ( ! empty( $textShadow['blur'] ) ? $textShadow['blur'] : '0' ) . 'px '
+						. ( ! empty( $textShadow['color'] )
+							? $css->render_color( $textShadow['color'], $textShadow['opacity'] )
+							: $css->render_color( '#000000', $textShadow['opacity'] )
+						);
+				}
+
+				switch ($key) {
+					case 0: $css->set_media_state('desktop'); break;
+					case 1: $css->set_media_state('tablet'); break;
+					case 2: $css->set_media_state('mobile'); break;
+				}
+
+				$css->add_property('text-shadow', $shadow_string);
+			}
+		}
+	}
+
+	/**
+	 * Retrieve the cascading value based on device-specific settings.
+	 *
+	 * @param mixed $mobile The value specifically set for mobile devices.
+	 * @param mixed $tablet The value specifically set for tablet devices.
+	 * @param mixed $default The default value if mobile and tablet values are not provided.
+	 * @param mixed $fallback The fallback value if none of the other values are set.
+	 */
+	public function get_cascading_value($mobile, $tablet, $default, $fallback) {
+		if (isset($mobile) && $mobile !== '') {
+			return $mobile;
+		} elseif (isset($tablet) && $tablet !== '') {
+			return $tablet;
+		} elseif (isset($default) && $default !== '') {
+			return $default;
+		}
+		return $fallback;
+	}
 }
 
 Kadence_Blocks_Advancedheading_Block::get_instance();

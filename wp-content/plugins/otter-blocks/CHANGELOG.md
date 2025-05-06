@@ -1,3 +1,97 @@
+##### [Version 3.0.11](https://github.com/Codeinwp/otter-blocks/compare/v3.0.10...v3.0.11) (2025-04-16)
+
+- Updated dependencies
+
+##### [Version 3.0.10](https://github.com/Codeinwp/otter-blocks/compare/v3.0.9...v3.0.10) (2025-02-05)
+
+- Fix language pack loading
+
+##### [Version 3.0.9](https://github.com/Codeinwp/otter-blocks/compare/v3.0.8...v3.0.9) (2025-01-16)
+
+- Fixed compatibility with WordPress 6.7, causing images to display incorrectly in the front-end
+
+##### [Version 3.0.8](https://github.com/Codeinwp/otter-blocks/compare/v3.0.7...v3.0.8) (2024-11-28)
+
+- Adds Template Cloud integration
+
+##### [Version 3.0.7](https://github.com/Codeinwp/otter-blocks/compare/v3.0.6...v3.0.7) (2024-11-21)
+
+- Enhanced security
+
+##### [Version 3.0.6](https://github.com/Codeinwp/otter-blocks/compare/v3.0.5...v3.0.6) (2024-11-12)
+
+- Fixed issue where spaces couldnt be typed directly in the Form blocks Submit button
+- Updated dependencies
+
+##### [Version 3.0.5](https://github.com/Codeinwp/otter-blocks/compare/v3.0.4...v3.0.5) (2024-10-30)
+
+- Improve strings structure for translation workflow
+- Enhanced security
+- Update internal dependencies
+
+##### [Version 3.0.4](https://github.com/Codeinwp/otter-blocks/compare/v3.0.3...v3.0.4) (2024-10-08)
+
+- Fixed styling that was breaking Otters notice
+- Fixed PHP fatal error appearing in some edge cases
+- Fixed border width and border-radius not working for Button Group block
+- Enhanced security
+- Fixed an issue with the user survey display
+
+##### [Version 3.0.3](https://github.com/Codeinwp/otter-blocks/compare/v3.0.2...v3.0.3) (2024-08-28)
+
+### Bug Fixes
+
+- **Fix WP Compatibility**: Fixed compatibility with versions of WordPress 6.5 or earlier.
+- **Fix Popup Block Recurring Dismission**: Fixed Popup Block not dismissing recurring visitors option.
+
+##### [Version 3.0.2](https://github.com/Codeinwp/otter-blocks/compare/v3.0.1...v3.0.2) (2024-08-19)
+
+### Bug Fixes
+- **Revert Slider Overflow**: Reverts a previous Slider fix that breaks overflow in Section Block.
+
+##### [Version 3.0.1](https://github.com/Codeinwp/otter-blocks/compare/v3.0.0...v3.0.1) (2024-08-19)
+
+### Bug Fixes
+- **Fix items getting cut off in Section Block on Mobile**: Fixes the regression caused by the last release that makes some items hidden in mobile that are children of Section block.
+
+#### [Version 3.0.0](https://github.com/Codeinwp/otter-blocks/compare/v2.6.13...v3.0.0) (2024-08-12)
+
+### New Features
+- **Patterns Library in Otter**: Added a new Patterns Library to Otter, including dozens of new patterns.
+- **Content Timeline Block**: Added a new Content Timeline Block for enhanced content structuring.
+- **New Tiled Layout for Posts Block**: Added a new tiled layout option to the Posts Block, providing more versatility in content presentation.
+- **Additional WooCommerce Conditions in Block Conditions**: Added more WooCommerce conditions to Block Conditions, including Product Category (has/has not), Product Tag, and Product Attribute.
+- **Modal Block in Pro Version**: Introduced a new Modal Block in the Pro version for creating modals.
+- **Mailchimp Merge Fields in Form Block**: Added the ability to link the value of the fields with some types for Mailchimp Merge Fields in the Form Block.
+- **Responsive Controls for Column Width in Section Block**: Enabled responsive controls for column width in the Section Block.
+- **Custom Text for Button in WooCommerce Add to Cart Block**: Allowed using custom text for buttons in the WooCommerce Add to Cart Block.
+- **Search Within Categories for Posts in Live Search Extension**: Enabled searching within categories for posts in the Live Search extension.
+- **Image Ratio Settings for Posts Block**: Improved the handling of images in the Posts Block with the addition of new Image Ratio settings, allowing for better control over image presentation.
+
+### Improvements
+- **OpenAI API Validation Key**: Added a validation key step in the settings for the OpenAI API.
+- **Visual Improvements to AI Block Variation Picker**: Enhanced the visual appearance and user interface of the AI Block Variation picker for a smoother user experience.
+- **Changes to Default Settings for Posts Block**: Updated the default settings for the Posts Block to optimize performance and ease of use.
+- **Dynamic Data Feature in Block Toolbar**: Relocated the Dynamic Data feature to the Block Toolbar for easier access and streamlined workflow.
+- **Increase Height for Popup in Editor on Auto Mode**: Increased the height for the popup in the editor when in auto mode.
+- **Block Tools Display by Default**: Changed Block tools settings to show them by default.
+- **Improved Error Messages in Form Block**: Enhanced error messages when the tester is an admin in the Form Block.
+- **Twitter Icon to X in Sharing Block**: Updated the Twitter icon to X in the Sharing Block.
+- **Disable Content AI Actions in Sidebar**: Added a setting in the dashboard to disable Content AI actions from the sidebar.
+- **ESC Key to Close Popup Block**: Added the option to close popups using the ESC key in the Popup Block.
+- **Various Quality of Life Improvements**: Ongoing enhancements to improve overall user experience.
+
+### Bug Fixes
+- **Removal of Copy/Paste Styles Feature**: Removed the Copy/Paste Styles feature to simplify the user interface and reduce potential conflicts.
+- **Padding Fix in Advanced Heading Block**: Fixed the issue where padding was not working correctly on mobile in the Advanced Heading block.
+- **Slider Width in Section Column**: Fixed the issue where the slider inside a section column was ignoring the width setting.
+- **Fix Blocks Using Empty ID**: Corrected the issue where blocks could use an empty ID.
+- **Blocks Not Working as Widgets**: Resolved the problem where blocks were not working properly when used as widgets.
+- **Replace Option in AI Block**: Fixed the issue where the replace option in the AI block was not working.
+- **Tabs and Accordion Block Scrolling**: Fixed the issue in the Tabs and Accordion Block where it was scrolling when the content exceeded one screen, adding a jump effect.
+- **Section Block Margin and Padding Inheritance**: Fixed the default inheritance for margin and padding in the Section Block.
+- **Flip Card Image Background Size**: Corrected the issue where the flip card image background size wasnt working on the frontend.
+
 ##### [Version 2.6.13](https://github.com/Codeinwp/otter-blocks/compare/v2.6.12...v2.6.13) (2024-07-17)
 
 - Fixed Button Group block - Appearance, Letter case, and Line height options are now working

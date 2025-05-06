@@ -163,7 +163,8 @@
             window.open('https://cf7addons.com/');
         });
 
-        $(window).on('load', function () {
+        $(window).on('load', function (e) {
+            e.preventDefault();
             $('.tf-field-disable').find('input, select, textarea, button, div, span').attr('disabled', 'disabled');
         });
 
@@ -182,7 +183,7 @@
          * Generate & set unique id for hotel rooms
          */
         $(document).on('click', '.room-repeater > div.csf-fieldset > a.csf-repeater-add', function (e) {
-
+            e.preventDefault();
             var repeaterNumber = $('.room-repeater .csf-repeater-wrapper [data-depend-id="room"]').length - 2;
 
             $('.room-repeater .unique-id input').each(function () {

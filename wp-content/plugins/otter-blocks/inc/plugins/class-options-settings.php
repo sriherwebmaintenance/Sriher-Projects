@@ -7,6 +7,9 @@
 
 namespace ThemeIsle\GutenbergBlocks\Plugins;
 
+use ThemeIsle\GutenbergBlocks\Server\Template_Cloud_Server;
+use ThemeIsle\GutenbergBlocks\Plugins\Template_Cloud;
+
 /**
  * Class Options_Settings
  */
@@ -92,6 +95,28 @@ class Options_Settings {
 
 		register_setting(
 			'themeisle_blocks_settings',
+			'themeisle_blocks_settings_patterns_library',
+			array(
+				'type'         => 'boolean',
+				'description'  => __( 'Patterns Library module allows to add predefined patterns to your blocks.', 'otter-blocks' ),
+				'show_in_rest' => true,
+				'default'      => true,
+			)
+		);
+
+		register_setting(
+			'themeisle_blocks_settings',
+			'themeisle_blocks_settings_dynamic_content',
+			array(
+				'type'         => 'boolean',
+				'description'  => __( 'Dynamic Content allows you to display dynamic content, link and images in your content.', 'otter-blocks' ),
+				'show_in_rest' => true,
+				'default'      => true,
+			)
+		);
+
+		register_setting(
+			'themeisle_blocks_settings',
 			'themeisle_blocks_settings_highlight_dynamic',
 			array(
 				'type'         => 'boolean',
@@ -131,6 +156,17 @@ class Options_Settings {
 				'description'  => __( 'Use 0.5 Scale for Review Block.', 'otter-blocks' ),
 				'show_in_rest' => true,
 				'default'      => false,
+			)
+		);
+
+		register_setting(
+			'themeisle_blocks_settings',
+			'themeisle_blocks_settings_block_ai_toolbar_module',
+			array(
+				'type'         => 'boolean',
+				'description'  => __( 'Enable the AI Block Toolbar in Editor', 'otter-blocks' ),
+				'show_in_rest' => true,
+				'default'      => true,
 			)
 		);
 
@@ -721,6 +757,94 @@ class Options_Settings {
 				'description'  => __( 'Enable FSE Onboarding Wizard.', 'otter-blocks' ),
 				'show_in_rest' => true,
 				'default'      => true,
+			)
+		);
+
+		register_setting(
+			'themeisle_blocks_settings',
+			'themeisle_blocks_settings_prompt_actions',
+			array(
+				'type'              => 'array',
+				'description'       => __( 'The prompt actions list of toolbar.', 'otter-blocks' ),
+				'sanitize_callback' => function( $array ) {
+					return array_map(
+						function( $item ) {
+							if ( isset( $item['title'] ) ) {
+								$item['title'] = sanitize_text_field( $item['title'] );
+							}
+							if ( isset( $item['prompt'] ) ) {
+								$item['prompt'] = sanitize_text_field( $item['prompt'] );
+							}
+							return $item;
+						},
+						$array
+					);
+				},
+				'default'           => array(
+					array(
+						'title'  => 'Fix Grammar',
+						'prompt' => 'Fix any grammatical errors in the following: {text_input}',
+					),
+					array(
+						'title'  => 'Rephrase',
+						'prompt' => 'Rephrase the following following: {text_input}',
+					),
+					array(
+						'title'  => 'Make Shorter',
+						'prompt' => 'Summarize or shorten the following: {text_input}',
+					),
+					array(
+						'title'  => 'Make Longer',
+						'prompt' => 'Expand or elaborate on the following: {text_input}',
+					),
+				),
+				'show_in_rest'      => array(
+					'schema' => array(
+						'type'  => 'array',
+						'items' => array(
+							'type'       => 'object',
+							'properties' => array(
+								'title'  => array(
+									'type' => 'string',
+								),
+								'prompt' => array(
+									'type' => 'string',
+								),
+							),
+						),
+					),
+				),
+			)
+		);
+
+
+		register_setting(
+			'themeisle_blocks_settings',
+			Template_Cloud::SOURCES_SETTING_KEY,
+			array(
+				'type'              => 'array',
+				'description'       => __( 'The template cloud sources from which patterns will be loaded.', 'otter-blocks' ),
+				'sanitize_callback' => [ Template_Cloud_Server::class, 'sanitize_template_cloud_sources' ],
+				'show_in_rest'      => array(
+					'schema' => array(
+						'type'  => 'array',
+						'items' => array(
+							'type'       => 'object',
+							'properties' => array(
+								'key'  => array(
+									'type' => 'string',
+								),
+								'url'  => array(
+									'type' => 'string',
+								),
+								'name' => array(
+									'type' => 'string',
+								),
+							),
+						),
+					),
+				),
+				'default'           => [],
 			)
 		);
 	}

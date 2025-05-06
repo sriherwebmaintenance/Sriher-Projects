@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit065d07b9635a04adf752972d7b0b525f
+class ComposerStaticInit1fab5656068a5ca0dc8dd793838bd2a1
 {
     public static $files = array (
         '16e4325dd9bdbbd2ce8c9530b088e50b' => __DIR__ . '/..' . '/codeinwp/themeisle-sdk/load.php',
@@ -142,6 +142,8 @@ class ComposerStaticInit065d07b9635a04adf752972d7b0b525f
         'Stripe\\BaseStripeClientInterface' => __DIR__ . '/..' . '/stripe/stripe-php/lib/BaseStripeClientInterface.php',
         'Stripe\\BillingPortal\\Configuration' => __DIR__ . '/..' . '/stripe/stripe-php/lib/BillingPortal/Configuration.php',
         'Stripe\\BillingPortal\\Session' => __DIR__ . '/..' . '/stripe/stripe-php/lib/BillingPortal/Session.php',
+        'Stripe\\Billing\\Alert' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Billing/Alert.php',
+        'Stripe\\Billing\\AlertTriggered' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Billing/AlertTriggered.php',
         'Stripe\\Billing\\Meter' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Billing/Meter.php',
         'Stripe\\Billing\\MeterEvent' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Billing/MeterEvent.php',
         'Stripe\\Billing\\MeterEventAdjustment' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Billing/MeterEventAdjustment.php',
@@ -168,6 +170,7 @@ class ComposerStaticInit065d07b9635a04adf752972d7b0b525f
         'Stripe\\Discount' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Discount.php',
         'Stripe\\Dispute' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Dispute.php',
         'Stripe\\Entitlements\\ActiveEntitlement' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Entitlements/ActiveEntitlement.php',
+        'Stripe\\Entitlements\\ActiveEntitlementSummary' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Entitlements/ActiveEntitlementSummary.php',
         'Stripe\\Entitlements\\Feature' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Entitlements/Feature.php',
         'Stripe\\EphemeralKey' => __DIR__ . '/..' . '/stripe/stripe-php/lib/EphemeralKey.php',
         'Stripe\\ErrorObject' => __DIR__ . '/..' . '/stripe/stripe-php/lib/ErrorObject.php',
@@ -235,7 +238,6 @@ class ComposerStaticInit065d07b9635a04adf752972d7b0b525f
         'Stripe\\Payout' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Payout.php',
         'Stripe\\Person' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Person.php',
         'Stripe\\Plan' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Plan.php',
-        'Stripe\\PlatformTaxFee' => __DIR__ . '/..' . '/stripe/stripe-php/lib/PlatformTaxFee.php',
         'Stripe\\Price' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Price.php',
         'Stripe\\Product' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Product.php',
         'Stripe\\ProductFeature' => __DIR__ . '/..' . '/stripe/stripe-php/lib/ProductFeature.php',
@@ -266,6 +268,7 @@ class ComposerStaticInit065d07b9635a04adf752972d7b0b525f
         'Stripe\\Service\\BillingPortal\\BillingPortalServiceFactory' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Service/BillingPortal/BillingPortalServiceFactory.php',
         'Stripe\\Service\\BillingPortal\\ConfigurationService' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Service/BillingPortal/ConfigurationService.php',
         'Stripe\\Service\\BillingPortal\\SessionService' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Service/BillingPortal/SessionService.php',
+        'Stripe\\Service\\Billing\\AlertService' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Service/Billing/AlertService.php',
         'Stripe\\Service\\Billing\\BillingServiceFactory' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Service/Billing/BillingServiceFactory.php',
         'Stripe\\Service\\Billing\\MeterEventAdjustmentService' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Service/Billing/MeterEventAdjustmentService.php',
         'Stripe\\Service\\Billing\\MeterEventService' => __DIR__ . '/..' . '/stripe/stripe-php/lib/Service/Billing/MeterEventService.php',
@@ -482,6 +485,8 @@ class ComposerStaticInit065d07b9635a04adf752972d7b0b525f
         'ThemeIsle\\GutenbergBlocks\\CSS\\Blocks\\Sharing_Icons_CSS' => __DIR__ . '/../..' . '/inc/css/blocks/class-sharing-icons-css.php',
         'ThemeIsle\\GutenbergBlocks\\CSS\\Blocks\\Slider_CSS' => __DIR__ . '/../..' . '/inc/css/blocks/class-slider-css.php',
         'ThemeIsle\\GutenbergBlocks\\CSS\\Blocks\\Tabs_CSS' => __DIR__ . '/../..' . '/inc/css/blocks/class-tabs-css.php',
+        'ThemeIsle\\GutenbergBlocks\\CSS\\Blocks\\Timeline_CSS' => __DIR__ . '/../..' . '/inc/css/blocks/class-timeline-css.php',
+        'ThemeIsle\\GutenbergBlocks\\CSS\\Blocks\\Timeline_Item_CSS' => __DIR__ . '/../..' . '/inc/css/blocks/class-timeline-item-css.php',
         'ThemeIsle\\GutenbergBlocks\\CSS\\CSS_Handler' => __DIR__ . '/../..' . '/inc/css/class-css-handler.php',
         'ThemeIsle\\GutenbergBlocks\\CSS\\CSS_Utility' => __DIR__ . '/../..' . '/inc/css/class-css-utility.php',
         'ThemeIsle\\GutenbergBlocks\\Integration\\FormSubscribeServiceInterface' => __DIR__ . '/../..' . '/inc/integrations/interfaces/interface-form-subscribe-service.php',
@@ -503,6 +508,7 @@ class ComposerStaticInit065d07b9635a04adf752972d7b0b525f
         'ThemeIsle\\GutenbergBlocks\\Plugins\\LimitedOffers' => __DIR__ . '/../..' . '/inc/plugins/class-limited-offers.php',
         'ThemeIsle\\GutenbergBlocks\\Plugins\\Options_Settings' => __DIR__ . '/../..' . '/inc/plugins/class-options-settings.php',
         'ThemeIsle\\GutenbergBlocks\\Plugins\\Stripe_API' => __DIR__ . '/../..' . '/inc/plugins/class-stripe-api.php',
+        'ThemeIsle\\GutenbergBlocks\\Plugins\\Template_Cloud' => __DIR__ . '/../..' . '/inc/plugins/class-template-cloud.php',
         'ThemeIsle\\GutenbergBlocks\\Pro' => __DIR__ . '/../..' . '/inc/class-pro.php',
         'ThemeIsle\\GutenbergBlocks\\Registration' => __DIR__ . '/../..' . '/inc/class-registration.php',
         'ThemeIsle\\GutenbergBlocks\\Render\\AMP\\Circle_Counter_Block' => __DIR__ . '/../..' . '/inc/render/amp/class-circle-counter-block.php',
@@ -525,6 +531,7 @@ class ComposerStaticInit065d07b9635a04adf752972d7b0b525f
         'ThemeIsle\\GutenbergBlocks\\Server\\Form_Server' => __DIR__ . '/../..' . '/inc/server/class-form-server.php',
         'ThemeIsle\\GutenbergBlocks\\Server\\Prompt_Server' => __DIR__ . '/../..' . '/inc/server/class-prompt-server.php',
         'ThemeIsle\\GutenbergBlocks\\Server\\Stripe_Server' => __DIR__ . '/../..' . '/inc/server/class-stripe-server.php',
+        'ThemeIsle\\GutenbergBlocks\\Server\\Template_Cloud_Server' => __DIR__ . '/../..' . '/inc/server/class-template-cloud-server.php',
         'ThemeIsle\\GutenbergBlocks\\Tracker' => __DIR__ . '/../..' . '/inc/Tracker.php',
         'enshrined\\svgSanitize\\ElementReference\\Resolver' => __DIR__ . '/..' . '/enshrined/svg-sanitize/src/ElementReference/Resolver.php',
         'enshrined\\svgSanitize\\ElementReference\\Subject' => __DIR__ . '/..' . '/enshrined/svg-sanitize/src/ElementReference/Subject.php',
@@ -546,9 +553,9 @@ class ComposerStaticInit065d07b9635a04adf752972d7b0b525f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit065d07b9635a04adf752972d7b0b525f::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit065d07b9635a04adf752972d7b0b525f::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit065d07b9635a04adf752972d7b0b525f::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit1fab5656068a5ca0dc8dd793838bd2a1::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit1fab5656068a5ca0dc8dd793838bd2a1::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit1fab5656068a5ca0dc8dd793838bd2a1::$classMap;
 
         }, null, ClassLoader::class);
     }

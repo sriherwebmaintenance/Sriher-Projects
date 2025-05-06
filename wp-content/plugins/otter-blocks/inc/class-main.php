@@ -30,7 +30,7 @@ class Main {
 	 */
 	public function init() {
 		if ( ! defined( 'THEMEISLE_BLOCKS_VERSION' ) ) {
-			define( 'THEMEISLE_BLOCKS_VERSION', '1.7.0' );
+			define( 'THEMEISLE_BLOCKS_VERSION', '3.0.11' );
 		}
 
 		add_action( 'init', array( $this, 'autoload_classes' ), 9 );
@@ -42,12 +42,14 @@ class Main {
 		if ( ! function_exists( 'is_wpcom_vip' ) ) {
 			add_filter( 'upload_mimes', array( $this, 'allow_meme_types' ), PHP_INT_MAX ); // phpcs:ignore WordPressVIPMinimum.Hooks.RestrictedHooks.upload_mimes
 			add_filter( 'wp_handle_upload_prefilter', array( $this, 'check_svg_and_sanitize' ) );
+			add_filter( 'wp_handle_sideload_prefilter', array( $this, 'check_svg_and_sanitize' ) );
 			add_filter( 'wp_check_filetype_and_ext', array( $this, 'fix_mime_type_json_svg' ), 75, 3 );
 			add_filter( 'wp_generate_attachment_metadata', array( $this, 'generate_svg_attachment_metadata' ), PHP_INT_MAX, 2 );
 		}
 
 		add_filter( 'otter_blocks_about_us_metadata', array( $this, 'about_page' ) );
 
+		add_action( 'parse_query', array( $this, 'pagination_support' ) );
 	}
 
 	/**
@@ -81,6 +83,8 @@ class Main {
 			'\ThemeIsle\GutenbergBlocks\Integration\Form_Email',
 			'\ThemeIsle\GutenbergBlocks\Server\Form_Server',
 			'\ThemeIsle\GutenbergBlocks\Server\Prompt_Server',
+			'\ThemeIsle\GutenbergBlocks\Plugins\Template_Cloud',
+			'\ThemeIsle\GutenbergBlocks\Server\Template_Cloud_Server',
 		);
 
 		$classnames = apply_filters( 'otter_blocks_autoloader', $classnames );
@@ -174,6 +178,10 @@ class Main {
 			'text-transform',
 			'transform',
 		);
+		// Return $props if $attr is not an array, addressing a specific edge case.
+		if ( ! is_array( $attr ) ) {
+			return $props;
+		}
 
 		$list = array_merge( $props, $attr );
 
@@ -393,6 +401,10 @@ class Main {
 					'otter-blocks'
 				);
 			}
+
+			$path_info     = pathinfo( $file['name'] );
+			$unique_suffix = '-' . substr( md5( uniqid() ), 0, 6 );
+			$file['name']  = $path_info['filename'] . $unique_suffix . '.' . $path_info['extension'];
 		}
 
 		return $file;
@@ -520,6 +532,25 @@ class Main {
 		return $metadata;
 	}
 
+	/**
+	 * Disable canonical redirect to make Posts pagination feature work.
+	 *
+	 * @param \WP_Query $request The query object.
+	 */
+	public function pagination_support( $request ) {
+		if (
+			true === $request->is_singular &&
+			-1 === $request->current_post &&
+			true === $request->is_paged &&
+			(
+				! empty( $request->query_vars['page'] ) ||
+				! empty( $request->query_vars['paged'] )
+			)
+		) {
+			add_filter( 'redirect_canonical', '__return_false' );
+		}
+	}
+
 
 	/**
 	 * After Update Migration
@@ -550,7 +581,7 @@ class Main {
 			'location'         => 'otter',
 			'logo'             => esc_url_raw( OTTER_BLOCKS_URL . 'assets/images/logo-alt.png' ),
 			'has_upgrade_menu' => ! DEFINED( 'OTTER_PRO_VERSION' ),
-			'upgrade_link'     => tsdk_utmify( Pro::get_url(), 'editor', Pro::get_reference() ),
+			'upgrade_link'     => tsdk_translate_link( tsdk_utmify( Pro::get_url(), 'editor', Pro::get_reference() ) ),
 			'upgrade_text'     => __( 'Get Otter Pro', 'otter-blocks' ),
 		);
 	}

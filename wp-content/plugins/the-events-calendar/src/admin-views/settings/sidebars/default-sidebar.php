@@ -44,7 +44,7 @@ $hero_section->set_header_image(
 		)
 	)
 );
-$hero_section->set_title( new Heading( __( 'Finding and extending your calendar', 'tribe-common' ), 2, new Classes( 'tec-settings-form__sidebar-header' ) ) );
+$hero_section->set_title( new Heading( __( 'Finding and extending your calendar', 'the-events-calendar' ), 2, new Classes( 'tec-settings-form__sidebar-header' ) ) );
 
 $hero_section->add_section(
 	( new Settings_Section() )
@@ -66,11 +66,6 @@ $hero_section->add_section(
 		->set_title( new Heading( __( 'Documentation', 'the-events-calendar' ), 3 ) )
 		->add_elements(
 			[
-				new Link(
-					tribe( 'tec.main' )->settings()->get_url( [ Tribe__Events__Main::instance()->activation_page->welcome_slug => 1 ] ),
-					__( 'View Welcome Page', 'the-events-calendar' )
-				),
-				$break,
 				new Link(
 					'https://evnt.is/1bbv',
 					__( 'Getting started guide', 'the-events-calendar' ),
@@ -112,7 +107,7 @@ $hero_section->add_section(
 				),
 
 				new Link(
-					admin_url( 'edit.php?post_type=tribe_events&page=tec-events-help' ),
+					admin_url( 'edit.php?post_type=tribe_events&page=tec-events-help-hub' ),
 					__( 'Help', 'the-events-calendar' )
 				),
 				$break,

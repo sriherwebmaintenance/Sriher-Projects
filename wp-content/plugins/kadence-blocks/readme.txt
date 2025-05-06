@@ -1,10 +1,10 @@
 === Gutenberg Blocks with AI by Kadence WP – Page Builder Features ===
-Contributors: britner, oakesjosh, woodardmc
+Contributors: britner, oakesjosh, woodardmc, ghernkadence
 Tags: gutenberg, blocks, page builder, editor, gutenberg blocks
 Donate link: https://www.kadencewp.com/about-us/
-Requires at least: 6.3
-Tested up to: 6.6
-Stable tag: 3.2.50
+Requires at least: 6.4
+Tested up to: 6.8.1
+Stable tag: 3.5.7
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -173,6 +173,302 @@ Please report security bugs found in the source code of the Kadence Blocks plugi
 Please report security bugs found in the Kadence Blocks plugin's source code through the Patchstack Vulnerability Disclosure Program https://patchstack.com/database/vdp/kadence-blocks. The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
 
 == Changelog ==
+
+= 3.5.7 =
+Release Date: May 5th 2025
+* Update: Improve design library performance.
+* Update: Fix import with advanced forms.
+* Update: Improve cache of is_authorized request.
+
+= 3.5.6 =
+Release Date: May 1st 2025
+* Update: Connect custom post category colors with relevant blocks (posts, post grid)
+* Enhancement: Improved design library navigation, filtering, and sorting.
+* Fix: Comma separated CC field not sending to multiple users.
+* Fix: Transparent Logo Reverts to Default Logo After Scrolling Back Up with Sticky Header Enabled.
+* Fix: Text alignemnt on frontend in table block.
+
+= 3.5.5 =
+Release Date: April 28th 2025
+* Fix: Added more safety checks to telemetry opt-ins/opt-outs.
+
+= 3.5.4 =
+Release Date: April 25th 2025
+* Fix: Button Block height when stacked vertically in section in some situations.
+* Fix: Navigation (Adv) top left border radius for active state does not reflect.
+* Fix: Video Popup padding for tablet and desktop is not reflecting the frontend.
+* Update: Tooltips and Progress Bar (stars) Aria roles for accessibility.
+
+= 3.5.3 =
+Release Date: 17th April 2025
+* Add: Advanced Text copy/paste now behaves like paragraph block when set as default.
+* Fix: Accordion header buttons no longer inherit box shadow from theme on active.
+* Fix: Design Library now hidden in Row Layout when hidden in block visibility.
+* Fix: Row layout inner column height of 100% on mobile/tablet when desktop is collapsed to rows.
+* Fix: PHP warning in Table of contents block in some situations.
+* Fix: Advanced nav uncollapsed vertical sub menus on frontend for tablet and mobile.
+* Fix: Lottie animation upload modal disappearing mid-upload.
+
+= 3.5.2 =
+Release Date: 16th April 2025
+* Fix: WP 6.8 button size issue.
+
+= 3.5.1 =
+Release Date: 3rd April 2025
+* Add: Preset options for box shadow.
+* Add: Indicator on blocks in the editor that have custom CSS applied.
+* Fix: Focus in Text (Adv) input when is selected or inserted.
+* Fix: Captions in gallery lightbox when caption text contains a link.
+* Fix: Advanced navigation in footer not inheriting styles from settings.
+* Fix: Add aria-required to required fields in classic form block.
+* Fix: FAQ schema on accordions containing CSS.
+* Fix: Add aria-label to Gallery carousels.
+* Fix: Updating text shadow opacity in advanced text block.
+
+= 3.5.0 =
+Release Date: 18th March 2025
+* Add: Vector Illustration Block.
+* Add: Search for icon feature for Icon block.
+* Add: Move Tabs menu added to Tabs block toolbar.
+* Add: Support for Croatian, Estonian, Polish, and Slovak languages in Kadence AI.
+* Fix: Progress bars not initializing inside query loops.
+* Fix: Setting numeric padding & margin on Adv Navigation sub menu links.
+* Fix: Aria label for Search (Adv) block.
+* Fix: Improve Link Title visibility on section overlay link.
+* Fix: Header block row padding/margin size units all now work.
+* Fix: Lottie block showing 404 error in console for Safari.
+* Fix: Info Box block with flip images not applying border radius.
+* Fix: Focus shadow on accordion buttons.
+
+= 3.4.11 =
+Release Date: 25th February 2025
+* Fix: Issue with advanced text color in editor when no color is selected.
+
+= 3.4.10 =
+Release Date: 25th February 2025
+* Add: Advanced Highlight feature added to Icon List block.
+* Add: Max height to vertical text orientation in Advanced Text block.
+* Update: FAQ Schema for accordions now processes dynamic content.
+* Fix: PHP Warning for column block when using a custom gutter.
+* Fix: Gallery (Adv) arrow strings added to pot file.
+* Fix: Issue with row layout tablet column widths in certain setups.
+* Fix: Advanced header off canvas editor width not matching frontend.
+
+= 3.4.9 =
+Release Date: 11th February 2025
+* Add: Allow uploading of design files in Advanced form. Ex: ai, ait, eps, psd
+* Add: Advanced form filter for submit actions.
+* Add: Advanced form filter submission filtering.
+* Fix: WPML translation for adv button links.
+* Fix: Advanced table column backgrounds.
+* Fix: Icon color not matching text color by default in Advanced button.
+
+= 3.4.8 =
+Release Date: 31st January 2025
+* Fix: Advanced search modal popup.
+
+= 3.4.7 =
+Release Date: 30th January 2025
+* Add: Vertical text options to Advanced Text block.
+* Update: Available google fonts.
+* Fix: Improve table block performance in editor.
+* Fix: Using advanced button inside a query loop when the card is sourced from a WooTemplate.
+* Fix: Aria labels on progress bar.
+* Fix: Using multiple Vimeo row layout background on the same page.
+* Fix: Navigation link dropdown arrow spacing on larger font sizes.
+* Fix: Table of contents bullet styles in the editor.
+
+= 3.4.6 =
+Release Date: 16th January 2025
+* Add: Support for Kadence Creative Kit
+* Add: Option to open advanced nav links in new tab.
+* Add: Search by pattern name in 3rd party pattern libraries.
+* Fix: Issue when copy & pasting block styles on widget page.
+* Fix: Form block honeypot field showing in customizer.
+
+= 3.4.5 =
+Release Date: 9th January 2025
+* Add: Product categories as option in Navigation Builder.
+* Fix: Video Popup when filtering in query loops.
+* Fix: Importing Advanced Heading and Info Box from template libraries.
+
+= 3.4.4 =
+Release Date: 7th January 2025
+* Add: Video Popup block, migrated from Kadence Blocks Pro.
+* Update: Resets and Controls for Info Box block.
+* Update: Header, Navigation, and Navigation Link Block WPML Translation support.
+* Fix: Text (adv) block responsive shadow colors
+
+= 3.4.3 =
+Release Date: December 23rd 2024
+* Fix: Possible issue with accordion showing broken in editor.
+
+= 3.4.2 =
+Release Date: December 17th 2024
+* Add: Features for activating nav links with hash anchor links on the page
+* Update: Mansonry display for advanced gallery block in the editor.
+* Fix: Issue with table of contents max width and margins.
+* Fix: Button block not centering with fixed width.
+* Fix: Issue with duplicating query loop card blocks with certain contents.
+* Fix: Lottie animation upload.
+
+= 3.4.1 =
+Release Date: December 12th 2024
+* Update: allowing splide slider options to be translated.
+* Update: TOC items readable/clickable when collapsed.
+* Fix: Issue with simple lightbox captions on some blocks.
+* Fix: Issue with row layout coulmns on tablet / mobile.
+* Fix: Issue with advanced galley shadows.
+* Fix: Issue with image captions in lighboxes.
+* Fix: Issue with tabs block accordion layouts not opening in some cases.
+* Fix: Count up block screen reader issue.
+* Fix: Issue with tons of connections causing overflow.
+
+= 3.4.0 =
+Release Date: December 5th 2024
+* Add: New Advanced Table block.
+* Update: Close mega menu when clicking outside of dropdown.
+* Update: Improve tabbing through navigation with submenus.
+* Update: Post categories as option in Advanced Navigation builder.
+* Fix: Issue with table of contents script dependency timing.
+* Fix: Issue with sticky header sections when transparent is active.
+* Fix: Border radius on thumbnail in advanced gallery.
+* Fix: Icon list border display when not no width is provided.
+* Fix: Navigation link icon size not applying.
+* Fix: Icon list link styling of none not applying.
+* Fix: Advanced text link wrap on some themes.
+* Fix: Advanced search input background color not applying.
+* Fix: WPML improvements with advanced text block.
+* Fix: Row layouts with advanced navigation links overlapping sticky header.
+* Fix: Issue with adding inner blocks to countdown block.
+* Fix: Shrink middle row option was shrinking images in mega menu.
+* Fix: Shrink middle row tablet and mobile height not saving.
+
+= 3.3.7 =
+Release Date: November 21st 2024
+* Fix: Issue with advanced gallery captions.
+
+= 3.3.6 =
+Release Date: November 20th 2024
+* Add: Allow links in advanced gallery lightbox captions.
+* Add: WPML support for advanced form input fields.
+* Adjust: Naming and support text for navigation stretch option.
+* Fix: Editor error when modifying accordion panes.
+
+= 3.3.5 =
+Release Date: November 19th 2024
+* Add: Filters to customize faq schema output for accordion blocks. kadence_blocks_faq_schema, kadence_blocks_faq_schema_allowed_tags, kadence_blocks_faq_schema_question, kadence_blocks_faq_schema_answer
+* Add: Responsive controls for Header Off Canvas block width type and slide direction.
+* Add: Off canvas display settings are now responsive.
+* Add: Responsive Navigation alignment settings.
+* Fix: Accordion scrolling to end of content when opened in some situations.
+* Fix: Off canvas content alignment not working to the right.
+* Fix: Navigation link alignment issues.
+* Fix: Smooth scrolling to accordion ID.
+* Fix: Maximum numeric value is shown on load for progress bar. If the user doesn't have JS enabled, they'll see the intended value on the page. This can be disabled in settings.
+
+= 3.3.4 =
+Release Date: November 12th 2024
+* Add: Ability to import & export advanced headers.
+* Add: Ability to import & export advanced forms.
+* Add: Ability to import & export advanced navigations.
+* Add: Add background gradient to advanced highlight.
+* Fix: Post grid not displaying all selected posts.
+* Fix: Active color not working for imported WordPress navigation menus.
+* Fix: Submit button on advanced form not using proper unit for border radius.
+
+= 3.3.3 =
+Release Date: October 29th 2024
+* Add: Section Priority option to header rows. This allows you to control how gridding of sections are prioritized.
+* Fix: Advanced image block not showing SVGs in editor.
+* Fix: Block settings visibility not working for section block.
+* Fix: Advanced form text fields now allowing "0" in required field.
+* Fix: Kadence legacy form freezing in reusable patterns.
+* Fix: Infobox on RTL sites when "Set height 100%" is enabled.
+* Fix: Ability to add nav to footer through widgets.
+* Fix: Text alignment when using vertical orientation in navigation block.
+* Fix: Improvements to the single container experience
+* Fix: Navigation link hover border settings not applying.
+* Fix: Navigation block style options not applying on vertical layout.
+* Fix: Border radius not work as expected on navigation link media items.
+* Fix: Display of sticky header on mobile and tablet.
+* Fix: Navigation link media spacing when positioned top or bottom.
+* Fix: Display of single row container on the frontend for mobile.
+* Fix: Improvements to display of gradient text when text spans multiple lines.
+* Fix: Border radius units in search block.
+* Fix: Improved performance when rendering custom SVGs.
+
+= 3.3.2 =
+Release Date: October 16th 2024
+* Add: Gradient text to advanced text block.
+* Add: Gradient text to advanced button block.
+* Add: Adv Header dynamic transparency options.
+* Fix: Some accordion block styles not applying unless title color was set.
+* Fix: Compatibility issue with block addon plugin.
+* Fix: Issue with transparent and sticky headers.
+* Fix: Issue with headers background not correctly applying at times.
+* Fix: Issue with accordion hover/focus and active styles.
+* Fix: Search block text color and placeholder color not applying.
+* Fix: Off canvas close button padding & margin units.
+* Fix: PHP 8.3 deprecation when using restrict content pro.
+
+= 3.3.1 =
+Release Date: October 4th 2024
+* Fix: Issue with adding items to tabs block in the editor.
+* Fix: Issue with scroll bars showing on mega menus incorrectly.
+
+= 3.3.0 =
+Release Date: October 3rd 2024
+* Add: Advanced Header block.
+* Add: Advanced Navigation block.
+* Add: Off canvas block.
+* Add: Site Identity block.
+* Add: Site Search block.
+
+= 3.2.54 =
+Release Date: September 25th 2024
+* Add: Support 4 columns in posts block.
+* Update: Add reset option to many settings in row layout.
+* Fix: Adv text highlight setting also applying to core highlight.
+* Fix: Tabs block in accordion mode interfering with slider block.
+* Fix: Adjustment to wpml config to allow translation of adv text block.
+* Fix: Issue with responsive vertical alignment in section block.
+* Fix: PHP warning for undefined array key.
+
+= 3.2.53 =
+Release Date: September 9th 2024
+* Add: ID to from tag in advanced form block for targeting with custom scripts.
+* Fix: Show more block inside query loop.
+* Fix: Countdown repeater not working.
+* Fix: Issue with progress block label position.
+* Fix: Accordion pane spacing issue on front end.
+* Fix: Infobox text alignment in some layouts.
+* Fix: Warning about multiple submit buttons when two advanced forms are on the same page.
+* Fix: Advanced image editor style not matching frontend when inside section.
+* Fix: Advanced image caption not loading google font.
+* Fix: Issues with progress bar label position.
+* Fix: Table of contents line being getting overridden in some situations.
+* Fix: Advanced galleries not showing when inside a section with an alignment set.
+* Fix: Issue with repeating countdown not working.
+* Fix: Escape HTML in countdown block labels.
+
+= 3.2.52 =
+Release Date: August 23rd 2024
+* Fix: Row layout responsive preview in editor when using break left or break right.
+
+= 3.2.51 =
+Release Date: August 22nd 2024
+* Update: Improve accessibility for progress bar block.
+* Update: Improve accessibility for buttons with video popup.
+* Fix: Using Dynamic content in Google Maps block
+* Fix: Carousel not looping in Advanced Gallery block.
+* Fix: Tabs block columns not updating in editor when viewed in Tablet or Mobile.
+* Fix: Prevent invalid HTML with multiple wrapped links in Icon List items.
+* Fix: Caption background color in Advanced Gallery block.
+* Fix: Rendering custom SVGs with group tags.
+* Fix: Issue with row layout break left and break right not showing in the editor.
+* Fix: Spacer height when using vh with default height value.
+* Fix: Border radius with overlay colors on Advanced Image block.
 
 = 3.2.50 =
 Release Date: July 25th 2024

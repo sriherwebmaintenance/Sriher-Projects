@@ -80,7 +80,7 @@ if ( ! class_exists( 'MoFormDocs' ) ) {
 		const WC_FORM_LINK         = array(
 			'formLink'  => 'https://wordpress.org/plugins/woocommerce/',
 			'guideLink' => 'https://plugins.miniorange.com/otp-verification-woocommerce-registration-form/',
-			'videoLink' => 'https://youtu.be/IpsJ9cRTYSI',
+			'videoLink' => 'https://youtu.be/CvmrMVBAM5A',
 		);
 		const WC_CHECKOUT_LINK     = array(
 			'formLink'  => 'https://wordpress.org/plugins/woocommerce/',
@@ -89,7 +89,7 @@ if ( ! class_exists( 'MoFormDocs' ) ) {
 		);
 		const WC_NEW_CHECKOUT_LINK = array(
 			'formLink'  => 'https://wordpress.org/plugins/woocommerce/',
-			'guideLink' => '',
+			'guideLink' => 'https://plugins.miniorange.com/otp-verification-woocommerce-checkout-form/',
 			'videoLink' => '',
 		);
 		const CHECKOUT_WC_LINK     = array(
@@ -156,7 +156,7 @@ if ( ! class_exists( 'MoFormDocs' ) ) {
 		const CF7_FORM_LINK                  = array(
 			'formLink'  => 'https://wordpress.org/plugins/contact-form-7/',
 			'guideLink' => 'https://plugins.miniorange.com/otp-verification-for-contact-form-7/',
-			'videoLink' => 'https://www.youtube.com/watch?v=lFKiudZI3dQ',
+			'videoLink' => 'https://youtu.be/mHIMdnpevNo&t',
 		);
 		const WC_SOCIAL_LOGIN                = array(
 			'formLink'  => 'https://woocommerce.com/products/woocommerce-social-login/',
@@ -166,7 +166,7 @@ if ( ! class_exists( 'MoFormDocs' ) ) {
 		const NINJA_FORMS_AJAX_LINK          = array(
 			'formLink'  => 'https://ninjaforms.com/',
 			'guideLink' => 'https://plugins.miniorange.com/otp-verification-ninja-forms-version-3-0',
-			'videoLink' => 'https://www.youtube.com/watch?v=T-LqQgm0jC4',
+			'videoLink' => 'https://youtu.be/bh3X46a-bDE',
 		);
 		const TUTOR_LMS_INSTRUCTOR_FORM_LINK = array(
 			'formLink'  => 'https://wordpress.org/plugins/tutor/',
@@ -192,7 +192,7 @@ if ( ! class_exists( 'MoFormDocs' ) ) {
 		const GF_FORM_LINK           = array(
 			'formLink'  => 'https://www.gravityforms.com/',
 			'guideLink' => 'https://plugins.miniorange.com/otp-verification-for-gravity-form',
-			'videoLink' => 'https://www.youtube.com/watch?v=drfoxo6WEnQ',
+			'videoLink' => 'https://youtu.be/9WuyEUTMwQ4',
 		);
 		const WP_MEMBER_LINK         = array(
 			'formLink'  => 'https://wordpress.org/plugins/wp-members/',
@@ -237,7 +237,7 @@ if ( ! class_exists( 'MoFormDocs' ) ) {
 		const WP_FORMS_LINK          = array(
 			'formLink'  => 'https://wordpress.org/plugins/wpforms-lite/',
 			'guideLink' => 'https://plugins.miniorange.com/otp-verification-for-wp-forms',
-			'videoLink' => '',
+			'videoLink' => 'https://youtu.be/dWjEjjN-aws',
 		);
 		const CALDERA_FORMS_LINK     = array(
 			'formLink'  => 'https://wordpress.org/plugins/caldera-forms/',
@@ -297,7 +297,7 @@ if ( ! class_exists( 'MoFormDocs' ) ) {
 		const LOGIN_FORM             = array(
 			'formLink'  => '',
 			'guideLink' => 'https://plugins.miniorange.com/otp-verification-login-form',
-			'videoLink' => 'https://www.youtube.com/watch?v=RyNWI-t2kDo',
+			'videoLink' => 'https://youtu.be/c8nNyVQ9-gY',
 		);
 		const WP_CLIENT_FORM         = array(
 			'formLink'  => 'https://wp-client.com/',
@@ -310,12 +310,6 @@ if ( ! class_exists( 'MoFormDocs' ) ) {
 			'videoLink' => '',
 		);
 
-		const ELEMENTOR_PRO = array(
-			'formLink'  => 'https://wordpress.org/plugins/elementor/',
-			'guideLink' => 'https://plugins.miniorange.com/otp-verification-for-elementor-pro-form',
-			'videoLink' => '',
-		);
-
 		const SOCIAL_LOGIN = array(
 			'formLink'  => 'https://wordpress.org/plugins/miniorange-login-openid/',
 			'guideLink' => 'https://plugins.miniorange.com/enable-otp-verification-with-social-login',
@@ -323,9 +317,9 @@ if ( ! class_exists( 'MoFormDocs' ) ) {
 		);
 
 		const ELEMENTORPRO_FORMS_LINK = array(
-			'formLink'  => 'https://elementor.com/pro/',
-			'guideLink' => '',
-			'videoLink' => '',
+			'formLink'  => 'https://wordpress.org/plugins/elementor/',
+			'guideLink' => 'https://plugins.miniorange.com/otp-verification-for-elementor-pro-form',
+			'videoLink' => 'https://youtu.be/NcTtiWbw_do',
 		);
 		const EDUMA_LOG               = array(
 			'formLink'  => 'https://themeforest.net/item/education-wordpress-theme-education-wp/14058034',
@@ -341,7 +335,7 @@ if ( ! class_exists( 'MoFormDocs' ) ) {
 
 		const USER_REG_FORMS = array(
 			'formLink'  => 'https://wordpress.org/plugins/user-registration/',
-			'guideLink' => '',
+			'guideLink' => 'https://plugins.miniorange.com/otp-verification-for-user-registration-form',
 			'videoLink' => '',
 		);
 		const EASYREG_FORM   = array(
@@ -357,7 +351,7 @@ if ( ! class_exists( 'MoFormDocs' ) ) {
 		);
 		const EVEREST_CONTACT_FORM_LINK = array(
 			'formLink'  => 'https://wordpress.org/plugins/everest-forms/',
-			'guideLink' => '',
+			'guideLink' => 'https://plugins.miniorange.com/otp-verification-for-everest-contact-form-wordpress-otp',
 			'videoLink' => '',
 		);
 		const FORMINATOR_FORM_LINK      = array(
@@ -396,6 +390,21 @@ if ( ! class_exists( 'MoFormDocs' ) ) {
 		);
 		const HOUZEZ_REG_LINK     = array(
 			'formLink'  => 'https://themeforest.net/item/houzez-real-estate-wordpress-theme/15752549',
+			'guideLink' => 'https://plugins.miniorange.com/setup-otp-verification-for-houzez-registration-form',
+			'videoLink' => '',
+		);
+		const JETFORM_BUILDER_LINK     = array(
+			'formLink'  => 'https://crocoblock.com/plugins/jetformbuilder/',
+			'guideLink' => 'https://plugins.miniorange.com/jetformbuilder-crocoblock-setup-for-otp-verification',
+			'videoLink' => '',
+		);
+		const FLUENT_FORM_LINK    = array(
+			'formLink'  => '',
+			'guideLink' => 'https://plugins.miniorange.com/wordpress-fluent-form-with-otp-verification',
+			'videoLink' => '',
+		);
+		const WS_FORM_LINK        = array(
+			'formLink'  => 'https://wsform.com/',
 			'guideLink' => '',
 			'videoLink' => '',
 		);

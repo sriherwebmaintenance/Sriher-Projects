@@ -125,30 +125,51 @@ if ( ! class_exists( 'WPLoginForm' ) ) {
 		 * @var boolean
 		 */
 		private $redirect_after_login;
+		/**
+		 * Login with OTP button text.
+		 *
+		 * @var boolean
+		 */
+		private $login_with_otp_button_text;
+		/**
+		 * Login with password button text.
+		 *
+		 * @var boolean
+		 */
+		private $login_with_pass_button_text;
+		/**
+		 * Login with password button CSS.
+		 *
+		 * @var boolean
+		 */
+		private $login_with_pass_button_css;
 
 		/**
 		 * Initializes values
 		 */
 		protected function __construct() {
-			$this->is_login_or_social_form   = true;
-			$this->is_ajax_form              = true;
-			$this->form_session_var          = FormSessionVars::WP_LOGIN_REG_PHONE;
-			$this->form_session_var2         = FormSessionVars::WP_DEFAULT_LOGIN;
-			$this->phone_form_id             = '#mo_phone_number';
-			$this->type_phone_tag            = 'mo_wp_login_phone_enable';
-			$this->type_email_tag            = 'mo_wp_login_email_enable';
-			$this->form_key                  = 'WP_DEFAULT_LOGIN';
-			$this->form_name                 = mo_( 'WordPress / WooCommerce / Ultimate Member Login Form' );
-			$this->is_form_enabled           = get_mo_option( 'wp_login_enable' );
-			$this->user_label                = get_mo_option( 'wp_username_label_text' );
-			$this->user_label                = $this->user_label ? mo_( $this->user_label ) : mo_( 'Username, E-mail or Phone No.' );
-			$this->skip_password_check       = get_mo_option( 'wp_login_skip_password' );
-			$this->allow_login_through_phone = get_mo_option( 'wp_login_allow_phone_login' );
-			$this->skip_pass_fallback        = get_mo_option( 'wp_login_skip_password_fallback' );
-			$this->delay_otp                 = get_mo_option( 'wp_login_delay_otp' );
-			$this->delay_otp_interval        = get_mo_option( 'wp_login_delay_otp_interval' );
-			$this->delay_otp_interval        = $this->delay_otp_interval ? $this->delay_otp_interval : 43800;
-			$this->form_documents            = MoFormDocs::LOGIN_FORM;
+			$this->is_login_or_social_form     = true;
+			$this->is_ajax_form                = true;
+			$this->form_session_var            = FormSessionVars::WP_LOGIN_REG_PHONE;
+			$this->form_session_var2           = FormSessionVars::WP_DEFAULT_LOGIN;
+			$this->phone_form_id               = '#mo_phone_number';
+			$this->type_phone_tag              = 'mo_wp_login_phone_enable';
+			$this->type_email_tag              = 'mo_wp_login_email_enable';
+			$this->form_key                    = 'WP_DEFAULT_LOGIN';
+			$this->form_name                   = mo_( 'WordPress / WooCommerce / Ultimate Member Login Form' );
+			$this->is_form_enabled             = get_mo_option( 'wp_login_enable' );
+			$this->user_label                  = get_mo_option( 'wp_username_label_text' );
+			$this->user_label                  = $this->user_label ? mo_( $this->user_label ) : mo_( 'Username, E-mail or Phone No.' );
+			$this->skip_password_check         = get_mo_option( 'wp_login_skip_password' );
+			$this->allow_login_through_phone   = get_mo_option( 'wp_login_allow_phone_login' );
+			$this->skip_pass_fallback          = get_mo_option( 'wp_login_skip_password_fallback' );
+			$this->delay_otp                   = get_mo_option( 'wp_login_delay_otp' );
+			$this->delay_otp_interval          = get_mo_option( 'wp_login_delay_otp_interval' );
+			$this->login_with_otp_button_text  = get_mo_option( 'wp_login_with_otp_button_text' ) ? get_mo_option( 'wp_login_with_otp_button_text' ) : mo_( 'Login With OTP' );
+			$this->login_with_pass_button_text = get_mo_option( 'wp_login_with_pass_button_text' ) ? get_mo_option( 'wp_login_with_pass_button_text' ) : mo_( 'Login With Password' );
+			$this->login_with_pass_button_css  = get_mo_option( 'wp_login_with_pass_button_css' );
+			$this->delay_otp_interval          = $this->delay_otp_interval ? $this->delay_otp_interval : 43800;
+			$this->form_documents              = MoFormDocs::LOGIN_FORM;
 
 			if ( $this->skip_password_check || $this->allow_login_through_phone ) {
 				add_action( 'login_enqueue_scripts', array( $this, 'miniorange_register_login_script' ) );
@@ -279,14 +300,16 @@ if ( ! class_exists( 'WPLoginForm' ) ) {
 				'mologin',
 				'movarlogin',
 				array(
-					'userLabel'       => ( $this->allow_login_through_phone && $this->get_verification_type() === VerificationType::PHONE ) ? $this->user_label : null,
-					'skipPwdCheck'    => $this->skip_password_check,
-					'skipPwdFallback' => $this->skip_pass_fallback,
-					'buttontext'      => mo_( 'Login with OTP' ),
-					'isAdminAction'   => 'mo-admin-check',
-					'nonce'           => wp_create_nonce( $this->nonce ),
-					'byPassAdmin'     => $this->by_pass_admin,
-					'siteURL'         => wp_ajax_url(),
+					'userLabel'           => ( $this->allow_login_through_phone && $this->get_verification_type() === VerificationType::PHONE ) ? $this->user_label : null,
+					'skipPwdCheck'        => $this->skip_password_check,
+					'skipPwdFallback'     => $this->skip_pass_fallback,
+					'loginOTPButtonText'  => $this->login_with_otp_button_text,
+					'loginPassButtonText' => $this->login_with_pass_button_text,
+					'loginPassButtonCSS'  => $this->login_with_pass_button_css,
+					'isAdminAction'       => 'mo-admin-check',
+					'nonce'               => wp_create_nonce( $this->nonce ),
+					'byPassAdmin'         => $this->by_pass_admin,
+					'siteURL'             => wp_ajax_url(),
 				)
 			);
 			wp_enqueue_script( 'mologin' );
@@ -376,14 +399,18 @@ if ( ! class_exists( 'WPLoginForm' ) ) {
 		 * @param array $extra_data - Extra dada stored in the session during sending the OTP.
 		 */
 		private function login_wp_user( $user_log, $extra_data = null ) {
-			$user = is_email( $user_log ) ? get_user_by( 'email', $user_log ) : ( $this->allowLoginThroughPhone() && MoUtility::validate_phone_number( $user_log ) ? $this->getUserFromPhoneNumber( MoUtility::process_phone_number( $user_log ) ) : get_user_by( 'login', $user_log ) );
-			wp_set_auth_cookie( $user->data->ID );
-			if ( $this->delay_otp && $this->delay_otp_interval > 0 ) {
-				update_user_meta( $user->data->ID, $this->time_stamp_meta_key, time() );
-			}
-			$this->unset_otp_session_variables();
-			do_action( 'wp_login', $user->user_login, $user );
+			$user = is_email( $user_log ) ? get_user_by( 'email', $user_log ) : get_user_by( 'login', $user_log );
+			$user = $user ? $user : ( $this->allowLoginThroughPhone() && MoUtility::validate_phone_number( $user_log ) ? $this->getUserFromPhoneNumber( MoUtility::process_phone_number( $user_log ) ) : '' );
 
+			if( $user ){
+				wp_set_auth_cookie( $user->data->ID, true );
+				if ( $this->delay_otp && $this->delay_otp_interval > 0 ) {
+					update_user_meta( $user->data->ID, $this->time_stamp_meta_key, time() );
+				}
+				$this->unset_otp_session_variables();
+				do_action( 'wp_login', $user->user_login, $user );
+			}
+			
 			if ( 'redirect_to_the_page' === $this->redirect_after_login ) {
 				wp_safe_redirect(
 					get_permalink(
@@ -427,7 +454,6 @@ if ( ! class_exists( 'WPLoginForm' ) ) {
 				}
 
 				if ( class_exists( 'UM' ) ) {
-
 					$user_id = $user->ID;
 					um_fetch_user( $user_id );
 
@@ -439,11 +465,11 @@ if ( ! class_exists( 'WPLoginForm' ) ) {
 						case 'rejected':
 							um_reset_user();
 
-							wp_safe_redirect( add_query_arg( 'err', esc_attr( $status ), UM()->permalinks()->get_current_url() ) );
-							exit;
+						wp_safe_redirect( add_query_arg( 'err', esc_attr( $status ), UM()->permalinks()->get_current_url() ) );
+						exit;
 					}
 				}
-
+				
 				$skip_otp_process = $this->skip_otp_process( $password, $post_data, $user );
 				if ( $this->byPassLogin( $user, $skip_otp_process ) ) {
 					return $user;
@@ -480,7 +506,7 @@ if ( ! class_exists( 'WPLoginForm' ) ) {
 				$this->fetchPhoneAndStartVerification( $username, $password, $phone_number, $req_data );
 			} elseif ( VerificationType::EMAIL === $otp_type ) {
 				$email = $user->data->user_email;
-				$this->startEmailVerification( $username, $email );
+				$this->startEmailVerification( $username, $email, $password, $req_data  );
 			}
 		}
 
@@ -496,7 +522,7 @@ if ( ! class_exists( 'WPLoginForm' ) ) {
 		 */
 		private function getUser( $username, $post_data, $password = null ) {
 			$user = is_email( $username ) ? get_user_by( 'email', $username ) : get_user_by( 'login', $username );
-			if ( $this->allow_login_through_phone && MoUtility::validate_phone_number( $username ) ) {
+			if ( ! $user && $this->allow_login_through_phone && MoUtility::validate_phone_number( $username ) ) {
 				$username = MoUtility::process_phone_number( $username );
 				$user     = $this->getUserFromPhoneNumber( $username );
 			}
@@ -595,9 +621,10 @@ if ( ! class_exists( 'WPLoginForm' ) ) {
 		 * @param array $email - email to send otp to.
 		 * @throws ReflectionException .
 		 */
-		private function startEmailVerification( $username, $email ) {
+		private function startEmailVerification( $username, $email, $password, $req_data  ) {
 			MoUtility::initialize_transaction( $this->form_session_var2 );
-			$this->send_challenge( $username, $email, null, null, VerificationType::EMAIL );
+			$redirect_to = isset( $req_data['redirect_to'] ) ? sanitize_text_field( $req_data['redirect_to'] ) : MoUtility::current_page_url();
+			$this->send_challenge( $username, $email, null, null, VerificationType::EMAIL, $password, $redirect_to, false );
 		}
 
 
@@ -608,7 +635,7 @@ if ( ! class_exists( 'WPLoginForm' ) ) {
 		 */
 		private function mo_handle_wp_login_ajax_send_otp( $post_data ) {
 			if ( $this->restrict_duplicates()
-			&& ! MoUtility::is_blank( $this->getUserFromPhoneNumber( sanitize_text_field( $post_data['user_phone'] ) ) ) ) {
+			&& ! MoUtility::is_blank( $this->getUserFromPhoneNumber( MoUtility::process_phone_number( sanitize_text_field( $post_data['user_phone'] ) ) ) ) ) {
 				wp_send_json(
 					MoUtility::create_json(
 						MoMessages::showMessage( MoMessages::PHONE_EXISTS ),
@@ -738,11 +765,10 @@ if ( ! class_exists( 'WPLoginForm' ) ) {
 		 * @return TRUE or FALSE
 		 */
 		private function isLoginWithOTP( $post_data, $user_roles = array() ) {
-			$login_with_otp_text = mo_( 'Login with OTP' );
 			if ( in_array( 'administrator', $user_roles, true ) && $this->by_pass_admin ) {
 				return false;
 			}
-			return MoUtility::sanitize_check( 'wp-submit', $post_data ) === $login_with_otp_text || MoUtility::sanitize_check( 'login', $post_data ) === $login_with_otp_text || MoUtility::sanitize_check( 'logintype', $post_data ) === $login_with_otp_text;        }
+			return MoUtility::sanitize_check( 'wp-submit', $post_data ) === $this->login_with_otp_button_text || MoUtility::sanitize_check( 'login', $post_data ) === $this->login_with_otp_button_text || MoUtility::sanitize_check( 'logintype', $post_data ) === $this->login_with_otp_button_text;        }
 
 		/**
 		 * Check if the user needs to be validated via OTP. Makes sure to check if admin has
@@ -765,9 +791,11 @@ if ( ! class_exists( 'WPLoginForm' ) ) {
 		 * @param array $phone - check the phone length.
 		 */
 		private function check_phone_length( $phone ) {
-			$phone_check = MoUtility::process_phone_number( $phone );
-			return strlen( $phone_check ) >= 5 ? $phone_check : '';
-
+			if( $phone ){
+				$phone_check = MoUtility::process_phone_number( $phone );
+				return strlen( $phone_check ) >= 5 ? $phone_check : '';
+			}
+			return;
 		}
 
 		/**
@@ -801,20 +829,23 @@ if ( ! class_exists( 'WPLoginForm' ) ) {
 			}
 			$data = MoUtility::mo_sanitize_array( $_POST );
 
-			$this->is_form_enabled           = $this->sanitize_form_post( 'wp_login_enable' );
-			$this->save_phone_numbers        = $this->sanitize_form_post( 'wp_login_register_phone' );
-			$this->by_pass_admin             = $this->sanitize_form_post( 'wp_login_bypass_admin' );
-			$this->phone_key                 = $this->sanitize_form_post( 'wp_login_phone_field_key' );
-			$this->allow_login_through_phone = $this->sanitize_form_post( 'wp_login_allow_phone_login' );
-			$this->restrict_duplicates       = $this->sanitize_form_post( 'wp_login_restrict_duplicates' );
-			$this->otp_type                  = $this->sanitize_form_post( 'wp_login_enable_type' );
-			$this->skip_password_check       = $this->sanitize_form_post( 'wp_login_skip_password' );
-			$this->user_label                = $this->sanitize_form_post( 'wp_username_label_text' );
-			$this->skip_pass_fallback        = $this->sanitize_form_post( 'wp_login_skip_password_fallback' );
-			$this->delay_otp                 = $this->sanitize_form_post( 'wp_login_delay_otp' );
-			$this->delay_otp_interval        = $this->sanitize_form_post( 'wp_login_delay_otp_interval' );
-			$this->redirect_after_login      = $this->sanitize_form_post( 'wp_login_redirection_enable' );
-			$this->redirect_to_page          = isset( $data['mo_login_page_id'] ) ? get_the_title( $data['mo_login_page_id'] ) : 'My Account';
+			$this->is_form_enabled             = $this->sanitize_form_post( 'wp_login_enable' );
+			$this->save_phone_numbers          = $this->sanitize_form_post( 'wp_login_register_phone' );
+			$this->by_pass_admin               = $this->sanitize_form_post( 'wp_login_bypass_admin' );
+			$this->phone_key                   = $this->sanitize_form_post( 'wp_login_phone_field_key' );
+			$this->allow_login_through_phone   = $this->sanitize_form_post( 'wp_login_allow_phone_login' );
+			$this->restrict_duplicates         = $this->sanitize_form_post( 'wp_login_restrict_duplicates' );
+			$this->otp_type                    = $this->sanitize_form_post( 'wp_login_enable_type' );
+			$this->skip_password_check         = $this->sanitize_form_post( 'wp_login_skip_password' );
+			$this->user_label                  = $this->sanitize_form_post( 'wp_username_label_text' );
+			$this->skip_pass_fallback          = $this->sanitize_form_post( 'wp_login_skip_password_fallback' );
+			$this->delay_otp                   = $this->sanitize_form_post( 'wp_login_delay_otp' );
+			$this->delay_otp_interval          = $this->sanitize_form_post( 'wp_login_delay_otp_interval' );
+			$this->redirect_after_login        = $this->sanitize_form_post( 'wp_login_redirection_enable' );
+			$this->login_with_otp_button_text  = $this->sanitize_form_post( 'wp_login_with_otp_button_text' );
+			$this->login_with_pass_button_text = $this->sanitize_form_post( 'wp_login_with_pass_button_text' );
+			$this->login_with_pass_button_css  = $this->sanitize_form_post( 'wp_login_with_pass_button_css' );
+			$this->redirect_to_page            = isset( $data['mo_login_page_id'] ) ? get_the_title( $data['mo_login_page_id'] ) : 'My Account';
 
 			update_mo_option( 'wp_login_enable_type', $this->otp_type );
 			update_mo_option( 'wp_login_enable', $this->is_form_enabled );
@@ -830,7 +861,9 @@ if ( ! class_exists( 'WPLoginForm' ) ) {
 			update_mo_option( 'wp_login_delay_otp_interval', $this->delay_otp_interval );
 			update_mo_option( 'wp_login_redirection_enable', $this->redirect_after_login );
 			update_mo_option( 'login_custom_redirect', $this->redirect_to_page );
-
+			update_mo_option( 'wp_login_with_pass_button_text', $this->login_with_pass_button_text );
+			update_mo_option( 'wp_login_with_pass_button_css', $this->login_with_pass_button_css );
+			update_mo_option( 'wp_login_with_otp_button_text', $this->login_with_otp_button_text );
 		}
 
 
@@ -919,5 +952,29 @@ if ( ! class_exists( 'WPLoginForm' ) ) {
 		 */
 		public function redirectToPage() {
 			return $this->redirect_to_page; }
+
+		/**
+		 * Getter for $login_with_pass_button_text
+		 *
+		 * @return string
+		 */
+		public function get_login_with_pass_button_text() {
+			return $this->login_with_pass_button_text; }
+
+		/**
+		 * Getter for $login_with_pass_button_css
+		 *
+		 * @return string
+		 */
+		public function get_login_with_pass_button_css() {
+			return $this->login_with_pass_button_css; }
+
+		/**
+		 * Getter for $login_with_otp_button_text
+		 *
+		 * @return string
+		 */
+		public function get_login_with_otp_button_text() {
+			return $this->login_with_otp_button_text; }
 	}
 }

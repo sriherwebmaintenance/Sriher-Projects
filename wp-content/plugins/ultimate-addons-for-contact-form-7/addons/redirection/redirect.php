@@ -1,4 +1,7 @@
 <?php
+
+use phpDocumentor\Reflection\Types\This;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -12,7 +15,12 @@ class UACF7_Redirection {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_redirect_script' ) );  
 		// add_action( 'wpcf7_after_save', array( $this, 'uacf7_save_meta' ) );
 		add_action( 'wpcf7_submit', array( $this, 'uacf7_non_ajax_redirection' ) );
-		add_filter( 'uacf7_post_meta_options', array( $this, 'uacf7_post_meta_options_redirection' ), 10, 2 );  
+		add_filter( 'uacf7_post_meta_options', array( $this, 'uacf7_post_meta_options_redirection' ), 10, 2 );
+
+		// add_action('admin_notices', array($this, 'uacf7_redirection_migration_notice'));
+		// add_action('admin_init', array($this, 'uacf7_migrate_redirection_handler'));
+		// add_action('admin_notices', array($this, 'uacf7_redirection_migration_success_notice'));
+		// add_action('admin_init', array($this, 'uacf7_handle_dismiss_notice'));
     }
     
     public function enqueue_redirect_script() {
@@ -244,9 +252,7 @@ class UACF7_Redirection {
 		}
 	}
     
-    /*
- 
-    
+
     /*
     * Fields array
     */
@@ -271,7 +277,6 @@ class UACF7_Redirection {
         );
         return $fields;
     }
-    
  
     /*
     Enable conditional redirect
@@ -294,9 +299,10 @@ class UACF7_Redirection {
                 
                 // $uacf7_redirect = get_post_meta( get_the_ID(), 'uacf7_redirect_enable', true );
 				$post_meta = uacf7_get_form_option(get_the_ID(), 'redirection');
+				// beaf_print_r($post_meta);
 				if($post_meta != false){
 					$uacf7_redirect = $post_meta['uacf7_redirect_enable']; 
-
+					
 					if( !empty($uacf7_redirect) && $uacf7_redirect == true ) {
 						
 						$forms[ $post_id ] = $uacf7_redirect;
@@ -306,7 +312,7 @@ class UACF7_Redirection {
     		endwhile;
     		wp_reset_postdata();
     	endif;
-    
+		// beaf_print_r($forms);
     	return $forms;
     }
 }

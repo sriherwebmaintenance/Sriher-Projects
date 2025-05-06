@@ -43,9 +43,9 @@ final class Reader
      *
      * @throws \KadenceWP\KadenceBlocks\Dotenv\Exception\InvalidEncodingException
      *
-     * @return array<string,string>
+     * @return array<string, string>
      */
-    public static function read(array $filePaths, bool $shortCircuit = true, string $fileEncoding = null)
+    public static function read(array $filePaths, bool $shortCircuit = true, ?string $fileEncoding = null)
     {
         $output = [];
 
@@ -72,7 +72,7 @@ final class Reader
      *
      * @return \KadenceWP\KadenceBlocks\PhpOption\Option<string>
      */
-    private static function readFromFile(string $path, string $encoding = null)
+    private static function readFromFile(string $path, ?string $encoding = null)
     {
         /** @var Option<string> */
         $content = Option::fromValue(@\file_get_contents($path), false);
