@@ -1,0 +1,85 @@
+
+@font-face {
+    font-family: "Font Awesome 5 Free";
+    src: url(../fonts/FontAwesome/fa-regular-400.ttf);
+    font-weight:400;
+
+    font-family: "Font Awesome 5 Free";
+    src: url(../fonts/FontAwesome/fa-solid-900.ttf);
+    font-weight:900;
+}
+/****Font Colors***/
+$primary_color: #105C8E;
+$secondary_color:#BF2228;
+$bg_color: #FCF8F1;
+$heading_color: #000000;
+$text_color: #1E1E1E;
+$link_color: #141D70;
+/****Font Colors***/
+/****Default Colors***/
+$red_color: #BF2228;
+$blue_color: #00f;
+$white_color: #fff;
+$offwhite_color:rgba(255, 255, 255, 0.7);
+$yellow_color: #FFC700;
+$black_color: #000;
+$grey_color:#AED3F8;
+/****Default Colors***/
+/****Background Colors***/
+$inner_banner_bg_color: rgba(0,0,0,0.25);
+$background_color: #ffffff;
+$table_bgcolor: #f9f9f9;
+$th_bgcolor: #e0f0f7;
+$table_bordercolor: darken($table_bgcolor, 15%);
+/****Background Colors***/
+/****Site Fonts***/
+$primary_font: 'Inter', sans-serif;
+$secondary_font: 'Bitter', sans-serif;
+$heading_font: 'Jost', sans-serif;
+$tertiary_font: 'Mukta', sans-serif;
+
+/****SiteFonts***/
+/****Button Styles***/
+$button_background: #1D35AA;
+$button_color: #fff;
+$button_border: #1D35AA;
+/****Button Styles***/
+/****Menu Styles***/
+$menu_width: 200px;
+$menu_background: #fff;
+$submenu_background: #ed7c5d;
+$menulink_background: #fff;
+$menulink_color: #ac1f2d;
+$submenulink_color: #fff;
+$submenu_border_color: #cffcfc;
+/****Menu Styles***/
+
+$border-color: rgba($black_color, 0.5);
+
+// =============================================
+// Primary Break Points
+// =============================================
+
+// These should be used with the bp (max-width, xx) mixin
+// where a min-width is used, remember to +1 to break correctly.
+// If these are changed, they must also be updated in app.js
+$bp-xxxsmall:325px;
+$bp-xxsmall:450px;
+$bp-xsmall: 576px;
+$bp-small: 768px;
+$bp-medium: 992px;
+$bp-lmedium: 1200px;
+$bp-large:1300px;
+$bp-xlarge: 1800px;
+/**********************************/
+$container-width: 1200px;
+$grid_gap: 20px;
+
+$primary-background: #fff;
+$secondary-background: #F8F5F0;
+
+$delay: 0.015s;
+$duration: 0.5s;
+$easing: cubic-bezier(0.76, 0, 0.24, 1);
+
+

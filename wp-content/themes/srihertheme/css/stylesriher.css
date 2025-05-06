@@ -1,0 +1,96 @@
+.ptb-100 {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.career-service-content {
+    padding-right: 35px;
+}
+
+.blog-title {
+    margin-bottom: 40px;
+}
+
+.blog-title h2 {
+    color: var(--blackColor);
+    font-family: Var(--heading-fontFamily2);
+    font-size: 32px;
+    font-weight: 400;
+    padding-left: 30px;
+    position: relative;
+    margin-bottom: 30px;
+    border-left: 4px solid rgb(176, 194, 255);
+}
+
+.blog-title p {
+    font-size: 16px;
+    margin-bottom: 15px;
+    line-height: 1.7;
+}
+
+.accessibility-link-widget {
+  background: #E8E9ED;
+  padding: 5px 0;
+}
+.accessibility-link-widget .accessibility-link-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+.accessibility-link-widget .accessibility-link-list a {
+  color: var(--blackColor);
+  font-family: var(--heading-fontFamily);
+  font-size: 18px;
+  line-height: 1;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 25px;
+  border-bottom: solid 1px var(--whiteColor);
+}
+.accessibility-link-widget .accessibility-link-list a.active {
+  color: #353688;
+}
+.accessibility-link-widget .accessibility-link-list a .icon {
+  font-size: 20px;
+  line-height: 1;
+}
+.accessibility-link-widget .accessibility-link-list a .icon i {
+  line-height: 1;
+}
+.accessibility-link-widget .accessibility-link-list a:last-child {
+  border: none;
+}
+.accessibility-link-widget .accessibility-link-list a:hover {
+  color: #353688;
+  letter-spacing: 1px;
+}
+.accessibility-link-widget h5 {
+  padding: 25px;
+  color: var(--blackColor);
+  font-size: 18px;
+  margin-bottom: 0;
+  border-bottom: solid 1px var(--whiteColor);
+}
+
+.row-student {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1 * var(--bs-gutter-y));
+    margin-right: calc(-.5 * var(--bs-gutter-x));
+    margin-left: calc(-.5 * var(--bs-gutter-x))
+}
+
+@media (min-width: 992px) {
+    .col-lg-4 {
+        flex: 0 0 auto;
+        width: 33.33333333%
+    }
+    .col-lg-8 {
+        flex: 0 0 auto;
+        width: 66.66666667%
+    }
+}
